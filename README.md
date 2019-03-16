@@ -60,9 +60,11 @@ Event:
 Performer _belongs to_ User  
 Location _has attachment_ Profilbild  
 Performer:
+* integer "user_id"
 * string "name"  
 * string "category"  
-* string "description"  
+* string "description"
+* string "email"
 
 OpeningHours _belongs to_ Location  
 OpeningHours:

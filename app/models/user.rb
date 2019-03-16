@@ -4,9 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
   
-  has_many :locations
-  has_many :performer
-  
-  has_many :events, through: :location
-  has_many :events, through: :performer
+  has_many :locations, dependent: :destroy
+  has_many :performers, dependent: :destroy
+
 end
