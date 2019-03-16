@@ -28,8 +28,7 @@ Location:
 * integer "user_id"  
 * string "name"  
 * string "type"  
-* string "formatted_address"  
-* string "facebook_page"  
+* string "formatted_address"
 * string "route"  
 * string "street_number"  
 * string "postal_code"  
@@ -73,7 +72,7 @@ OpeningHours:
 * time "start_time"  
 * time "end_time"  
 
-Ticket _belongs to_ Location  
+Ticket _belongs to_ Event
 Ticket:
 * integer "location_id"  
 * string "name"  
@@ -81,6 +80,9 @@ Ticket:
 * string "status"  
 
 SocialLinks:  
+SocialLinks _has one_ Performer
+SocialLinks _has one_ Location
+
 * integer "location_id"  
 * integer "performer_id"  
 * string "channel"  
