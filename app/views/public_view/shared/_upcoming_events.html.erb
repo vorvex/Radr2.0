@@ -1,0 +1,35 @@
+<div class="event-holder">
+  <h2 style="margin-bottom: 10px !important"><%= heading %></h2>
+  <div class="slick-carousel">
+    <% resource.each do |event| %>
+      <a href="/event/<%= event.city %>/<%= event.name %>" class="preview">
+        <div class="preview-inner">
+          <div>
+            <h4><%= event.name %></h4><span><%= event.category %></span>
+          </div>
+          <p><%= event.time_str %><br/><%= event.location_name %>, <%= event.city %></p>
+        </div>
+        <img class="lazy" src="<%= event.image_url %>" alt="<%= event.name %>">
+      </a>
+    <% end %>
+    
+  </div>
+</div>
+<script>
+  $('.slick-carousel').slick({
+      dots: false,
+      infinite: false,
+      slidesToScroll: 1,
+      slidesToShow: 1,
+      variableWidth: true,
+      speed: 300,
+      slidesToShow: 1
+    });
+  
+  $('.preview').mouseover(function(){
+        $(this).children().toggleClass('hover');
+  });
+  $('.preview').mouseout(function(){
+    $(this).children().toggleClass('hover');
+  });
+</script>

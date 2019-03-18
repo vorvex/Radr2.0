@@ -1,0 +1,9 @@
+<div class="description-container">
+  <p><%= @resource.description %></p>
+  <div id="readmore"></div>
+</div>
+<script>
+  $('#readmore').on('click', function(){
+    $('.description-container').toggleClass('open');
+  })
+</script>

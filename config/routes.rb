@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
   
+  namespace :api do
+    resources :user do
+    end
+  end
+  
   root 'dashboard#index'
   
   get 'einstellungen' => 'dashboard#settings'
   get 'neue-location' => 'dashboard#new_location'
   get 'neuer-performer' =>'dashboard#new_performer'
-  get 'neues-event' => 'dashboard#new_event'
-  
-  namespace :api do
-    resources :user do
-    end
-  end
+  get 'public_neues-event' => 'dashboard#new_event'
   
   post 'event/create' => 'event#create'
   post 'location/create' => 'location#create'
@@ -35,4 +35,10 @@ Rails.application.routes.draw do
   
   devise_for :users
 
+  # Event, Location & Performer Views
+  
+  get 'location/:city/:name' => 'public_view#location'
+  get 'performer/:id' => 'public_view#performer'
+  get 'event/:city/:name/' => 'public_view#event'
+  
 end

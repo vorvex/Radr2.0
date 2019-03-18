@@ -1,0 +1,36 @@
+<div class="map-holder">
+  <iframe width="100%" height="140px" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/view?zoom=16&center=<%= @resource.lat %>%2C<%= @resource.lng %>&key=AIzaSyBNAXfMrJDNWqcq8bW6OhWgZd6XUi-F1UI"></iframe>
+</div>
+<a class="oh-head" href="https://maps.google.com/?ll=<%= @resource.lat %>, <%= @resource.lng %>" target="_blank">
+  <span class="oh-icon">          
+    <svg width="18px" height="24px" viewBox="0 0 18 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Location" transform="translate(-13.000000, -596.000000)">
+                <g id="Adresse" transform="translate(10.000000, 593.000000)">
+                    <g id="Group" transform="translate(0.000000, 3.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                        <path d="M16.0885714,8.682 C16.0885714,11.0785714 14.1361714,13.0229143 11.7277714,13.0229143 C9.31902857,13.0229143 7.36697143,11.0785714 7.36697143,8.682 C7.36697143,6.28474286 9.31937143,4.34108571 11.7277714,4.34108571 C14.1366857,4.34091429 16.0885714,6.28457143 16.0885714,8.682 M20.6130857,8.682 C20.6130857,3.88697143 16.7084571,0 11.8913143,0 C7.07451429,0 3.16954286,3.88697143 3.16954286,8.682 C3.16954286,10.7902286 3.9252,12.7232571 5.18091429,14.2268571 L11.8988571,23.8753714 L18.7150286,14.0861143 C18.9598286,13.7811429 19.1840571,13.4597143 19.3863429,13.1218286 L19.4552571,13.0234286 L19.4439429,13.0234286 C20.1862286,11.7456 20.6130857,10.2641143 20.6130857,8.682" id="Shape" fill="#8E8E93" fill-rule="nonzero"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </svg>
+  </span>
+  <div>
+    <h2><%= @resource.route + " " + @resource.street_number + ", " + @resource.locality %></h2>
+    <span class="subheader">Adresse</span>
+  </div>
+  <span class="oh-button">    
+    <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="Location" transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                <g id="Adresse" transform="translate(10.000000, 593.000000)">
+                    <g id="arrow-right" transform="translate(340.000000, 15.000000)">
+                        <polygon id="Path" points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </svg>
+  </span>
+</a>

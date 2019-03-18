@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_16_185406) do
+ActiveRecord::Schema.define(version: 2019_03_18_075534) do
 
   create_table "events", force: :cascade do |t|
     t.integer "location_id"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2019_03_16_185406) do
   create_table "locations", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name"
-    t.string "type"
+    t.string "category"
     t.string "formatted_address"
     t.string "route"
     t.string "street_number"
@@ -46,14 +46,15 @@ ActiveRecord::Schema.define(version: 2019_03_16_185406) do
     t.float "lng"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
   end
 
   create_table "opening_hours", force: :cascade do |t|
     t.integer "location_id"
     t.date "date"
     t.integer "week_day"
-    t.time "start_time"
-    t.time "end_time"
+    t.string "start_time"
+    t.string "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

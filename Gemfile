@@ -7,6 +7,7 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.2', '>= 5.2.2.1'
 
 gem 'devise'
+gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'

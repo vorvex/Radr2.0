@@ -1,0 +1,389 @@
+// Place all the styles related to the public_view controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: hero-new;  
+  font-weight: 500;
+  margin: 0px !important;
+  
+}
+
+p, span, a, .subheader {
+  font-family: hero-new;
+  font-weight: 400;
+  font-size: 14px;
+  font-height: 20px;
+}
+
+h1 {
+  font-size: 20px;
+  line-height: 28px;
+}
+
+h2 {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.subheader {
+  color: #8E8E93;
+}
+
+//Card Body 
+
+.card-body {
+  padding: 10px;
+}
+
+//Card Head
+
+.card-head {
+  display: flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-head > div {
+  margin: 0px 10px 0px 0px;
+  flex-grow: 1;
+}
+
+//Social Button
+.social-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FFFFFF;
+  box-shadow: 0 0 5px 0 #D1D1D6;
+  border-radius: 5px;
+  height: 40px;
+  width: 40px;
+}
+
+//Opening Hours
+
+.oh-container {
+  width: 100%;
+}
+
+.oh-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: #000;
+    text-decoration: none !important;
+}
+
+.oh-icon {
+    height: 40px;
+    margin-top: 4px;
+}
+
+.oh-button {
+  margin-right: 5px;
+}
+
+.oh-button.open {
+  transform: rotate(180deg)
+}
+
+.oh-body {
+  display: none;
+}
+.oh-body table {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.oh-body tr {
+  margin-bottom: 10px;
+}
+
+.oh-body td {
+  padding-bottom: 10px;
+}
+
+.oh-head > div { 
+    margin: 0px 10px;
+    flex-grow: 1;
+}
+
+// Description
+
+.description-container p {
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  text-align: justify;
+}
+
+.description-container p:after {
+  position: absolute;
+  bottom: 0px;  
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  content: "";
+  background: linear-gradient(to top,
+     rgba(255,255,255, 1) 0%, 
+     rgba(255,255,255, 0) 70%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+.description-container.open p:after {
+  background: linear-gradient(to top,
+     rgba(255,255,255, 0) 0%, 
+     rgba(255,255,255, 0) 70%);
+}
+
+.description-container.open p {
+  height: auto;
+}
+.description-container div {
+  width: 100%;
+  text-align: center;
+  margin-top: -15px;
+  color: #8E8E93;
+}
+
+.description-container div:before {
+  content: 'Weiter lesen';
+}
+
+.description-container.open div:before {
+  content: 'Weniger anzeigen';
+}
+
+.description-container {
+  margin-bottom: 10px;
+}
+
+//Map Holder
+.map-holder {
+  overflow: hidden;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+//Upcoming Events
+
+.event-holder {
+  margin: 10px 0px;
+}
+
+.slick-carousel {
+  width: 100%;
+}
+
+.preview {
+	display: block;
+	width: 280px !important;
+	height: 160px !important;
+	overflow: hidden;
+	margin-right: 10px;
+	margin-bottom: 20px;
+  background-image: url('/images/blurred-image.jpg');
+  border-radius: 5px;
+}
+
+.preview:last-child {
+	margin-right: 0px;
+}
+
+.preview:hover {
+	text-decoration: none;
+}
+
+.preview-inner {
+	position: relative;
+	top: 97px;
+	left: 0px;
+  z-index: 10;
+  padding: 10px;
+	padding-top: 40px;
+  width: calc(100%);
+  height: calc(100% - 20px);
+	transition: 500ms ease;
+	background-image: -webkit-linear-gradient(rgba(0,0,0,0.00) 10%, rgba(0,0,0,0.90) 100%);
+	background-image: -o-linear-gradient(rgba(0,0,0,0.00) 10%, rgba(0,0,0,0.90) 100%);
+	background-image: linear-gradient(rgba(0,0,0,0.00) 10%, rgba(0,0,0,0.90) 100%);
+}
+
+.preview-inner.hover {
+	top: 65px;
+}
+
+.preview-inner > div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.preview-inner > div > h4 {
+	font-size: 14px;
+	color: white;
+	line-height: 16px;
+	margin: 0;
+	margin-bottom: 5px;
+	text-decoration: none;
+}
+
+.preview-inner > div > span {
+	font-size: 14px;
+	color: white;
+	line-height: 16px;
+	margin: 0;
+	margin-bottom: 5px;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+.preview-inner > p {
+	color: white;
+	font-size: 12px;
+	line-height: 16px;
+	margin: 0px;
+}
+
+.preview img {
+	position: relative;
+	width: 100%;
+  min-height: 100%;
+	top: -140px;
+	left: 0px;
+  color: transparent;
+}
+
+//Slick
+
+@charset "UTF-8";
+$color-primary: #7E5C77;
+$color-secondary: #777777;
+$color-tertiary: #CCCCCC;
+$color-background: #F4F4F4;
+$color-font: #3B3B3B;
+$color-header: #FDFDFD;
+$slick-dot-character: "\2022" !default;
+$slick-dot-size: 12px !default;
+
+/* Arrows */
+
+.slick-prev,
+.slick-next {
+    position: absolute;
+    display: block;
+    height: 20px;
+    width: 20px;
+    line-height: 0px;
+    font-size: 0px;
+    cursor: pointer;
+    background: transparent;
+    color: transparent;
+    top: 50%;
+    z-index: 10;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    padding: 0;
+    border: none;
+    outline: none;
+    &:hover, &:focus {
+        outline: none;
+        background: transparent;
+        color: transparent;
+        &:before {
+            opacity: 1;
+        }
+    }
+    &.slick-disabled:before {
+        opacity: 0.5;
+    }
+    &:before {
+        font-size: 20px;
+        line-height: 1;
+        color: white;
+        opacity: 0.75;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+.slick-prev {
+    left: 10px;
+    &:before {
+        content: '←';
+        
+    }
+}
+
+.slick-next {
+    right: 10px;
+    &:before {
+        content: '→';
+    }
+}
+
+.slick-dots {
+    position: absolute;
+    bottom: -15px;
+    list-style: none;
+    display: block;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    li {
+        position: relative;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        margin: 0 5px;
+        padding: 0;
+        cursor: pointer;
+        button {
+            border: 0;
+            background: transparent;
+            display: block;
+            height: 20px;
+            width: 20px;
+            outline: none;
+            line-height: 0px;
+            font-size: 0px;
+            color: transparent;
+            padding: 5px;
+            cursor: pointer;
+            &:hover, &:focus {
+                outline: none;
+                &:before {
+                    opacity: 1;
+                }
+            }
+            &:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: $slick-dot-character;
+                width: 20px;
+                height: 20px;
+                font-size: $slick-dot-size;
+                line-height: 20px;
+                text-align: center;
+                color: $color-primary;
+                opacity: 0.25;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+        }
+        &.slick-active button:before {
+            color: $color-primary;
+            opacity: 1;
+        }
+    }
+}
