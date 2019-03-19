@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_action :authenticate_user!
+
   
   def index
     @user = current_user
@@ -13,6 +13,19 @@ class DashboardController < ApplicationController
   def new_performer
     @user = current_user
     @performer = Performer.new
+  end
+  
+  def new_event
+    @user = current_user
+    @event = Event.new
+  end
+  
+  def edit_event
+    @event = Event.find(params[:id])
+  end
+  
+  def edit_performer
+    @performer = Performer.find(params[:id])
   end
   
   def settings

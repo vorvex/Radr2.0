@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   get 'einstellungen' => 'dashboard#settings'
   get 'neue-location' => 'dashboard#new_location'
   get 'neuer-performer' =>'dashboard#new_performer'
-  get 'public_neues-event' => 'dashboard#new_event'
+  get 'neues-event' => 'dashboard#new_event'
+  
+  get 'event-bearbeiten/:id' => 'dashboard#edit_event'
+  get 'performer-bearbeiten/:id' => 'dashboard#edit_performer'
   
   post 'event/create' => 'event#create'
   post 'location/create' => 'location#create'
@@ -19,12 +22,12 @@ Rails.application.routes.draw do
   post 'ticket/create' => 'ticket#create'
   post 'performer/create' => 'performer#create'
   
-  put 'event/edit' => 'event#edit'
-  put 'location/edit' => 'location#edit'
-  put 'opening_hour/edit' => 'opening_hour#edit'
-  put 'social_link/edit' => 'social_link#edit'
-  put 'ticket/edit' => 'ticket#edit'
-  put 'performer/edit' => 'performer#edit'
+  patch 'event/edit/:id' => 'event#edit', as: :edit_event
+  patch 'location/edit/:id' => 'location#edit'
+  patch 'opening_hour/edit/:id' => 'opening_hour#edit'
+  patch 'social_link/edit/:id' => 'social_link#edit'
+  patch 'ticket/edit/:id' => 'ticket#edit'
+  patch 'performer/edit/:id' => 'performer#edit', as: :edit_performer
   
   delete 'event/delete' => 'event#delete'
   delete 'location/delete' => 'location#delete'

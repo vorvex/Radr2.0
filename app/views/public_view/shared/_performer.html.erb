@@ -1,5 +1,5 @@
 <a data-type="inbound-link" class="oh-head" href="/performer/<%= @resource.id %>" >
-  <img src="/images/blurred-image-2.jpg" alt="" class="oh-head-img">
+  <img src="<%= url_for(@resource.performer.profile_image_thumbnail) %>" alt="" class="oh-head-img">
   <div>
     <h2><%= @resource.performer.name %></h2>
     <span class="subheader"><%= @resource.performer.category %></span>

@@ -11,7 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.lazy/1.7.9/jquery.lazy.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
      <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -23,4 +22,24 @@
     <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
+  <script type="text/javascript" src="/jquery.unveil.js"></script>
+  <script>
+  $(document).ready(function() {
+    $(".coverimage").unveil();
+  });
+    
+  var iframes = $('iframe');
+
+  $(document).ready(function() {
+      iframes.attr('src', function() {
+          return $(this).data('src');
+      });
+  });
+
+  iframes.attr('data-src', function() {
+      var src = $(this).attr('src');
+      $(this).removeAttr('src');
+      return src;
+  });
+</script>
 </html>

@@ -10,7 +10,7 @@
           </div>
           <p><%= event.time_str %><br/><%= event.location_name %>, <%= event.city %></p>
         </div>
-        <img class="lazy" src="<%= event.image_url %>" alt="<%= event.name %>">
+        <img class="lazy" src="<%= url_for(event.images_thumbnail) %>" alt="<%= event.name %>">
       </a>
       <% end %>
     <% end %>

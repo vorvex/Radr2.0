@@ -3,6 +3,9 @@ class Event < ApplicationRecord
   belongs_to :performer
   belongs_to :location
   
+  has_one_attached :images_thumbnail
+  has_many_attached :images
+  
   def self.upcoming
     where('start_time > ?', Time.now).order('start_time ASC')
   end
