@@ -1,2 +1,65 @@
-<h1>PublicView#performer</h1>
-<p>Find me in app/views/public_view/performer.html.erb</p>
+<a id="back" style="display: none;"> 
+  <svg width="15px" height="24px" viewBox="0 0 15 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Performer" transform="translate(-20.000000, -20.000000)" fill="#000000" fill-rule="nonzero">
+            <g id="arrow-right" transform="translate(27.500000, 32.000000) scale(-1, 1) translate(-27.500000, -32.000000) translate(20.000000, 20.000000)">
+                <polygon id="Path" points="0 1.455 1.5525 0 14.4 12 1.5525 24 0 22.5525 11.2875 12"></polygon>
+            </g>
+        </g>
+    </g>
+  </svg>
+</a>
+<div class="performer-image-container">
+  <img src="/images/performer-fallback.jpg" alt="" class="performer-image">
+</div>
+<div class="performer-body">
+  <div class="card-head centered">
+    <div>
+      <h1><%= @resource.name %></h1>
+      <span class="subheader"><%= @resource.category %></span>
+    </div>
+  </div>
+  <div class="social-container">
+    <a href="" class="social-button">
+      <img src="/images/instagram.svg" alt="Instagram">
+    </a>
+    <a href="" class="social-button">
+      <img src="/images/soundcloud.svg" alt="Soundcloud">
+    </a>
+    <a href="" class="social-button">
+      <img src="/images/facebook.svg" alt="Facebook Page">
+    </a>
+  </div>
+  <%= render "public_view/shared/description" %>
+  <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+</div>
+<script>
+  $(window).scroll(function(){
+        var scroll = $(this).scrollTop();
+        if(scroll < 0) {
+          var scale = (scroll/400) * (-1) + 1;
+          $('.performer-image').css('transform', 'scale(' + scale + ')');
+          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+        } else if(scroll > 0) {
+          var scale = (scroll/250) * (-1) + 1;
+          var fade = 1 - (scroll/200);
+          $('.performer-image').css('transform', 'scale(' + scale + ')');
+          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+          $('.performer-image').css('opacity', fade);
+      }});
+</script>
+<script>
+  $('[data-type="inbound-link"]').on('click', function(event){
+    event.preventDefault();
+    var href = $(this).attr('href') + '?from=' + window.location.pathname;
+    window.location.href = href;
+  });
+</script>
+<script>
+    var thisurl = new URL(document.location.href);
+		var from = thisurl.searchParams.get("from");
+    if (from != null) {
+      $('#back').attr("href", from);
+      $('#back').css('display', 'inline-block');
+    }
+</script>

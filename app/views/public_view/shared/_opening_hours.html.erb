@@ -6,7 +6,7 @@
       </svg>
     </span>
     <div>
-      <h2 <% unless !@resource.open? %>style="color: #FF2D55"<% end %> ><%= @resource.open_string? %></h2>
+      <h2 <% unless @resource.open? %>style="color: #FF2D55"<% end %> ><%= @resource.open_string? %></h2>
       <span class="subheader">Öffnungszeiten</span>
     </div>
     <span class="oh-button">      

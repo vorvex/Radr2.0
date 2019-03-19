@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.alert, .notice {
+  display: none;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: hero-new;  
   font-weight: 500;
@@ -17,23 +21,80 @@ p, span, a, .subheader {
 }
 
 h1 {
-  font-size: 20px;
-  line-height: 28px;
+  font-size: 20px !important;
+  line-height: 28px !important;
 }
 
 h2 {
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 16px !important;
+  line-height: 24px !important;
 }
 
 .subheader {
-  color: #8E8E93;
+  color: #757575;
+}
+
+//Cover Image
+
+.coverimage-container {
+  width: 100vw;
+  height: calc(100vw / 1.7);
+  overflow: hidden;
+  z-index: 0 !important;
+  margin: 0px;
+}
+
+.cover-slick {
+  position: fixed !important;
+  width: 100vw;
+  height: calc(100vw / 1.7);
+}
+
+.slick-track {
+  height: calc(100vw / 1.7);
+}
+
+.coverimage {
+  position: fixed;
+  width: 100vw;
+  height: calc(100vw / 1.7);
+}
+
+#back {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+}
+
+a:hover, a:focus {
+    color: currentcolor !important;
+    text-decoration: none !important;
 }
 
 //Card Body 
 
 .card-body {
+  margin-top: -10px;
   padding: 10px;
+  background: #FFFFFF;
+  border-radius: 10px 10px 0 0;
+  z-index: 10;
+  position: relative;
+}
+
+.card-body.event {
+  margin-top: -10px;
+  padding: 10px;
+  background: #FFFFFF;
+  border-radius: 10px 10px 0 0;
+  z-index: 10;
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.card-body > div, .card-body > a {
+  margin-bottom: 10px;
 }
 
 //Card Head
@@ -83,6 +144,12 @@ h2 {
 .oh-icon {
     height: 40px;
     margin-top: 4px;
+}
+
+.oh-head-img {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
 }
 
 .oh-button {
@@ -150,7 +217,7 @@ h2 {
   width: 100%;
   text-align: center;
   margin-top: -15px;
-  color: #8E8E93;
+  color: #757575;
 }
 
 .description-container div:before {
@@ -180,6 +247,8 @@ h2 {
 
 .slick-carousel {
   width: 100%;
+  height: 160px !important;
+  overflow: hidden !important;
 }
 
 .preview {
@@ -386,4 +455,97 @@ $slick-dot-size: 12px !default;
             opacity: 1;
         }
     }
+}
+
+//Performer
+
+.performer-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.performer-image {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+}
+
+.card-head.centered {
+  text-align: center;
+}
+
+.social-container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+
+.social-container > .social-button {
+  margin: 0px 5px;
+}
+
+.performer-body{
+  padding: 0px 10px;
+  background: #fff;
+  
+}
+
+//Footer
+.footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100vw;
+  height: 50px;
+  background-image: linear-gradient(-180deg, rgba(255,255,255,0.00) 30%, #FFFFFF 100%);
+  z-index: 11;
+  padding: 0px 10px 10px 10px;
+}
+
+.footer-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #DD2476;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #FFFFFF !important;
+  line-height: 24px;
+  padding: 8px;
+  text-align: center;
+  
+}
+
+
+
+//Tickets
+
+.ticket-head {
+  margin-top: 20px !important;
+  display: block;
+  width: 100vw;
+  text-align: center;
+}
+
+.ticket-body {
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.ticket-body > a {
+  margin-bottom: 10px;
+}
+
+.price-tag {
+  font-size: 16px;
+  color: #000000;
+  text-align: right;
+  line-height: 24px;
+  margin: 0 10px;
 }

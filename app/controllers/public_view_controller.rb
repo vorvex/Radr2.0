@@ -5,11 +5,15 @@ class PublicViewController < ApplicationController
   end
 
   def event
-    @event = Event.find_by_name(params[:name])
+    @resource = Event.find(params[:id])
   end
 
   def performer
-    @performer = Performer.find(params[:id])
+    @resource = Performer.find(params[:id])
+  end
+  
+  def tickets
+    @resource = Event.find(params[:id]).tickets
   end
   
   private

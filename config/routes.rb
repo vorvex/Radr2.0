@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   
   get 'location/:city/:name' => 'public_view#location'
   get 'performer/:id' => 'public_view#performer'
-  get 'event/:city/:name/' => 'public_view#event'
+  get 'event/:city/:id/:name/' => 'public_view#event'
+  get 'event/:id/tickets' => 'public_view#tickets'
   
 end

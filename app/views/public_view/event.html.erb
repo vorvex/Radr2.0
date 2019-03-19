@@ -1,2 +1,82 @@
-<h1>PublicView#event</h1>
-<p>Find me in app/views/public_view/event.html.erb</p>
+<a id="back" style="display: none;"> 
+  <svg width="22px" height="32px" viewBox="0 0 22 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+          <filter x="-80.0%" y="-50.0%" width="260.0%" height="200.0%" filterUnits="objectBoundingBox" id="filter-1">
+              <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+              <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+              <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+              <feMerge>
+                  <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                  <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+          </filter>
+      </defs>
+      <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Location" transform="translate(-17.000000, -18.000000)" fill="#FFFFFF" fill-rule="nonzero">
+              <g id="ImageSlider">
+                  <g id="arrow-right" filter="url(#filter-1)" transform="translate(27.500000, 32.000000) scale(-1, 1) translate(-27.500000, -32.000000) translate(20.000000, 20.000000)">
+                      <polygon id="Path" points="0 1.455 1.5525 0 14.4 12 1.5525 24 0 22.5525 11.2875 12"></polygon>
+                  </g>
+              </g>
+          </g>
+      </g>
+  </svg>
+</a>
+<div class="coverimage-container">
+  <div class="cover-slick">
+    <img src="/images/blurred-image.jpg" alt="" class="coverimage">
+  </div>
+</div>
+<div class="card-body event">
+  <span class="subheader" style="color: red"><%= @resource.time_str %></span>
+  <div class="card-head">
+    <div>
+      <h1><%= @resource.name %></h1>
+      <span class="subheader"><%= @resource.category %></span>
+    </div>
+    <a href="" class="social-button">
+      <img src="/images/facebook.svg" alt="Facebook Event">
+    </a>
+  </div>
+  <%= render "public_view/shared/location" %>
+  <%= render "public_view/shared/description" %>
+  <%= render "public_view/shared/map", resource: @resource.location %>
+  <%= render "public_view/shared/performer" %>
+  <% if @resource.similar_events.upcoming.count > 1 %>
+    <%= render "public_view/shared/upcoming_events", events: @resource.similar_events.upcoming, heading: 'Veranstaltungen in ' + @resource.city %>
+  <% end %>
+</div>
+<div class="footer">
+  <a data-type="inbound-link" href="/event/<%= @resource.id %>/tickets" class="footer-link">Ticketinfos</a>
+</div>
+<script>
+  $(window).scroll(function(){
+        var scroll = $(this).scrollTop();
+        if(scroll < 0) {
+          var scale = (scroll/120) * (-1) + 1;
+          $('.cover-slick').css('transform', 'scale(' + scale + ')');
+        } else if(scroll > 0) {
+          var scale = (scroll / 20 * (-2));
+          $('.cover-slick').css('top', scale );
+      }});
+  $('.cover-slick').slick({
+      speed: 300,
+      fade: true,
+      cssEase: 'linear'
+    });
+</script>
+<script>
+  $('[data-type="inbound-link"]').on('click', function(event){
+    event.preventDefault();
+    var href = $(this).attr('href') + '?from=' + window.location.pathname;
+    window.location.href = href;
+  });
+</script>
+<script>
+    var thisurl = new URL(document.location.href);
+		var from = thisurl.searchParams.get("from");
+    if (from != null) {
+      $('#back').attr("href", from);
+      $('#back').css('display', 'inline-block');
+    }
+</script>

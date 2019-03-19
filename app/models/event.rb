@@ -1,6 +1,6 @@
 class Event < ApplicationRecord
   has_many :tickets, dependent: :destroy
-  has_one :performer
+  belongs_to :performer
   belongs_to :location
   
   def self.upcoming
@@ -23,7 +23,20 @@ class Event < ApplicationRecord
     self.location.name
   end
   
-  def time_str
+  def similar_events
+    Event.find_by_city(self.city)
+  end
+  
+  def next_week?
+    days_till = (self.start_time - Time.now) / 86400
+    if days_till < 6 && days_till > 0
+      return true
+    else
+      return false
+    end
+  end
+  
+  def time_str    
     start_time = self.start_time
     end_time = self.end_time  
     s_day = start_time.day
@@ -36,7 +49,24 @@ class Event < ApplicationRecord
     e_year = end_time.year
     e_hour = end_time.hour
     e_min = end_time.min
-
+    
+    case self.start_time.wday
+      when 0
+        wday = "Sonntag"
+      when 1
+        wday = "Montag"
+      when 2
+        wday = "Dienstag"
+      when 3
+        wday = "Mittwoch"
+      when 4
+        wday = "Donnerstag"
+      when 5
+        wday = "Freitag"
+      when 6
+        wday = "Samstag"
+    end
+    
     case s_month
     when 1 
       month = "Januar"
@@ -63,13 +93,21 @@ class Event < ApplicationRecord
     when 12 
       month = "Dezember"
     end
-
+    
     if s_day == e_day 
-      return "#{s_day}.#{month} um #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
+      if self.next_week?
+        return "#{wday} von #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
+      else
+        return "#{wday[0..1]} #{s_day}. #{month} von #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
+      end
     elsif s_day == e_day - 1 && e_hour < 7
-      return "#{s_day}.#{month} um #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
+      if self.next_week?
+        return "#{wday} von #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
+      else
+        return "#{wday[0..1]} #{s_day}. #{month} von #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
+      end
     else
-      return "#{s_day}.#{month} um #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_day}.#{e_month} um #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
+      return "#{wday[0..1]} #{s_day}. #{month} - #{e_day}.#{e_month}"
     end
   end
   
