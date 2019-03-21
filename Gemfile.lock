@@ -89,6 +89,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    color (1.8)
+    colorscore (0.0.5)
+      color
     concurrent-ruby (1.1.5)
     crass (1.0.4)
     devise (4.6.1)
@@ -240,6 +243,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  colorscore (~> 0.0.5)
   devise
   heroku-deflater
   jbuilder (~> 2.5)

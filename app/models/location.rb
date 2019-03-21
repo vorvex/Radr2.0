@@ -4,8 +4,7 @@ class Location < ApplicationRecord
   has_many :opening_hours
   has_many :social_links
   
-  has_one_attached :profile_image
-  has_one_attached :profile_image_thumbnail
+  has_one_attached :thumbnail
   
   has_many_attached :images
   

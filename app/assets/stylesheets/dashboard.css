@@ -1,0 +1,247 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_self
+ */
+
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+.alert, .notice {
+  display: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: hero-new;  
+  font-weight: 500;
+  margin: 0px !important;
+  
+}
+
+p, span, a, .subheader {
+  font-family: hero-new;
+  font-weight: 400;
+  font-size: 14px;
+  font-height: 20px;
+}
+
+h1 {
+  font-size: 20px !important;
+  line-height: 28px !important;
+}
+
+h2 {
+  font-size: 16px !important;
+  line-height: 24px !important;
+}
+
+.subheader {
+  color: #757575;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+// Header
+label {
+  font-weight: 400 !important;
+}
+
+.form-h1 {
+  margin-bottom: 10px !important;
+}
+
+header {
+  display: block;
+  padding: 10px 15px;
+  background: #ffffff;
+  background: #FFFFFF;
+  box-shadow: 0 0 5px 0 rgba(0,0,0,0.50);
+}
+.brand {
+  display: block;
+}
+.logo {
+  display: block;
+  height: 40px;
+}
+
+.container {
+  margin-top: 10px;
+}
+
+/* Accordion */
+
+.form-accordion {
+    height: calc( 100vh - 70px - 48px - 40px);
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.accordion-inner {
+    
+}
+
+.accordion-inner.active {
+  flex-grow: 10;
+}
+
+.accordion-inner.active .accordion-body {
+  display: block;
+}
+
+.accordion-inner.done svg {
+  color: #FF2D55 !important;
+}
+
+.accordion-header {
+  display: flex;
+  align-content: center;
+  margin-bottom: 10px;
+}
+
+.accordion-body {
+    display: none;
+    max-height: calc(100vh - 270px);
+    overflow-x: scroll;
+}
+
+.point {
+  margin-right: 10px;
+}
+
+.point svg {
+  color: #8E8E93;
+}
+
+.accordion-body .form-group {
+  margin-top: 10px;
+}
+
+/* JQuery Business Hours */
+
+.clean {
+    clear: both;
+}
+
+.dayContainer {
+    float: left;
+    line-height: 20px;
+    margin-right: 8px;
+    width: 65px;
+    font-size: 11px;
+    font-weight: bold;
+    width: calc(100vw / 4 - 16px);
+    margin-bottom: 10px;
+}
+
+.colorBox {
+    cursor: pointer;
+    height: 45px;
+    border: 2px solid #888;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+.colorBox.WorkingDayState {
+    border: 2px solid #4E8059;
+    background-color: #8ade8f;
+}
+
+.colorBox.RestDayState {
+    border: 2px solid #7a1c44;
+    background-color: #de5962;
+}
+
+.operationTime .mini-time {
+    width: 40px;
+    padding: 3px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.dayContainer .add-on {
+    padding: 4px 2px;
+}
+
+.colorBoxLabel {
+    clear: both;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.operationTime {
+    margin-top: 5px;
+}
+
+/* Footer */
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100vw;
+  height: 50px;
+  background-image: linear-gradient(-180deg, rgba(255,255,255,0.00) 30%, #FFFFFF 100%);
+  z-index: 11;
+  padding: 0px 10px 10px 10px;
+}
+
+.footer-link {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #DD2476;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #FFFFFF !important;
+  line-height: 24px;
+  padding: 8px;
+  text-align: center;
+  
+}

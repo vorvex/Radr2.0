@@ -1,0 +1,17 @@
+var accordion1 = $('#accordion1');
+var accordion2 = $('#accordion2');
+var accordion3 = $('#accordion3');
+
+var form2 = $('#form2');
+var form3 = $('#form3');
+var button1 = $('#button1');
+var button2 = $('#button2');
+
+accordion1.removeClass('active').addClass('done');
+accordion2.addClass('active');
+
+button1.remove();
+button2.css('display', 'block');
+
+form2.attr('action', '/location/create2/' + <%= @location.id %>);
+form3.attr('action', '/location/create3/' + <%= @location.id %>);

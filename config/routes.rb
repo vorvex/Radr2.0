@@ -15,8 +15,12 @@ Rails.application.routes.draw do
   get 'event-bearbeiten/:id' => 'dashboard#edit_event'
   get 'performer-bearbeiten/:id' => 'dashboard#edit_performer'
   
-  post 'event/create' => 'event#create'
-  post 'location/create' => 'location#create'
+  post 'event/create' => 'event#create'  
+  
+  post 'location/create' => 'location#create_location1'
+  patch 'location/create2/:id' =>  'location#create_location2', as: :create_location2
+  patch 'location/create3/:id' =>  'location#create_location3', as: :create_location3
+  
   post 'opening_hour/create' => 'opening_hour#create'
   post 'social_link/create' => 'social_link#create'
   post 'ticket/create' => 'ticket#create'

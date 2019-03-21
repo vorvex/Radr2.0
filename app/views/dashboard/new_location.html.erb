@@ -1,1 +1,195 @@
-<h1>New Location</h1>
+<%= render 'dashboard/shared/header' %>
+<div class="container">
+  <h1 class="form-h1">New Location</h1>
+  <div class="form-accordion">
+    <div id="accordion1" class="accordion-inner active">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">1</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Name, Kategorie & Adresse</h2>
+      </div>
+      <div class="accordion-body">
+        <form id="form1">
+          <div class="form-group">
+            <label for="location-name">Name</label>
+            <input type="text" class="form-control" name="location-name" id="location-name" aria-describedby="locationHelp" placeholder="Locationname" required>
+            <small id="locationHelp" class="form-text text-muted">Der Name Ihres Veranstaltungsort.</small>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="berechtigung" name="berechtigung" required>
+            <label class="form-check-label" for="berechtigung">
+              Hiermit bestätige Ich, dass ich dazu berechtigt bin diesen Veranstaltungsort zu representieren. 
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="category">Kategorie</label>
+            <select class="form-control" id="category" name="category" aria-describedby="categoryHelp" >
+              <option></option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <small id="categoryHelp" class="form-text text-muted">Wählen Sie die nächstbeste Kategorie aus.</small>
+          </div>
+          <div class="form-group">
+            <label for="address-lookup">Adresse</label>
+            <input type="text" class="form-control " id="address-lookup" aria-describedby="addressHelp" placeholder="Adresse">
+            <small id="addressHelp" class="form-text text-muted">Geben Sie Ihre Adresse ein und klicken Sie auf die genaue Adresse im Dropdown</small>
+            <div style="display: none">
+              Latitude:   <input name="lat" type="text" value="">
+              Longitude:  <input name="lng" type="text" value="">
+              Address:    <input name="formatted_address" type="text" value="">
+              Locality:   <input name="locality" type="text" value="">
+              Street:     <input name="route" type="text" value="">
+              Streetnr:   <input name="street_number" type="text" id="street_number" value="">
+              PLZ:        <input name="postal_code" type="text" value="">
+              City:       <input name="locality" type="text" value="">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="accordion2" class="accordion-inner">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">2</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Profilbild & Bilder hochladen</h2>
+      </div>
+      <div class="accordion-body">
+        <%= form_for(Location.find(1), :html => {role: "form", :multipart => true, id: "form2"}, url: create_location2_url(Location.find(1))) do |f| %>
+          <div class="form-group">
+            <label for="attachment">Bilder hochladen</label>
+            <%= f.file_field('attachment', :multiple => true, class: "form-control-file", id: "attachment") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="accordion3" class="accordion-inner">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">3</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Beschreibung & Öffnungszeiten</h2>
+      </div>
+      <div class="accordion-body">
+        <%= form_for(Location.find(1), :html => {role: "form", :multipart => true, id: "form3"}, url: create_location3_url(Location.find(1))) do |f| %>
+          <div class="form-group">
+            <label for="description">Beschreibung</label>
+            <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>
+            <small id="descriptionHelp" class="form-text text-muted">Tragen Sie hier weitere Informationen zu Ihrer Location ein</small>
+          </div>
+          <label for="opening_hours" style="margin-bottom: 0px">Öffnungszeiten</label>
+          <textarea type="text" name="opening_hours" id="opening_hours" hidden></textarea>
+        <% end %>
+        <div class="form-group" id="business-hours"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Weiter</a> 
+  <a href='' class="footer-link" id="button2" style="display: none;">Weiter</a>
+  <a href='' class="footer-link" id="button3" style="display: none;">Weiter</a>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNAXfMrJDNWqcq8bW6OhWgZd6XUi-F1UI&libraries=places"></script>
+<script src="/jquery.geocomplete.min.js"></script>
+<script>
+  $('#address-lookup').geocomplete({ details: "form" }).bind("geocode:result", function(event, result){
+    console.log(result);
+    if($('#street_number').val() !== "") {
+      $('#address-lookup').removeClass('is-invalid');
+      $('#address-lookup').addClass('is-valid');
+      console.log($('#street_number').val());
+    } else {
+      $('#address-lookup').removeClass('is-valid');
+      $('#address-lookup').addClass('is-invalid');
+      console.log($('#street_number').val());
+    };
+  });
+
+</script>
+<script src="/jquery.timepicker.js"></script>
+<script>
+  $(document).ready(function () {
+    bsCustomFileInput.init()
+  });
+</script>
+<!-- JQuery Business Hours -->
+<script src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+<script src="/jquery.businessHours.min.js"></script>
+<script>
+  var businessHoursManager = $("#business-hours").businessHours({
+                    postInit:function(){
+                        $('.operationTimeFrom, .operationTimeTill').timepicker({
+                            'timeFormat': 'H:i',
+                            'step': 15
+                            });
+                        $('.operationTimeFrom, .operationTimeTill, .operationState').on('change', function(){
+                          $("textarea#opening_hours").val(JSON.stringify(businessHoursManager.serialize()));
+                        });
+                    },
+                    dayTmpl:'<div class="dayContainer" >' +
+                        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"></div>' +
+                        '<div class="weekday"></div>' +
+                        '<div class="operationDayTimeContainer">' +
+                        '<div class="operationTime input-group"><input type="text" name="startTime" class="form-control operationTimeFrom" value=""></div>' +
+                        '<div class="operationTime input-group"><input type="text" name="endTime" class="form-control operationTimeTill" value=""></div>' +
+                        '</div></div>'
+                });
+</script>
+<!-- Step 1 -->
+<script>
+  $('#button1').on('click', function(event){
+    event.preventDefault();
+    $.ajax({
+                  type: 'POST',
+                  url: '/location/create',
+                  data: $("#form1").serialize(),
+                  error: function(){
+                    // Es ist ein Fehler aufgetretten Meldung einfügen.
+                  }	
+                });
+ });
+  
+ $('#button2').on('click', function(event){
+    event.preventDefault();
+    $('#form2').submit();
+    $('#button2').remove();
+    $('#button3').css('display', 'block');
+    $("#accordion2").removeClass('active').addClass('done');
+    $("#accordion3").addClass('active');
+
+ });
+  
+  $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#form2').ajaxForm(); 
+        });
+</script>
+<!-- The template to display files available for upload -->
+<script src="/jquery.form.min.js"></script>

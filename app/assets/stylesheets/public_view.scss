@@ -39,6 +39,7 @@ h2 {
 .coverimage-container {
   width: 100vw;
   height: calc(100vw / 1.7);
+  max-height: 70vh;
   overflow: hidden;
   z-index: 0 !important;
   margin: 0px;
@@ -50,6 +51,7 @@ h2 {
   position: fixed !important;
   width: 100vw;
   height: calc(100vw / 1.7);
+  max-height: 70vh;
 }
 
 .slick-track {
@@ -98,7 +100,7 @@ a:hover, a:focus {
   border-radius: 10px 10px 0 0;
   z-index: 10;
   position: relative;
-  margin-bottom: 50px;
+  padding-bottom: 60px;
 }
 
 .card-body > div, .card-body > a {
@@ -147,6 +149,7 @@ a:hover, a:focus {
     cursor: pointer;
     color: #000;
     text-decoration: none !important;
+    background: #fff;
 }
 
 .oh-icon {
@@ -196,6 +199,7 @@ a:hover, a:focus {
   overflow: hidden;
   position: relative;
   text-align: justify;
+  color: #000;
 }
 
 .description-container p:after {
