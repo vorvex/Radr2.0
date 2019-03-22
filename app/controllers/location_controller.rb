@@ -2,7 +2,7 @@ class LocationController < ApplicationController
    skip_before_action :verify_authenticity_token
   
   def create_location1 # Name, Category, Adresse
-    name = params[:name]
+    name = params[:locationname]
     category = params[:category]
     formatted_address = params[:formatted_address]
     route = params[:route]
@@ -40,13 +40,14 @@ class LocationController < ApplicationController
     
       thumbnail = File.basename(images.first.original_filename, File.extname(images.first.original_filename)) + '-thumbnail' + File.extname(images.first.original_filename)
 
-      source = Tinify.from_file(images.first.tempfile)
-      resized_thumbnail = source.resize(
+      source_thumbnail = Tinify.from_file(images.first.tempfile)
+      resized_thumbnail = source_thumbnail.resize(
         method: "thumb",
         width: 80,
         height: 80
       )
       images.each do |image| 
+        source = Tinify.from_file(image.tempfile)
         resized = source.resize(
           method: "cover",
           width: 750,
@@ -77,10 +78,10 @@ class LocationController < ApplicationController
     @location.update(description: params[:description])    
     
     json = JSON.parse(params[:opening_hours])
-    index = 0
+    index = 1
     json.each do |day|
       if day["isActive"]
-           OpeningHour.create(location: Location.last, week_day: index, start_time: day["timeFrom"], end_time: day["timeTill"])
+           OpeningHour.create(location: @location, week_day: index, start_time: day["timeFrom"], end_time: day["timeTill"])
       end
      index += 1
      end

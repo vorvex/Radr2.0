@@ -25,8 +25,12 @@ body {
 
 }
 
-.alert, .notice {
+.alert:empty, .notice:empty {
   display: none;
+}
+
+.close {
+  font-size: 15px !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -144,6 +148,12 @@ header {
 .accordion-body {
     display: none;
     max-height: calc(100vh - 270px);
+    overflow-x: scroll;
+}
+
+.event-accordion .accordion-body {
+    display: none;
+    max-height: calc(100vh - 290px);
     overflow-x: scroll;
 }
 

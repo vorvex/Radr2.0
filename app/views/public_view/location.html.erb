@@ -24,7 +24,9 @@
 </a>
 <div class="coverimage-container">
   <div class="cover-slick">
-    <img src="/images/blurred-image.jpg" alt="" class="coverimage">
+    <% @resource.images.each do |image| %>
+      <img data-src="<%= url_for(image) %>" alt="Location Image" class="coverimage">
+    <% end %>
   </div>
 </div>
 <div class="card-body">

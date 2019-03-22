@@ -15,3 +15,17 @@
 //= require turbolinks
 //= require jquery3
 //= require_tree .
+
+function alert(type, message) {
+  var popup = $('<div class="alert alert-dismissible fade show" role="alert"></div>');
+  var close = $('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
+  popup.append(message);
+  popup.append(close);
+  popup.addClass('alert-' + type);  
+  $('.container').prepend(popup);  
+  $('button.close').on('click', function(){
+    $(this).parent('div').remove();
+  });
+}
+
+

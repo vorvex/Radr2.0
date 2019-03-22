@@ -1,1 +1,191 @@
-<h1>New Event</h1>
+<%= render 'dashboard/shared/header' %>
+<div class="container">
+  <h1 class="form-h1">Neue Veranstaltung</h1>
+  <div class="form-accordion event-accordion">
+    <div id="accordion1" class="accordion-inner active">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">1</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Name, Location & Datum</h2>
+      </div>
+      <div class="accordion-body">
+        <%= form_for(@event, :html => {role: "form", id: "form1", style: "overflow-x: hidden;"}, url: create_event1_path) do |f| %>
+          <div class="form-group">
+            <label for="eventname">Name</label>
+            <input type="text" class="form-control" name="eventname" id="eventname" aria-describedby="eventHelp" placeholder="Eventname" required>
+            <small id="eventHelp" class="form-text text-muted">Der Name der Ihrer Veranstaltung</small>
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <%= f.collection_select(:location_id, User.first.locations.all, :id, :name, {}, {:class=>"form-control"}) %>
+            <small id="locationHelp" class="form-text text-muted">Wählen Sie einen Veranstaltungsort aus.</small>
+          </div>
+          <label for="start_date">Startdatum</label>
+          <div class="row" style="margin-bottom: 10px">
+            <div class="col-8">
+              <%= f.text_field :start_date, placeholder: '01.01.2019', 'data-type': 'date', class: "form-control date", readonly: 'true' %>
+            </div>
+            <div class="col-4">
+              <%= f.time_field :start_time, placeholder: '12:00', 'data-type': 'time', class: "form-control", style: "text-align: center" %>
+            </div>
+          </div>
+          <label for="start_date">Enddatum</label>
+          <div class="row" style="margin-bottom: 10px">
+            <div class="col-8">
+              <%= f.text_field :end_date, placeholder: '01.01.2019', 'data-type': 'date', class: "form-control", readonly: 'true' %>
+            </div>
+            <div class="col-4">
+              <%= f.time_field :end_time, placeholder: '12:00', 'data-type': 'time', class: "form-control", style: "text-align: center" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="accordion2" class="accordion-inner">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">2</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Bilder hochladen</h2>
+      </div>
+      <div class="accordion-body">
+        <%= form_for(Event.find(1), :html => {role: "form", :multipart => true, id: "form2"}, url: create_event2_url(Event.find(1))) do |f| %>
+          <div class="form-group">
+            <label for="attachment">Bilder hochladen</label>
+            <%= f.file_field('attachment', :multiple => true, class: "form-control-file", id: "attachment") %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="accordion3" class="accordion-inner">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">3</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Beschreibung & Performer</h2>
+      </div>
+      <div class="accordion-body">
+        <%= form_for(Event.find(1), :html => {role: "form", id: "form3"}, url: create_event3_url(Event.find(1))) do |f| %>
+          <div class="form-group">
+            <label for="description">Beschreibung</label>
+            <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>
+            <small id="descriptionHelp" class="form-text text-muted">Tragen Sie hier weitere Informationen zu Ihrer Location ein</small>
+          </div>
+          <div class="form-group">
+            <label for="category">Kategorie</label>
+            <select class="form-control" id="category" name="category" aria-describedby="categoryHelp" >
+              <option></option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+            <small id="categoryHelp" class="form-text text-muted">Wählen Sie die nächstbeste Kategorie aus.</small>
+          </div>
+          <input type="text" class="form-control" name="performer_id" id="performer_id" hidden>
+        <% end %>
+        <form action="/search-performer" id="performer_search">
+          <div class="form-group">
+            <label for="Performer">Performer</label>
+            <input type="text" class="form-control" name="q" id="search" placeholder="Performer" required>
+          </div>
+        </form>
+    </div>
+    <div id="accordion4" class="accordion-inner">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">4</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Tickets</h2>
+      </div>
+      <div class="accordion-body">
+        <%= form_for(Event.find(1), :html => {role: "form", id: "form4"}, url: create_event4_url(Event.find(1))) do |f| %>
+        
+        <% end %>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Weiter</a> 
+  <a href='' class="footer-link" id="button2" style="display: none;">Weiter</a>
+  <a href='' class="footer-link" id="button3" style="display: none;">Weiter</a>
+  <a href='' class="footer-link" id="button4" style="display: none;">Fertigstellen</a>
+</div>
+<script>
+  $(document).ready(function () {
+    bsCustomFileInput.init()
+  });
+</script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/jquery.timepicker.js"></script>
+<script src="/modernizr.touch.js"></script>
+<script>
+  $( function() {
+    $("*[data-type='date']").datepicker();
+  });
+</script>
+
+<!-- Step 1 -->
+<script>
+  $('#button1').on('click', function(event){
+    event.preventDefault();
+    $('#form1').submit();
+ });
+  
+ $('#button2').on('click', function(event){
+    event.preventDefault();
+    $('#form2').submit();
+    $('#button2').remove();
+    $('#button3').css('display', 'block');
+    $("#accordion2").removeClass('active').addClass('done');
+    $("#accordion3").addClass('active');
+ });
+  
+  $('#button3').on('click', function(event){
+    event.preventDefault();
+    $('#form3').submit();
+    $("#accordion3").removeClass('active').addClass('done');
+ });
+  
+  $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#form1').ajaxForm();
+            $('#form2').ajaxForm();
+            $('#form3').ajaxForm();
+        });
+</script>
+<!-- The template to display files available for upload -->
+<script src="/jquery.form.min.js"></script>
