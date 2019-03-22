@@ -36,31 +36,32 @@ class LocationController < ApplicationController
     
     images = params[:location][:attachment]
     
-    puts images
+    if images != nil
     
-    thumbnail = File.basename(images.first.original_filename, File.extname(images.first.original_filename)) + '-thumbnail' + File.extname(images.first.original_filename)
+      thumbnail = File.basename(images.first.original_filename, File.extname(images.first.original_filename)) + '-thumbnail' + File.extname(images.first.original_filename)
 
-    source = Tinify.from_file(images.first.tempfile)
-    resized_thumbnail = source.resize(
-      method: "thumb",
-      width: 80,
-      height: 80
-    )
-    images.each do |image| 
-      resized = source.resize(
-        method: "cover",
-        width: 750,
-        height: 440
+      source = Tinify.from_file(images.first.tempfile)
+      resized_thumbnail = source.resize(
+        method: "thumb",
+        width: 80,
+        height: 80
       )
+      images.each do |image| 
+        resized = source.resize(
+          method: "cover",
+          width: 750,
+          height: 440
+        )
 
-      resized.to_file('/tmp/' + image.original_filename)
-      resized_thumbnail.to_file('/tmp/' + thumbnail)
+        resized.to_file('/tmp/' + image.original_filename)
+        resized_thumbnail.to_file('/tmp/' + thumbnail)
 
-      @location.images.attach(io: File.open('/tmp/' + image.original_filename), filename: image.original_filename)
-    end    
-    @location.thumbnail.attach(io: File.open('/tmp/' + thumbnail), filename: thumbnail)
-
-    if @location.save
+        @location.images.attach(io: File.open('/tmp/' + image.original_filename), filename: image.original_filename)
+      end    
+      @location.thumbnail.attach(io: File.open('/tmp/' + thumbnail), filename: thumbnail)
+    
+    end  
+    if @location.thumbnail.attached?
       respond_to do |format|
         format.js { render partial: 'location/success2' }
       end
@@ -72,7 +73,19 @@ class LocationController < ApplicationController
   end
   
   def create_location3 # Beschreibung & Öffnungszeiten
-  
+    @location = Location.find(params[:id])    
+    @location.update(description: params[:description])    
+    
+    json = JSON.parse(params[:opening_hours])
+    index = 0
+    json.each do |day|
+      if day["isActive"]
+           OpeningHour.create(location: Location.last, week_day: index, start_time: day["timeFrom"], end_time: day["timeTill"])
+      end
+     index += 1
+     end
+    
+    @location.save
   end
 
   def edit
