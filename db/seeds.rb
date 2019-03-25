@@ -5,6 +5,10 @@ open_fr = OpeningHour.create(location: location, week_day: 5, start_time: '12:00
 open_sa = OpeningHour.create(location: location, week_day: 6, start_time: '12:00', end_time: '01:00')
 open_so = OpeningHour.create(location: location, week_day: 0, start_time: '12:00', end_time: '01:00')
 
+eventstart = Time.now + (24*60*60)
+
+eventnd = Time.now + (27*60*60)
+
 event = Event.create(location_id: location.id, name: "Insanity Party Night", category: "MusicEvent",
                      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.", 
                      start_date: eventstart, end_date: eventnd)
