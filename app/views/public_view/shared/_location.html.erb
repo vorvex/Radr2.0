@@ -1,5 +1,5 @@
 <a data-type="inbound-link" class="oh-head" href="/location/<%= @resource.city %>/<%= @resource.location.name %>">
-  <img src="/images/blurred-image-2.jpg" alt="" class="oh-head-img">
+  <img src="<% if @resource.location.thumbnail.attached? %><%= url_for(@resource.location.thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="oh-head-img">
   <div>
     <h2><%= @resource.location.name %></h2>
     <span class="subheader"><%= @resource.location.category %></span>

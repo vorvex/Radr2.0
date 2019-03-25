@@ -42,7 +42,9 @@
   <%= render "public_view/shared/opening_hours" %>
   <%= render "public_view/shared/description" %>
   <%= render "public_view/shared/map", resource: @resource %>
-  <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+  <% if @resource.events.upcoming.any? %>
+    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+  <% end %>
 </div>
 <script>
   $(window).scroll(function(){

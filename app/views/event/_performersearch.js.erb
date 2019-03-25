@@ -1,0 +1,11 @@
+$('#performerDropdown').addClass('active');
+$('#performerDropdown').html("<%= j(render 'event/performersearch.html') %>");
+$('[data-type="performer"]').on('click', function(){
+  $("#performer").val($(this).data('id'));
+  $("#performerSearch").val($(this).html());
+  $("#performerSearch").addClass('is-valid');
+  $("#performerSearch").focusout();
+});
+$('#invitePerformer').on('click', function(){
+  $('#invitePerformerForm').slideDown();
+});

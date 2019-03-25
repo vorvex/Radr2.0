@@ -284,7 +284,7 @@ a:hover, a:focus {
 
 .preview-inner {
 	position: relative;
-	top: 97px;
+	top: 86px;
 	left: 0px;
   z-index: 10;
   padding: 10px;
@@ -324,6 +324,7 @@ a:hover, a:focus {
 	margin-bottom: 5px;
 	font-weight: 400;
 	text-decoration: none;
+  text-align: end;
 }
 
 .preview-inner > p {

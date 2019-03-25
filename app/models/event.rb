@@ -6,6 +6,11 @@ class Event < ApplicationRecord
   has_one_attached :images_thumbnail
   has_many_attached :images
   
+  def self.categories 
+    arr = ['', 'Musik Event', 'Konzert', 'Festival', 'Sport Event', 'Food Event', 'Tanz Event', 'Theater Event']
+    return arr
+  end
+  
   def self.upcoming
     where('start_time > ?', Time.now).order('start_time ASC')
   end
@@ -30,6 +35,14 @@ class Event < ApplicationRecord
     Event.find_by_city(self.city)
   end
   
+  def performer
+    if self.performer_id.nil?
+      Performer.none
+    else
+      Performer.find(self.performer_id)
+    end
+  end
+  
   def next_week?
     days_till = (self.start_time - Time.now) / 86400
     if days_till < 6 && days_till > 0
@@ -41,7 +54,11 @@ class Event < ApplicationRecord
   
   def time_str    
     start_time = self.start_time
-    end_time = self.end_time  
+    if self.end_time != nil
+      end_time = self.end_time
+    else
+      end_time = self.start_time
+    end
     s_day = start_time.day
     s_month = start_time.month
     s_year = start_time.year
@@ -52,7 +69,7 @@ class Event < ApplicationRecord
     e_year = end_time.year
     e_hour = end_time.hour
     e_min = end_time.min
-    
+
     case self.start_time.wday
       when 0
         wday = "Sonntag"
@@ -110,7 +127,7 @@ class Event < ApplicationRecord
         return "#{wday[0..1]} #{s_day}. #{month} von #{s_hour.to_s.rjust(2, '0')}:#{s_min.to_s.rjust(2, '0')} - #{e_hour.to_s.rjust(2, '0')}:#{e_min.to_s.rjust(2, '0')}"
       end
     else
-      return "#{wday[0..1]} #{s_day}. #{month} - #{e_day}.#{e_month}"
+      return "#{wday[0..1]} #{s_day}. #{month} - #{e_day}. #{month}"
     end
   end
   

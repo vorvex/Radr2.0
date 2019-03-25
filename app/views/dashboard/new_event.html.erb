@@ -25,7 +25,7 @@
           </div>
           <div class="form-group">
             <label for="location">Location</label>
-            <%= f.collection_select(:location_id, User.first.locations.all, :id, :name, {}, {:class=>"form-control"}) %>
+            <%= f.collection_select(:location_id, @user.locations.all, :id, :name, {}, {:class=>"form-control"}) %>
             <small id="locationHelp" class="form-text text-muted">Wählen Sie einen Veranstaltungsort aus.</small>
           </div>
           <label for="start_date">Startdatum</label>
@@ -63,13 +63,8 @@
         </span>
         <h2>Bilder hochladen</h2>
       </div>
-      <div class="accordion-body">
-        <%= form_for(Event.find(1), :html => {role: "form", :multipart => true, id: "form2"}, url: create_event2_url(Event.find(1))) do |f| %>
-          <div class="form-group">
-            <label for="attachment">Bilder hochladen</label>
-            <%= f.file_field('attachment', :multiple => true, class: "form-control-file", id: "attachment") %>
-          </div>
-        <% end %>
+      <div class="accordion-body" id="imageupload">
+        <div class="dropzone" id="myDropzone"></div>
       </div>
     </div>
     <div id="accordion3" class="accordion-inner">
@@ -87,6 +82,26 @@
         <h2>Beschreibung & Performer</h2>
       </div>
       <div class="accordion-body">
+        <form action="/performer/search" id="performer_search">
+          <div class="form-group">
+            <label for="Performer">Performer</label>
+            <input type="text" class="form-control" name="q" id="performerSearch" placeholder="Performer">
+            <div id="performerDropdown"></div>
+          </div>
+        </form>
+        <%= form_for(Performer.new, :html => {role: "form", id: "invitePerformerForm", style: "display: none;"}, url: invite_performer_url) do |f| %>
+          <h5>Performer einladen</h5>
+          <div class="form-group input-group-sm">
+            <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+          </div>
+          <div class="form-group input-group-sm">
+            <%= f.select(:category, Performer.categories, {}, {class: "form-control"}) %>
+          </div>
+          <div class="form-group input-group-sm">
+            <%= f.email_field :email, placeholder: 'beispiel@email.de', class: "form-control" %>
+          </div>
+          <button type="submit" class="btn btn-primary">Performer einladen</button>
+        <% end %>
         <%= form_for(Event.find(1), :html => {role: "form", id: "form3"}, url: create_event3_url(Event.find(1))) do |f| %>
           <div class="form-group">
             <label for="description">Beschreibung</label>
@@ -95,24 +110,13 @@
           </div>
           <div class="form-group">
             <label for="category">Kategorie</label>
-            <select class="form-control" id="category" name="category" aria-describedby="categoryHelp" >
-              <option></option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
+            <%= f.select(:category, Event.categories, {}, {class: "form-control"}) %>
             <small id="categoryHelp" class="form-text text-muted">Wählen Sie die nächstbeste Kategorie aus.</small>
           </div>
-          <input type="text" class="form-control" name="performer_id" id="performer_id" hidden>
+          <input type="text" class="form-control" name="performer_id" id="performer" hidden>
         <% end %>
-        <form action="/search-performer" id="performer_search">
-          <div class="form-group">
-            <label for="Performer">Performer</label>
-            <input type="text" class="form-control" name="q" id="search" placeholder="Performer" required>
-          </div>
-        </form>
+        
+    </div>
     </div>
     <div id="accordion4" class="accordion-inner">
       <div class="accordion-header">
@@ -129,42 +133,142 @@
         <h2>Tickets</h2>
       </div>
       <div class="accordion-body">
-        <%= form_for(Event.find(1), :html => {role: "form", id: "form4"}, url: create_event4_url(Event.find(1))) do |f| %>
-        
-        <% end %>
+        <div id="ticketContainer">
+          <%= form_for(Ticket.new, :html => {role: "form", id: "newticket"}, url: create_ticket_path) do |f| %>
+            <h5 style="margin-bottom: 10px !important;">Neues Ticket</h5>
+            <input type="text" name="event_id" id="eventid" value="1" hidden>
+            <input type="text" name="container" value="ticketContainer" hidden>
+              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+                <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+              </div>
+              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+                <%= f.select(:status, Ticket.stati, {}, {class: "form-control"}) %>
+              </div>
+              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+                <%= f.number_field(:price, in: 0.00..10000.00, placeholder:'30,00', class:"form-control")%>
+                <div class="input-group-append">
+                  <span class="input-group-text" id="basic-addon2">€</span>
+                </div>
+              </div>
+              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+                <%= f.url_field :url, placeholder: 'Ticket Link', class: "form-control" %>
+              </div>
+              <div class="input-group">
+                <%= f.submit "Ticket erstellen", class: "btn btn-primary" %>
+              </div>
+          <% end %>
+          </div>
       </div>
     </div>
   </div>
   </div>
-</div>
 <div class="footer">
   <a href='' class="footer-link" id="button1">Weiter</a> 
   <a href='' class="footer-link" id="button2" style="display: none;">Weiter</a>
   <a href='' class="footer-link" id="button3" style="display: none;">Weiter</a>
-  <a href='' class="footer-link" id="button4" style="display: none;">Fertigstellen</a>
+  <a href='' class="footer-link" id="button4" style="display: none;">Weiter</a>
+  <a href='/' class="footer-link" id="button5" style="display: none;">Fertigstellen</a>
 </div>
 <script>
   $(document).ready(function () {
     bsCustomFileInput.init()
   });
 </script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/jquery.timepicker.js"></script>
 <script src="/modernizr.touch.js"></script>
 <script>
   $( function() {
-    $("*[data-type='date']").datepicker();
+    $("*[data-type='date']").datepicker({
+        language: 'de-DE',
+        weekStart: 1,
+        format: 'dd.mm.yyyy',
+        daysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+        daysMin: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
+});
   });
 </script>
-
+<!-- Dropzone JS -->
+<script src="https://unpkg.com/dropzone"></script>
+<script src="https://unpkg.com/cropperjs"></script>
+<script>
+  var event_id = 0;
+  Dropzone.options.myDropzone = {
+ url: '/event/4/add_images',
+ transformFile: function(file, done) {
+  // Create Dropzone reference for use in confirm button click handler
+  var myDropZone = this;
+  // Create the image editor overlay
+  var editor = document.createElement('div');
+  editor.style.position = 'fixed';
+  editor.style.left = 0;
+  editor.style.right = 0;
+  editor.style.top = 0;
+  editor.style.bottom = 0;
+  editor.style.zIndex = 9999;
+  editor.style.backgroundColor = '#000';
+  document.body.appendChild(editor);
+  // Create confirm button at the top left of the viewport
+  var buttonConfirm = document.createElement('button');
+  buttonConfirm.className = 'btn btn-primary';
+  buttonConfirm.style.position = 'absolute';
+  buttonConfirm.style.right = '10px';
+  buttonConfirm.style.top = '10px';
+  buttonConfirm.style.zIndex = 9999;
+  buttonConfirm.textContent = 'Confirm';
+  editor.appendChild(buttonConfirm);
+  buttonConfirm.addEventListener('click', function() {
+    // Get the canvas with image data from Cropper.js
+    var canvas = cropper.getCroppedCanvas({
+      maxWidth: 1500,
+      maxHeight: 880
+    });
+    // Turn the canvas into a Blob (file object without a name)
+    canvas.toBlob(function(blob) {
+      // Create a new Dropzone file thumbnail
+      myDropZone.createThumbnail(
+        blob,
+        myDropZone.options.thumbnailWidth,
+        myDropZone.options.thumbnailHeight,
+        myDropZone.options.thumbnailMethod,
+        false, 
+        function(dataURL) {
+          
+          // Update the Dropzone file thumbnail
+          myDropZone.emit('thumbnail', file, dataURL);
+          // Return the file to Dropzone
+          done(blob);
+      });
+    });
+    // Remove the editor from the view
+    document.body.removeChild(editor);
+  });
+  // Create an image node for Cropper.js
+  var image = new Image();
+  image.src = URL.createObjectURL(file);
+  editor.appendChild(image);
+  
+  // Create Cropper.js
+  var cropper = new Cropper(image, { aspectRatio: 1.7 });
+},
+    init: function() {
+    this.on("processing", function(file) {
+      this.options.url = 'event/' + event_id + '/add_images';
+    });
+  }
+    
+};
+  
+$('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
+</script>
 <!-- Step 1 -->
 <script>
   $('#button1').on('click', function(event){
     event.preventDefault();
     $('#form1').submit();
  });
-  
+// Step 2  
  $('#button2').on('click', function(event){
     event.preventDefault();
     $('#form2').submit();
@@ -173,11 +277,21 @@
     $("#accordion2").removeClass('active').addClass('done');
     $("#accordion3").addClass('active');
  });
-  
+// Step 3  
   $('#button3').on('click', function(event){
     event.preventDefault();
     $('#form3').submit();
+    $('#button3').remove();
+    $('#button4').css('display', 'block');
     $("#accordion3").removeClass('active').addClass('done');
+    $("#accordion4").addClass('active');
+ });
+// Step 4    
+  $('#button4').on('click', function(event){
+    event.preventDefault();
+    $('.container').html("<%= j(render 'shared/done') %>");
+    $('#button4').remove();
+    $('#button5').css('display', 'block');                            
  });
   
   $(document).ready(function() { 
@@ -185,7 +299,33 @@
             $('#form1').ajaxForm();
             $('#form2').ajaxForm();
             $('#form3').ajaxForm();
+            $('#invitePerformerForm').ajaxForm();
+            $('#newticket').ajaxForm();
         });
 </script>
-<!-- The template to display files available for upload -->
+<script>
+$('#performer_search').on('keyup', function(event){
+        event.preventDefault();
+        if($('#performerSearch').val().length > 0){
+          $.ajax({
+                  type: 'GET',
+                  url: 'performer/search',
+                  data: $("#performer_search").serialize()
+                });
+        }
+      });
+$('#performer_search').focusout(function(event){
+  if($('a' + ':hover').length) {
+    return;
+  };
+  $('#performerDropdown').removeClass('active');
+});
+  
+</script>
 <script src="/jquery.form.min.js"></script>
+<script>
+ function changeAccordion(slide){
+   $('.accordion-inner').removeClass('active');
+   $('#accordion' + slide).addClass('active');
+ };
+</script>

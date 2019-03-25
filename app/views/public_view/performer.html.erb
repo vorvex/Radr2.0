@@ -10,7 +10,7 @@
   </svg>
 </a>
 <div class="performer-image-container">
-  <img src="<%= url_for(@resource.profile_image) %>" alt="Profilbild" class="performer-image">
+  <img src="<% if @resource.profile_image.attached? %><%= url_for(@resource.profile_image) %><% else %>/images/blurred-image.jpg<% end %>" alt="Profilbild" class="performer-image">
 </div>
 <div class="performer-body">
   <div class="card-head centered">

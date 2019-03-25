@@ -17,6 +17,11 @@ class Location < ApplicationRecord
     return arr
   end
   
+  def self.categories 
+    arr = ['', 'Nachtclub', 'Bar', 'Restaurant', 'Sport Arena', 'Theater', 'Veranstaltungsort', 'Sonstiges']
+    return arr
+  end
+  
   def open? #1
     today = self.opening_hours.find_by_week_day(Date.today.wday)
     Time.zone = "Berlin"

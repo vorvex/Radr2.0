@@ -8,16 +8,19 @@ class DashboardController < ApplicationController
   def new_location
     @user = current_user
     @location = Location.new
+    @resource = "Ihre Location"
   end
   
   def new_performer
     @user = current_user
     @performer = Performer.new
+    @resource = "Ihr Performer"
   end
   
   def new_event
-    @user = current_user
+    @user = User.first
     @event = Event.new
+    @resource = "Ihre Veranstaltung"
   end
   
   def edit_event

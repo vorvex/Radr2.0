@@ -16,17 +16,21 @@ Rails.application.routes.draw do
   get 'performer-bearbeiten/:id' => 'dashboard#edit_performer'
 
   post 'event/create' => 'event#create_event1', as: :create_event1
-  patch 'event/create2/:id' =>  'event#create_event2', as: :create_event2
+  post 'event/:id/add_images' =>  'event#add_images'
   patch 'event/create3/:id' =>  'event#create_event3', as: :create_event3
-  patch 'event/create4/:id' =>  'event#create_event4', as: :create_event4
+  
+  post 'create-ticket' =>  'ticket#create', as: :create_ticket
   
   post 'location/create' => 'location#create_location1', as: :create_location1
-  patch 'location/create2/:id' =>  'location#create_location2', as: :create_location2
+  post 'location/:id/add_images' =>  'location#add_images'
   patch 'location/create3/:id' =>  'location#create_location3', as: :create_location3
   
   post 'opening_hour/create' => 'opening_hour#create'
   post 'social_link/create' => 'social_link#create'
   post 'ticket/create' => 'ticket#create'
+  
+  get 'performer/search' => 'event#search_performer'
+  post 'performer/invite' => 'event#invite_performer', as: :invite_performer
   post 'performer/create' => 'performer#create'
   
   patch 'event/edit/:id' => 'event#edit', as: :edit_event
@@ -40,7 +44,7 @@ Rails.application.routes.draw do
   delete 'location/delete' => 'location#delete'
   delete 'opening_hour/delete' => 'opening_hour#delete'
   delete 'social_link/delete' => 'social_link#delete'
-  delete 'ticket/delete' => 'ticket#delete'
+  delete 'ticket/delete' => 'ticket#destroy', as: :destroy_ticket
   delete 'performer/delete' => 'performer#delete'
   
   devise_for :users

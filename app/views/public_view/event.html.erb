@@ -43,14 +43,16 @@
   <%= render "public_view/shared/location" %>
   <%= render "public_view/shared/description" %>
   <%= render "public_view/shared/map", resource: @resource.location %>
-  <%= render "public_view/shared/performer" %>
-  <% if @resource.similar_events.upcoming.count > 1 %>
-    <%= render "public_view/shared/upcoming_events", events: @resource.similar_events.upcoming, heading: 'Veranstaltungen in ' + @resource.city %>
+  <% if !@resource.performer_id.nil? %>
+    <%= render "public_view/shared/performer" %>
   <% end %>
+
 </div>
-<div class="footer">
-  <a data-type="inbound-link" href="/event/<%= @resource.id %>/tickets" class="footer-link">Ticketinfos</a>
-</div>
+<% if @resource.tickets.any? %>
+  <div class="footer">
+    <a data-type="inbound-link" href="/event/<%= @resource.id %>/tickets" class="footer-link">Ticketinfos</a>
+  </div>
+<% end %>
 <script>
   $(window).scroll(function(){
         var scroll = $(this).scrollTop();

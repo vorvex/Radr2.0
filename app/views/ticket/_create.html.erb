@@ -1,0 +1,7 @@
+<div class="ticket-container" data-id="<%= @ticket.id %>">
+  <strong><%= @ticket.name %></strong><br/>
+  Status: <%= @ticket.status %><br/>
+  Preis: <%= @ticket.price_str %><br/>
+  Link: <%= @ticket.url %>
+  <%= button_to "x", destroy_ticket_path(:id => @ticket.id), :method => :delete, data: { confirm: 'Sind Sie sich sicher?' }, :remote => true, class: "delete-ticket" %>
+</div>

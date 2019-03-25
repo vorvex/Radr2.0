@@ -1,5 +1,5 @@
 class Performer < ApplicationRecord
-  belongs_to :user
+  has_one :user
   has_many :social_links, dependent: :destroy
   has_many :events
   
@@ -12,6 +12,19 @@ class Performer < ApplicationRecord
   
   def finished_events
     self.events.where('start_time < ?', Time.now)
+  end
+  
+  def self.categories
+    arr = ['', 'DJ', 'Band', 'Sänger', 'Unterhalter', 'Künstler', 'Tanzgruppe']
+    return arr
+  end
+  
+  def user
+    if self.user_id.nil?
+      return nil
+    else
+      User.find(self.user_id)
+    end
   end
   
 end

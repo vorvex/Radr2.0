@@ -147,8 +147,9 @@ header {
 
 .accordion-body {
     display: none;
+    height: 100%;
     max-height: calc(100vh - 270px);
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 .event-accordion .accordion-body {
@@ -230,6 +231,77 @@ header {
     margin-top: 5px;
 }
 
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff; 
+    opacity: 1;
+}
+
+/* DropZone */
+
+.dropzone {
+  width: 100%;
+  height: 95%;
+  background: #f7f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid #efe8e8;
+}
+
+.dropzone .dz-preview.dz-image-preview {
+    background: transparent;
+}
+
+/* Performer Search */
+
+#performerDropdown {
+  display: none;
+}
+
+#performerDropdown.active {
+  display: block;
+}
+
+#performerDropdown a {
+    display: block;
+    padding: 5px;
+    border: solid thin lightgrey;
+    border-radius: 4px;
+    margin-top: -1px;
+    cursor: pointer;
+}
+
+/* Create Ticket */
+
+.ticket-container {
+    border: solid thin lightgray;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    position: relative;
+    margin-top: 10px;
+}
+
+.ticket-container .button_to {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.delete-ticket {
+    -webkit-appearance: none;
+    border: none;
+}
+
+.ready {
+  display: flex;
+  width: 100%;
+  min-height: 500px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 /* Footer */
 
 .footer {

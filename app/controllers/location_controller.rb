@@ -22,31 +22,38 @@ class LocationController < ApplicationController
       end
     else
       respond_to do |format|
-        format.js { render partial: 'location/error1' }
+        format.js { render partial: 'location/error1', resource: "Location"  }
       end
     end
     
   end
   
-  def create_location2 # Profilbild & Bilder
+  def add_images # Profilbild & Bilder
     require "tinify"
     Tinify.key = "CQXQ1v8qCGY7FLND9P1mSXtqPyVdBF3r"
+    if params[:id] == 0
+      @location = Location.last
+    else
+      @location = Location.find(params[:id])
+    end
     
-    @location = Location.find(params[:id])
+    image = params[:file]
     
-    images = params[:location][:attachment]
-    
-    if images != nil
-    
-      thumbnail = File.basename(images.first.original_filename, File.extname(images.first.original_filename)) + '-thumbnail' + File.extname(images.first.original_filename)
+     if !@location.thumbnail.attached? 
+       
+      thumbnail = File.basename(image.original_filename, File.extname(image.original_filename)) + '-thumbnail' + File.extname(image.original_filename)
 
-      source_thumbnail = Tinify.from_file(images.first.tempfile)
+      source_thumbnail = Tinify.from_file(image.tempfile)
       resized_thumbnail = source_thumbnail.resize(
-        method: "thumb",
+        method: "cover",
         width: 80,
         height: 80
       )
-      images.each do |image| 
+       resized_thumbnail.to_file('/tmp/' + thumbnail)
+       @location.thumbnail.attach(io: File.open('/tmp/' + thumbnail), filename: thumbnail)
+       
+     end
+      
         source = Tinify.from_file(image.tempfile)
         resized = source.resize(
           method: "cover",
@@ -55,22 +62,9 @@ class LocationController < ApplicationController
         )
 
         resized.to_file('/tmp/' + image.original_filename)
-        resized_thumbnail.to_file('/tmp/' + thumbnail)
 
         @location.images.attach(io: File.open('/tmp/' + image.original_filename), filename: image.original_filename)
-      end    
-      @location.thumbnail.attach(io: File.open('/tmp/' + thumbnail), filename: thumbnail)
     
-    end  
-    if @location.thumbnail.attached?
-      respond_to do |format|
-        format.js { render partial: 'location/success2' }
-      end
-    else
-      respond_to do |format|
-        format.js { render partial: 'location/error2' }
-      end
-    end
   end
   
   def create_location3 # Beschreibung & Öffnungszeiten

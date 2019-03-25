@@ -1,6 +1,12 @@
 class Ticket < ApplicationRecord
   belongs_to :event
   
+  def self.stati 
+    arr = ['Vorverkauf', 'Verfügbar', 'Abendkasse', 'Ausverkauft']
+    
+    return arr
+  end
+  
   def status_str
     case self.status
       when "https://schema.org/InStock"
@@ -14,17 +20,19 @@ class Ticket < ApplicationRecord
   
   def status_html
     case self.status
-      when "https://schema.org/InStock"
-        "Verfügbar"
-      when "https://schema.org/SoldOut"
+      when "Ausverkauft"
         "<span style='color: #FF2D55 '>Ausverkauft</span>"
-      when "https://schema.org/PreOrder"
-        "Vorverkauf"
+    else
+      return self.status
     end
   end
   
   def price_str
-    return "%.2f" % self.price
+    if !self.price.nil?
+      return "%.2f" % self.price
+    else
+      return "Kostenlos" 
+    end
   end
   
 end
