@@ -5,7 +5,7 @@ class PerformerController < ApplicationController
     Time.zone = "Berlin"
     name = params[:performername]
     
-    @performer = Performer.new(user_id: User.first.id, name: params[:performername], category: params[:performer][:category], description: params[:description])
+    @performer = Performer.new(user_id: current_user.id, name: params[:performername], category: params[:performer][:category], description: params[:description])
 
     @performer.save
     respond_to do |format|

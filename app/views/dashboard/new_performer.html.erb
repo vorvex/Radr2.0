@@ -23,14 +23,13 @@
             <input type="text" class="form-control" name="performername" id="performername" aria-describedby="performerHelp" placeholder="Künstlername" required>
           </div>
           <div class="form-group">
-            <label for="location">Location</label>
+            <label for="location">Kategorie</label>
             <%= f.select(:category, Performer.categories, {}, {class: "form-control"}) %>
             <small id="locationHelp" class="form-text text-muted">Wählen Sie einen Kategorie aus.</small>
           </div>
           <div class="form-group">
             <label for="description">Beschreibung</label>
             <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>
-            <small id="descriptionHelp" class="form-text text-muted">Tragen Sie hier weitere Informationen zu Ihrer Location ein</small>
           </div>
         <% end %>
       </div>

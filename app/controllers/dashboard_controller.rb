@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController  
+  before_action :authenticate_user!
   layout 'dashboard'
   
   def index
@@ -18,7 +19,7 @@ class DashboardController < ApplicationController
   end
   
   def new_event
-    @user = User.first
+    @user = current_user
     @event = Event.new
     @resource = "Ihre Veranstaltung"
   end

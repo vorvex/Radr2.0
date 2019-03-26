@@ -17,6 +17,7 @@
 //= require_tree .
 
 function alert(type, message) {
+  if (message.length > 0){
   var popup = $('<div class="alert alert-dismissible fade show" role="alert"></div>');
   var close = $('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
   popup.append(message);
@@ -25,7 +26,15 @@ function alert(type, message) {
   $('.container').prepend(popup);  
   $('button.close').on('click', function(){
     $(this).parent('div').remove();
-  });
+  })};
+}
+
+function toast(message) {
+  var toast = $('<div class="toast" role="alert" aria-live="assertive" aria-atomic="true"><div class="toast-header"><img src="" class="rounded mr-2" alt=""><strong class="mr-auto">Radr</strong><small class="text-muted">just now</small><button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close"><span aria-hidden="true">&times;</span></button></div></div>');
+  var toastbody = $('<div class="toast-body"></div>');
+      toastbody.html(message);
+      toast.prepend(toastbody);
+  $('#toastContainer').prepend(toast);
 }
 
 

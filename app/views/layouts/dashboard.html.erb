@@ -23,8 +23,10 @@
     <script src="/datepicker/datepicker.js"></script>    
   </head>
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert" ><%= alert %></p>
+    <script>
+      alert('notice',<%= notice %>);
+      alert('notice',<%= alert %>);
+    </script>
     <%= yield %>
   </body>
 </html>

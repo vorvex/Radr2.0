@@ -13,7 +13,7 @@ class LocationController < ApplicationController
     lat = params[:lat]
     lng = params[:lng]
     
-    @location = Location.create(user_id: User.first.id, name: name, category: category, formatted_address: formatted_address, 
+    @location = Location.create(user_id: current_user.id, name: name, category: category, formatted_address: formatted_address, 
                                 route: route, street_number: street_number, postal_code: postal_code, locality: locality, lat: lat, lng: lng)
     
     if @location.save

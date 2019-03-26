@@ -244,6 +244,10 @@ a:hover, a:focus {
   margin-bottom: 10px;
 }
 
+.performer-body #description {
+  text-align: center;
+}
+
 //Map Holder
 .map-holder {
   overflow: hidden;
@@ -507,6 +511,7 @@ $slick-dot-size: 12px !default;
 .performer-body{
   padding: 0px 10px;
   background: #fff;
+  max-width: 1024px;
   
 }
 
