@@ -1,0 +1,16 @@
+var accordion1 = $('#accordion1');
+var accordion2 = $('#accordion2');
+var accordion3 = $('#accordion3');
+
+var button1 = $('#button1');
+var button2 = $('#button2');
+
+accordion1.removeClass('active').addClass('done');
+accordion2.addClass('active');
+
+button1.remove();
+button2.css('display', 'block');
+
+$('#performerid').val('<%= @performer.id %>');
+
+performer_id = <%= @performer.id %>;

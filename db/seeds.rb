@@ -11,7 +11,7 @@ eventnd = Time.now + (27*60*60)
 
 event = Event.create(location_id: location.id, name: "Insanity Party Night", category: "MusicEvent",
                      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.", 
-                     start_date: eventstart, end_date: eventnd)
+                     start_time: eventstart, end_time: eventnd)
 
 ticket1 = Ticket.create(event: event, name: "Ticketkategorie 1", url: "https://www.example.de", status: "https://schema.org/InStock")
 ticket2 = Ticket.create(event: event, name: "Ticketkategorie 2", url: "https://www.example.de", status: "https://schema.org/SoldOut")

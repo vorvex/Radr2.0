@@ -1,1 +1,205 @@
-<h1>New Performer</h1>
+<%= render 'dashboard/shared/header' %>
+<div class="container">
+  <h1 class="form-h1">Neuer Performer</h1>
+  <div class="form-accordion event-accordion">
+    <div id="accordion1" class="accordion-inner active">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">1</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Name, Kategorie & Beschreibung</h2>
+      </div>
+      <div class="accordion-body">
+        <%= form_for(@performer, :html => {role: "form", id: "form1", style: "overflow-x: hidden;"}, url: create_performer1_path) do |f| %>
+          <div class="form-group">
+            <label for="performername">Name</label>
+            <input type="text" class="form-control" name="performername" id="performername" aria-describedby="performerHelp" placeholder="Künstlername" required>
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <%= f.select(:category, Performer.categories, {}, {class: "form-control"}) %>
+            <small id="locationHelp" class="form-text text-muted">Wählen Sie einen Kategorie aus.</small>
+          </div>
+          <div class="form-group">
+            <label for="description">Beschreibung</label>
+            <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>
+            <small id="descriptionHelp" class="form-text text-muted">Tragen Sie hier weitere Informationen zu Ihrer Location ein</small>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div id="accordion2" class="accordion-inner">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">2</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Profilbild hochladen</h2>
+      </div>
+      <div class="accordion-body" id="imageupload">
+        <div class="dropzone" id="myDropzone"></div>
+        <label>Laden Sie Ihr Profilbild hier hoch. Sollte der Ladebalken nicht verschwinden drücken Sie einfach weiter.</label>
+      </div>
+    </div>
+    <div id="accordion3" class="accordion-inner">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">3</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Social Links</h2>
+      </div>
+      <div class="accordion-body">
+        <div id="linkContainer">
+          <%= form_for(SocialLink.new, :html => {role: "form", id: "newlink"}, url: create_link_path) do |f| %>
+            <h5 style="margin-bottom: 10px !important;">Social Link</h5>
+            <input type="text" name="performer_id" id="performerid" value="1" hidden>
+            <input type="text" name="container" value="linkContainer" hidden>
+              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+                <%= f.text_field :url, placeholder: 'URL', class: "form-control" %>
+              </div>
+              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+                <%= f.select(:channel, SocialLink.channels, {}, {class: "form-control"}) %>
+              </div>
+              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+                <%= f.submit "Link erstellen", class: "btn btn-primary" %>
+              </div>
+          <% end %>
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Weiter</a> 
+  <a href='' class="footer-link" id="button2" style="display: none;">Weiter</a>
+  <a href='' class="footer-link" id="button3" style="display: none;">Weiter</a>
+  <a href='/' class="footer-link" id="button4" style="display: none;">Fertigstellen</a>
+</div>
+<!-- Dropzone JS -->
+<script src="https://unpkg.com/dropzone"></script>
+<script src="https://unpkg.com/cropperjs"></script>
+<script>
+  var event_id = 0;
+  Dropzone.options.myDropzone = {
+ url: '/performer/1/add_image',
+ transformFile: function(file, done) {
+  // Create Dropzone reference for use in confirm button click handler
+  var myDropZone = this;
+  // Create the image editor overlay
+  var editor = document.createElement('div');
+  editor.style.position = 'fixed';
+  editor.style.left = 0;
+  editor.style.right = 0;
+  editor.style.top = 0;
+  editor.style.bottom = 0;
+  editor.style.zIndex = 9999;
+  editor.style.backgroundColor = '#000';
+  document.body.appendChild(editor);
+  // Create confirm button at the top left of the viewport
+  var buttonConfirm = document.createElement('button');
+  buttonConfirm.className = 'btn btn-primary';
+  buttonConfirm.style.position = 'absolute';
+  buttonConfirm.style.right = '10px';
+  buttonConfirm.style.top = '10px';
+  buttonConfirm.style.zIndex = 9999;
+  buttonConfirm.textContent = 'Confirm';
+  editor.appendChild(buttonConfirm);
+  buttonConfirm.addEventListener('click', function() {
+    // Get the canvas with image data from Cropper.js
+    var canvas = cropper.getCroppedCanvas({
+      maxWidth: 800,
+      maxHeight: 800
+    });
+    // Turn the canvas into a Blob (file object without a name)
+    canvas.toBlob(function(blob) {
+      // Create a new Dropzone file thumbnail
+      myDropZone.createThumbnail(
+        blob,
+        myDropZone.options.thumbnailWidth,
+        myDropZone.options.thumbnailHeight,
+        myDropZone.options.thumbnailMethod,
+        false, 
+        function(dataURL) {
+          
+          // Update the Dropzone file thumbnail
+          myDropZone.emit('thumbnail', file, dataURL);
+          // Return the file to Dropzone
+          done(blob);
+      });
+    });
+    // Remove the editor from the view
+    document.body.removeChild(editor);
+  });
+  // Create an image node for Cropper.js
+  var image = new Image();
+  image.src = URL.createObjectURL(file);
+  editor.appendChild(image);
+  
+  // Create Cropper.js
+  var cropper = new Cropper(image, { aspectRatio: 1 });
+},
+    init: function() {
+    this.on("processing", function(file) {
+      this.options.url = 'performer/' + performer_id + '/add_image';
+    });
+  }
+    
+};
+  
+$('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
+</script>
+<!-- Step 1 -->
+<script>
+  $('#button1').on('click', function(event){
+    event.preventDefault();
+    $('#form1').submit();
+ });
+// Step 2  
+ $('#button2').on('click', function(event){
+    event.preventDefault();
+    $('#button2').remove();
+    $('#button3').css('display', 'block');
+    $("#accordion2").removeClass('active').addClass('done');
+    $("#accordion3").addClass('active');
+ });
+// Step 3  
+  $('#button3').on('click', function(event){
+    event.preventDefault();
+    $('#button3').remove();
+    $('#button4').css('display', 'block');
+    $('.container').html("<%= j(render 'shared/done') %>");
+ });
+  
+  $(document).ready(function() { 
+            // bind 'myForm' and provide a simple callback function 
+            $('#form1').ajaxForm();
+            $('#newlink').ajaxForm();
+        });
+</script>
+<script src="/jquery.form.min.js"></script>
+<script>
+ function changeAccordion(slide){
+   $('.accordion-inner').removeClass('active');
+   $('#accordion' + slide).addClass('active');
+ };
+</script>

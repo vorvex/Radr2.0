@@ -21,9 +21,14 @@ Rails.application.routes.draw do
   
   post 'create-ticket' =>  'ticket#create', as: :create_ticket
   
+  post 'create-link' =>  'social_link#create', as: :create_link
+  
   post 'location/create' => 'location#create_location1', as: :create_location1
   post 'location/:id/add_images' =>  'location#add_images'
   patch 'location/create3/:id' =>  'location#create_location3', as: :create_location3
+  
+  post 'performer/create' => 'performer#create_performer1', as: :create_performer1
+  post 'performer/:id/add_image' =>  'performer#add_image'
   
   post 'opening_hour/create' => 'opening_hour#create'
   post 'social_link/create' => 'social_link#create'
@@ -43,7 +48,7 @@ Rails.application.routes.draw do
   delete 'event/delete' => 'event#delete'
   delete 'location/delete' => 'location#delete'
   delete 'opening_hour/delete' => 'opening_hour#delete'
-  delete 'social_link/delete' => 'social_link#delete'
+  delete 'social_link/delete' => 'social_link#destroy', as: :destroy_link
   delete 'ticket/delete' => 'ticket#destroy', as: :destroy_ticket
   delete 'performer/delete' => 'performer#delete'
   

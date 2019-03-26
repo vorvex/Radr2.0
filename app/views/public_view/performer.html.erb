@@ -20,18 +20,14 @@
     </div>
   </div>
   <div class="social-container">
-    <a href="" class="social-button">
-      <img src="/images/instagram.svg" alt="Instagram">
-    </a>
-    <a href="" class="social-button">
-      <img src="/images/soundcloud.svg" alt="Soundcloud">
-    </a>
-    <a href="" class="social-button">
-      <img src="/images/facebook.svg" alt="Facebook Page">
-    </a>
+    <% @resource.social_links.each do |link| %>
+      <%= link.buttons.html_safe %>
+    <% end %>
   </div>
   <%= render "public_view/shared/description" %>
-  <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+  <% if @resource.events.upcoming.any? %>
+    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+  <% end %>
 </div>
 <script>
   $(window).scroll(function(){

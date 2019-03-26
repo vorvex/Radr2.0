@@ -1,10 +1,10 @@
 class TicketController < ApplicationController
   def create
-    @ticket = Ticket.create(name: params[:ticket][:name], event_id: params[:event_id], url: params[:ticket][:url], status: params[:ticket][:status], price: params[:ticket][:price])
+    @ticket = Ticket.create(url: params[:ticket][:name], event_id: params[:event_id], url: params[:ticket][:url], status: params[:ticket][:status], price: params[:ticket][:price])
     @container = params[:container]
     if @ticket.save
       respond_to do |format|
-        format.js { render partial: 'ticket/create' }
+        format.js { render partial: 'social_li/create' }
       end
     end
   end

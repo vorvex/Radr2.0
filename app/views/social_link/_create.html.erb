@@ -1,0 +1,5 @@
+<div class="ticket-container" data-id="<%= @link.id %>">
+  <strong><%= @link.channel %></strong><br/>
+  Link: <%= @link.url %>
+  <%= button_to "x", destroy_link_path(:id => @link.id), :method => :delete, data: { confirm: 'Sind Sie sich sicher?' }, :remote => true, class: "delete-ticket" %>
+</div>

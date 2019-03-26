@@ -62,12 +62,12 @@ class Event < ApplicationRecord
     s_day = start_time.day
     s_month = start_time.month
     s_year = start_time.year
-    s_hour = start_time.hour
+    s_hour = start_time.hour + 1
     s_min = start_time.min
     e_day = end_time.day
     e_month = end_time.month
     e_year = end_time.year
-    e_hour = end_time.hour
+    e_hour = end_time.hour + 1
     e_min = end_time.min
 
     case self.start_time.wday
