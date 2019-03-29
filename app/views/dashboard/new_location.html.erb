@@ -1,6 +1,5 @@
-<%= render 'dashboard/shared/header' %>
+<%= render 'dashboard/shared/header2', header: 'Neue Location' %>
 <div class="container">
-  <h1 class="form-h1">Neue Location</h1>
   <div class="form-accordion">
     <div id="accordion1" class="accordion-inner active">
       <div class="accordion-header">
@@ -40,7 +39,7 @@
           </div>
           <div class="form-group">
             <label for="address-lookup">Adresse</label>
-            <input type="text" class="form-control " id="address-lookup" aria-describedby="addressHelp" placeholder="Adresse">
+            <input type="text" class="form-control" id="address-lookup" aria-describedby="addressHelp" placeholder="Adresse">
             <small id="addressHelp" class="form-text text-muted">Geben Sie Ihre Adresse ein und klicken Sie auf die genaue Adresse im Dropdown</small>
             <div style="display: none">
               Latitude:   <input name="lat" type="text" value="">
@@ -50,7 +49,6 @@
               Street:     <input name="route" type="text" value="">
               Streetnr:   <input name="street_number" type="text" id="street_number" value="">
               PLZ:        <input name="postal_code" type="text" value="">
-              City:       <input name="locality" type="text" value="">
             </div>
           </div>
         </form>
@@ -129,11 +127,6 @@
 
 </script>
 <script src="/jquery.timepicker.js"></script>
-<script>
-  $(document).ready(function () {
-    bsCustomFileInput.init()
-  });
-</script>
 <!-- JQuery Business Hours -->
 <script src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
 <script src="/jquery.businessHours.min.js"></script>

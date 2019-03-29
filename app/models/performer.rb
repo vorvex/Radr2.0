@@ -6,6 +6,10 @@ class Performer < ApplicationRecord
   has_one_attached :profile_image
   has_one_attached :profile_image_thumbnail
   
+  def events
+    Event.where('performer_id IS ?', self.id)
+  end
+  
   def upcoming_events
     self.events.where('start_time > ?', Time.now).order('start_time ASC')
   end

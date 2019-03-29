@@ -1,0 +1,102 @@
+<a class="coverimage-container edit-image" href="/p/<%= @profile.id %>/edit_images">
+  <% if @profile.profile_image.attached? %>
+      <img src="<%= url_for(@profile.profile_image) %>" alt="Location Image" class="coverimage" >
+  <% end %>
+</a>
+<div class="card-body">
+  <a class="oh-head" href="/p/<%= @profile.id %>/events" >
+    <div>
+      <h2>Events</h2>
+      <span class="subheader">Events anzeigen</span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+  <a class="oh-head" href="/p/<%= @profile.id %>/edit_informations">
+    <div>
+      <h2>Generelle Informationen</h2>
+      <span class="subheader">Informationen aktualisieren</span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+  <a class="oh-head" href="/p/<%= @profile.id %>/social_links" >
+    <div>
+      <h2>Social Media Links</h2>
+      <span class="subheader">Links aktualisieren</span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+  <a class="oh-head" href="/p/<%= @profile.id %>/share" >
+    <div>
+      <h2>Profillink teilen</h2>
+      <span class="subheader">Link teilen oder kopieren</span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+  <a data-type="inbound-link" class="oh-head" href="/neues-event" >
+    <div>
+      <h2>Neues Event</h2>
+      <span class="subheader">Event erstellen</span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+</div>

@@ -1,0 +1,41 @@
+<%= render 'dashboard/shared/header2', header: 'Generelle Informationen', link: @performer.id, type: 'performer' %>
+<div class="container">
+  <%= form_for(@performer, :html => {role: "form", id: "form1"}, url: edit_performer_informations_url(@performer.id)) do |f| %>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <label for="category">Kategorie</label>
+      <%= f.select(:category, Performer.categories, {}, {class: "form-control"}) %>
+    </div>
+    <div class="form-group">
+      <label for="description">Beschreibung</label>
+      <%= f.text_area(:description, rows: 5, class: 'form-control') %>
+    </div>
+  <% end %>
+</div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Aktualisieren</a> 
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNAXfMrJDNWqcq8bW6OhWgZd6XUi-F1UI&libraries=places"></script>
+<script src="/jquery.geocomplete.min.js"></script>
+<script>
+  $('#address-lookup').geocomplete({ details: "form" }).bind("geocode:result", function(event, result){
+    console.log(result);
+    if($('#street_number').val() !== "") {
+      $('#address-lookup').removeClass('is-invalid');
+      $('#address-lookup').addClass('is-valid');
+      console.log($('#street_number').val());
+    } else {
+      $('#address-lookup').removeClass('is-valid');
+      $('#address-lookup').addClass('is-invalid');
+      console.log($('#street_number').val());
+    };
+  });
+</script>
+<script>
+  $('#button1').on('click', function(){
+    $('#form1').submit();
+  });
+</script>

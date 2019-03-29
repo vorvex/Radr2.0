@@ -32,6 +32,10 @@ class Location < ApplicationRecord
       start_float = today.start_time[0..1].to_f + (today.start_time[3..3].to_f / 60)
       end_float = today.end_time[0..1].to_f + (today.end_time[3..3].to_f / 60)
       
+      if end_float < start_float 
+        end_float += 24
+      end
+      
       if now.between?(start_float, end_float) #3
         return true
       else #3
@@ -76,5 +80,22 @@ class Location < ApplicationRecord
       return "Heute Geschlossen" 
     end #2
   end #1
+  
+  
+  def open_json 
+    arr = [*0..6]
+    json = Array.new(7, {})
+    arr.each do |index|
+      day = self.opening_hours.find_by_week_day(index)
+      if day.nil?
+        json[index] = { :isActive => false, :timeFrom => nil, :timeTill => nil }
+      else
+        json[index]  = { :isActive => true, :timeFrom => day.start_time, :timeTill => day.end_time }
+      end
+    end
+    
+    json.push(json.shift)
+    return json.to_json
+  end
   
 end

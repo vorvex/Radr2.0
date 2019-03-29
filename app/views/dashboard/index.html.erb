@@ -1,2 +1,12 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<%= render 'dashboard/shared/header' %>
+<div id="container">
+  <% if @type == "location" %>
+    <%= render 'dashboard/shared/show_location' %>
+  <% else %>
+    <%= render 'dashboard/shared/show_performer' %>
+  <% end %>
+</div>
+<script src="https://unpkg.com/dropzone"></script>
+<script src="https://unpkg.com/cropperjs"></script>
+<script src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+<script src="/jquery.businessHours.min.js"></script>

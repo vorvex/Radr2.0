@@ -1,0 +1,6 @@
+$('#container').html("<%= j(render 'dashboard/shared/show_location.html') %>");
+$('#profile-name').html("<%= @profile.name %>");
+$('.dropdown-inner').slideUp();
+setTimeout(function () {      
+   $('.dropdown-container').removeClass('active')       
+}, 350);

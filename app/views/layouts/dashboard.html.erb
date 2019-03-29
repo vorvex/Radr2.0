@@ -16,17 +16,32 @@
     <link href="https://unpkg.com/croppie/croppie.css" rel="stylesheet"/>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>    
     <script src="/datepicker/datepicker.js"></script>    
   </head>
-  <body>
+  <body class="dashboard">
     <script>
       alert('notice',<%= notice %>);
       alert('notice',<%= alert %>);
     </script>
     <%= yield %>
+    <script>
+  $('[data-type="inbound-link"]').on('click', function(event){
+    event.preventDefault();
+    var href = $(this).attr('href') + '?from=' + window.location.pathname;
+    window.location.href = href;
+  });
+</script>
+<script>
+    var thisurl = new URL(document.location.href);
+		var from = thisurl.searchParams.get("from");
+    if (from !== null) {
+      $('#back').attr("href", from)
+      $('#back').css('display', 'block');
+    }
+</script>
   </body>
 </html>

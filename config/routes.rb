@@ -7,6 +7,27 @@ Rails.application.routes.draw do
   
   root 'dashboard#index'
   
+  get 'l/show/:id' => 'dashboard#show_location', as: :show_location
+  get 'p/show/:id' => 'dashboard#show_performer', as: :show_performer
+  
+  get 'l/:id/edit_images' => 'location#edit_images'
+  get 'p/:id/edit_images' => 'performer#edit_images'
+  get 'e/:id/edit_images' => 'event#edit_images'
+  
+  get 'l/:id/events' => 'location#events'
+  get 'p/:id/events' => 'performer#events'
+  
+  get 'l/:id/edit_informations' => 'location#edit_informations'
+  get 'p/:id/edit_informations' => 'performer#edit_informations'
+  get 'e/:id/edit_informations' => 'event#edit_informations'
+
+  patch 'l/:id/edit_informations' => 'location#update_informations', as: :edit_location_informations
+  patch 'p/:id/edit_informations' => 'performer#update_informations', as: :edit_performer_informations
+  patch 'e/:id/edit_informations' => 'event#update_informations', as: :edit_event_informations
+  
+  get 'l/:id/opening_hours' => 'location#opening_hours'
+  patch 'l/:id/opening_hours' => 'location#update_opening_hours', as: :update_opening_hours
+  
   get 'einstellungen' => 'dashboard#settings'
   get 'neue-location' => 'dashboard#new_location'
   get 'neuer-performer' =>'dashboard#new_performer'
@@ -47,6 +68,7 @@ Rails.application.routes.draw do
   
   delete 'event/delete' => 'event#delete'
   delete 'location/delete' => 'location#delete'
+  delete 'delete_image/:id' => 'dashboard#delete_image', as: :delete_image
   delete 'opening_hour/delete' => 'opening_hour#delete'
   delete 'social_link/delete' => 'social_link#destroy', as: :destroy_link
   delete 'ticket/delete' => 'ticket#destroy', as: :destroy_ticket

@@ -1,0 +1,17 @@
+<%= render 'dashboard/shared/header2', header: 'Events', link: @performer.id, type: 'performer' %>
+<div class="container">
+  <% @events.each do |event| %>
+  <div class="card">
+    <a href="/e/<%= event.id %>/edit-images" class="card-img-top edit-image">
+      <img src="<% if event.images_thumbnail.attached?  %><%= url_for(event.images_thumbnail) %><% else %>/images/blurred-image.jpg<% end %>" alt="<%= event.name %>">
+    </a>
+    <div class="card-body">
+      <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;"><%= event.name %></h5>
+      <h6 class="card-subtitle mb-2 text-muted"><%= event.time_str %></h6>
+      <a href="/e/<%= event.id %>/edit" class="card-link">Bearbeiten</a>
+      <a href="/e/<%= event.id %>/tickets" class="card-link">Ticketoptionen</a>
+      <a href="/e/<%= event.id %>/share-link" class="card-link">Link teilen</a>
+    </div>
+  </div>
+  <% end %>
+</div>

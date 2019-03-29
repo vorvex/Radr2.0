@@ -1,0 +1,95 @@
+<%= render 'dashboard/shared/header2', header: 'Bilder bearbeiten', link: @location.id, type: 'location' %>
+<div class="editdropzone"> 
+  <div class="dropzone" id="myDropzone"></div>
+</div>
+<% @location.images.each do |image| %>
+  <div class="edit-image-container" data-id="<%= image.id %>">
+    <img src="<%= url_for(image) %>" alt="" width="100%">
+    <%= button_to "Löschen", delete_image_url(:id => image.id), method: :delete, data: { confirm: 'Sind sie sich sicher?'}, :remote => true %>
+  </div>
+<% end %>
+<div id="image-upload">  
+  <svg width="32px" height="28px" viewBox="0 0 32 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="Dashboard" transform="translate(-213.000000, -463.000000)" fill="#FFFFFF" fill-rule="nonzero">
+              <g id="iconfinder_image_add_103590" transform="translate(213.000000, 459.000000)">
+                  <g id="image_x5F_add" transform="translate(0.000000, 4.000000)">
+                      <path d="M28,4 L24,4 L20,0 L11.999,0 L8,4 L4,4 C4,4 0,4 0,8 L0,20 C0,24 4,24 4,24 C4,24 9.662,24 15.518,24 C17.132,26.411 19.879,27.999 23,28 C26.875,27.998 30.167,25.546 31.436,22.112 C31.995,21.076 32,20 32,20 C32,20 32,12 32,8 C32,4 28,4 28,4 Z M14.033,19.66 C11.686,18.847 10,16.626 10,14 C10,10.688 12.684,8 16,8 C17.914,8 19.607,8.908 20.706,10.306 C16.848,11.321 14,14.822 14,19 C14,19.223 14.018,19.441 14.033,19.66 Z M23,25.883 C19.199,25.874 16.124,22.799 16.115,19 C16.124,15.199 19.199,12.124 23,12.115 C26.799,12.124 29.874,15.199 29.883,19 C29.874,22.799 26.799,25.874 23,25.883 Z" id="Shape"></path>
+                      <polygon id="Path" points="28 18 24.002 18 24.002 14 22 14 22 18 18 18 18 20 22 20 22 24 24.002 24 24.002 20 28 20"></polygon>
+                  </g>
+              </g>
+          </g>
+      </g>
+  </svg>
+</div>
+<!-- Dropzone JS -->
+<script src="https://unpkg.com/dropzone"></script>
+<script src="https://unpkg.com/cropperjs"></script>
+<script>
+  $("#myDropzone").dropzone({ 
+    url: '/location/<%= @location.id %>/add_images', 
+     transformFile: function(file, done) {
+      // Create Dropzone reference for use in confirm button click handler
+      var myDropZone = this;
+      // Create the image editor overlay
+      var editor = document.createElement('div');
+      editor.style.position = 'fixed';
+      editor.style.left = 0;
+      editor.style.right = 0;
+      editor.style.top = 0;
+      editor.style.bottom = 0;
+      editor.style.zIndex = 9999;
+      editor.style.backgroundColor = '#000';
+      document.body.appendChild(editor);
+      // Create confirm button at the top left of the viewport
+      var buttonConfirm = document.createElement('button');
+      buttonConfirm.className = 'btn btn-primary';
+      buttonConfirm.style.position = 'absolute';
+      buttonConfirm.style.right = '10px';
+      buttonConfirm.style.top = '10px';
+      buttonConfirm.style.zIndex = 9999;
+      buttonConfirm.textContent = 'Confirm';
+      editor.appendChild(buttonConfirm);
+      buttonConfirm.addEventListener('click', function() {
+        // Get the canvas with image data from Cropper.js
+        var canvas = cropper.getCroppedCanvas({
+          maxWidth: 1500,
+          maxHeight: 880
+        });
+        // Turn the canvas into a Blob (file object without a name)
+        canvas.toBlob(function(blob) {
+          // Create a new Dropzone file thumbnail
+          myDropZone.createThumbnail(
+            blob,
+            myDropZone.options.thumbnailWidth,
+            myDropZone.options.thumbnailHeight,
+            myDropZone.options.thumbnailMethod,
+            false, 
+            function(dataURL) {
+
+              // Update the Dropzone file thumbnail
+              myDropZone.emit('thumbnail', file, dataURL);
+              // Return the file to Dropzone
+              done(blob);
+          });
+        });
+        // Remove the editor from the view
+        document.body.removeChild(editor);
+      });
+      // Create an image node for Cropper.js
+      var image = new Image();
+      image.src = URL.createObjectURL(file);
+      editor.appendChild(image);
+
+      // Create Cropper.js
+      var cropper = new Cropper(image, { aspectRatio: 1.7 });
+    }   
+  });
+  
+$('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
+</script>
+<script>
+ $('#image-upload').on ('click',function(){
+   $('.editdropzone').toggleClass('active')
+ });
+</script>

@@ -1,0 +1,55 @@
+<%= render 'dashboard/shared/header2', header: 'Generelle Informationen', link: @location.id, type: 'location' %>
+<div class="container">
+  <%= form_for(@location, :html => {role: "form", id: "form1"}, url: edit_location_informations_url(@location.id)) do |f| %>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <label for="category">Kategorie</label>
+      <%= f.select(:category, Location.categories, {}, {class: "form-control"}) %>
+    </div>
+    <div class="form-group">
+      <label for="address-lookup">Adresse</label>
+      <input type="text" class="form-control is-valid" id="address-lookup" value="<%= @location.formatted_address %>" aria-describedby="addressHelp" placeholder="Adresse">
+      <small id="addressHelp" class="form-text text-muted">Geben Sie Ihre Adresse ein und klicken Sie auf die genaue Adresse im Dropdown</small>
+      <div style="display: none">
+        Latitude:   <input name="lat" type="text" value="<%= @location.lat %>">
+        Longitude:  <input name="lng" type="text" value="<%= @location.lng %>">
+        Address:    <input name="formatted_address" type="text" value="<%= @location.formatted_address %>">
+        Locality:   <input name="locality" type="text" value="<%= @location.locality %>">
+        Street:     <input name="route" type="text" value="<%= @location.route %>">
+        Streetnr:   <input name="street_number" type="text" id="street_number" value="<%= @location.street_number %>">
+        PLZ:        <input name="postal_code" type="text" value="<%= @location.postal_code %>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Beschreibung</label>
+      <%= f.text_area(:description, rows: 5, class: 'form-control') %>
+    </div>
+  <% end %>
+</div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Aktualisieren</a> 
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNAXfMrJDNWqcq8bW6OhWgZd6XUi-F1UI&libraries=places"></script>
+<script src="/jquery.geocomplete.min.js"></script>
+<script>
+  $('#address-lookup').geocomplete({ details: "form" }).bind("geocode:result", function(event, result){
+    console.log(result);
+    if($('#street_number').val() !== "") {
+      $('#address-lookup').removeClass('is-invalid');
+      $('#address-lookup').addClass('is-valid');
+      console.log($('#street_number').val());
+    } else {
+      $('#address-lookup').removeClass('is-valid');
+      $('#address-lookup').addClass('is-invalid');
+      console.log($('#street_number').val());
+    };
+  });
+</script>
+<script>
+  $('#button1').on('click', function(){
+    $('#form1').submit();
+  });
+</script>

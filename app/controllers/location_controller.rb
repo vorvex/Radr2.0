@@ -1,5 +1,6 @@
 class LocationController < ApplicationController
    skip_before_action :verify_authenticity_token
+   layout "dashboard"
   
   def create_location1 # Name, Category, Adresse
     name = params[:locationname]
@@ -78,15 +79,81 @@ class LocationController < ApplicationController
            OpeningHour.create(location: @location, week_day: index, start_time: day["timeFrom"], end_time: day["timeTill"])
       end
      index += 1
+     if index === 7
+       index = 0
+     end
      end
     
     @location.save
   end
 
-  def edit
+  def edit_images
+    @location = Location.find(params[:id])
   end
 
-  def delete
+  def edit_informations
+    @location = Location.find(params[:id])
+  end
+  
+  def update_informations
+    formatted_address = params[:formatted_address]
+    route = params[:route]
+    street_number = params[:street_number]
+    postal_code = params[:postal_code]
+    locality = params[:locality]
+    # place_id = params[:place_id]
+    lat = params[:lat]
+    lng = params[:lng]
+    
+    @location = Location.find(params[:id])
+    @location.update(name: params[:location][:name], description: params[:location][:description], category: params[:location][:category], 
+                     formatted_address: formatted_address, route: route, street_number: street_number, postal_code: postal_code, locality: locality, lat: lat, lng: lng)
+    @location.save
+    
+    path = '/?profile=' + @location.id.to_s + '&type=location'
+    
+    redirect_to path
+  end
+  
+  def opening_hours 
+    @location = Location.find(params[:id])
+    @opening_hours = @location.opening_hours
+    @special_hours = OpeningHour.new()
+    
+  end
+  
+  def update_opening_hours
+    @location = Location.find(params[:id])
+    if params[:opening_hours] != ''
+      
+      json = JSON.parse(params[:opening_hours])
+      index = 1
+      json.each do |day|
+        wday = @location.opening_hours.find_by_week_day(index)
+        if wday.nil? & day["isActive"]
+           OpeningHour.create(location: @location, week_day: index, start_time: day["timeFrom"], end_time: day["timeTill"])
+        elsif !wday.nil? & day["isActive"]
+          wday.update(start_time: day["timeFrom"], end_time: day["timeTill"])
+        elsif !wday.nil? & !day["isActive"]
+          wday.delete!
+        end
+         index += 1 
+         if index === 7
+           index = 0
+         end
+       end
+    end
+      
+    path = '/?profile=' + @location.id.to_s + '&type=location'
+    
+    redirect_to path
+    
+  end
+  
+  
+  def events
+    @location = Location.find(params[:id])
+    @events = @location.events
   end
   
   private

@@ -1,0 +1,39 @@
+<%= render 'dashboard/shared/header2', header: 'Öffnungszeiten bearbeiten', link: @location.id, type: 'location' %>
+<div class="container">
+  <%= form_for(@location, :html => {role: "form", id: "form1"}, url: update_opening_hours_url(@location.id)) do |f| %>
+      <textarea type="text" name="opening_hours" id="opening_hours" hidden></textarea>
+  <% end %>
+  <div class="form-group" id="business-hours"></div>
+</div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Aktualisieren</a> 
+</div>
+  <!-- JQuery Business Hours -->
+  <script src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+  <script src="/jquery.businessHours.min.js"></script>
+  <script>
+    var businessHoursManager = $("#business-hours").businessHours({
+        postInit:function(){
+            $('.operationTimeFrom, .operationTimeTill').timepicker({
+                'timeFormat': 'H:i',
+                'step': 15
+                });
+            $('.operationTimeFrom, .operationTimeTill, .operationState').on('change', function(){
+              $("textarea#opening_hours").val(JSON.stringify(businessHoursManager.serialize()));
+            });
+        },
+        dayTmpl:'<div class="dayContainer" >' +
+            '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"></div>' +
+            '<div class="weekday"></div>' +
+            '<div class="operationDayTimeContainer">' +
+            '<div class="operationTime input-group"><input type="text" name="startTime" class="form-control operationTimeFrom" value=""></div>' +
+            '<div class="operationTime input-group"><input type="text" name="endTime" class="form-control operationTimeTill" value=""></div>' +
+            '</div></div>',
+      operationTime: <%= @location.open_json.html_safe %>
+    });
+  </script>
+  <script>
+  $('#button1').on('click', function(){
+    $('#form1').submit();
+  });
+</script>

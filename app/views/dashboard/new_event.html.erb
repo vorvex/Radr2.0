@@ -1,6 +1,5 @@
-<%= render 'dashboard/shared/header' %>
+<%= render 'dashboard/shared/header2', header: 'Neue Veranstaltung', link: '/', type: '' %>
 <div class="container">
-  <h1 class="form-h1">Neue Veranstaltung</h1>
   <div class="form-accordion event-accordion">
     <div id="accordion1" class="accordion-inner active">
       <div class="accordion-header">
@@ -40,7 +39,7 @@
           <label for="start_date">Enddatum</label>
           <div class="row" style="margin-bottom: 10px">
             <div class="col-8">
-              <%= f.text_field :end_date, placeholder: '01.01.2019', 'data-type': 'date', class: "form-control", readonly: 'true' %>
+              <%= f.text_field :end_date, placeholder: '01.01.2019', 'data-type': 'date', class: "form-control date", readonly: 'true' %>
             </div>
             <div class="col-4">
               <%= f.time_field :end_time, placeholder: '12:00', 'data-type': 'time', class: "form-control", style: "text-align: center" %>
@@ -171,11 +170,6 @@
   <a href='' class="footer-link" id="button4" style="display: none;">Weiter</a>
   <a href='/' class="footer-link" id="button5" style="display: none;">Fertigstellen</a>
 </div>
-<script>
-  $(document).ready(function () {
-    bsCustomFileInput.init()
-  });
-</script>
 <script src="/jquery.timepicker.js"></script>
 <script src="/modernizr.touch.js"></script>
 <script>
