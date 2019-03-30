@@ -22,6 +22,10 @@ class Location < ApplicationRecord
     return arr
   end
   
+  def url 
+    return 'https://radr2-leondahmer.codeanyapp.com' + '/location/' + self.locality + "/" + self.name 
+  end
+  
   def open? #1
     today = self.opening_hours.find_by_week_day(Date.today.wday)
     Time.zone = "Berlin"

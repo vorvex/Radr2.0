@@ -3,7 +3,7 @@ class SocialLink < ApplicationRecord
   has_one :location
   
   def self.channels
-    arr = ['Instagram', 'Facebook', 'SoundCloud']
+    arr = ['Instagram', 'Facebook', 'SoundCloud', 'YouTube']
     return arr
   end
   

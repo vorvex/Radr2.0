@@ -131,6 +131,8 @@ class Event < ApplicationRecord
     end
   end
   
-  
+  def url 
+    return 'https://radr2-leondahmer.codeanyapp.com' + '/event/' + self.location.locality + "/" + self.id.to_s + "/" + self.name 
+  end
   
 end

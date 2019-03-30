@@ -25,6 +25,18 @@ Rails.application.routes.draw do
   patch 'p/:id/edit_informations' => 'performer#update_informations', as: :edit_performer_informations
   patch 'e/:id/edit_informations' => 'event#update_informations', as: :edit_event_informations
   
+  get 'l/:id/share' => 'location#share'
+  get 'p/:id/share' => 'performer#share'
+  get 'e/:id/share' => 'event#share'
+  
+  get 'l/:id/social_links' => 'location#social_links'
+  get 'p/:id/social_links' => 'performer#social_links'
+  get 'e/:id/social_links' => 'event#social_links'
+  
+  patch 'l/:id/social_links' => 'location#edit_social_links', as: :edit_location_social_links
+  patch 'p/:id/social_links' => 'performer#edit_social_links', as: :edit_performer_social_links
+  patch 'e/:id/social_links' => 'event#edit_social_links', as: :edit_event_social_links
+  
   get 'l/:id/opening_hours' => 'location#opening_hours'
   patch 'l/:id/opening_hours' => 'location#update_opening_hours', as: :update_opening_hours
   

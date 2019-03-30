@@ -130,11 +130,11 @@ class LocationController < ApplicationController
       index = 1
       json.each do |day|
         wday = @location.opening_hours.find_by_week_day(index)
-        if wday.nil? & day["isActive"]
+        if wday.nil? && day["isActive"]
            OpeningHour.create(location: @location, week_day: index, start_time: day["timeFrom"], end_time: day["timeTill"])
-        elsif !wday.nil? & day["isActive"]
+        elsif !wday.nil? && day["isActive"]
           wday.update(start_time: day["timeFrom"], end_time: day["timeTill"])
-        elsif !wday.nil? & !day["isActive"]
+        elsif !wday.nil? && !day["isActive"]
           wday.delete!
         end
          index += 1 
@@ -150,10 +150,64 @@ class LocationController < ApplicationController
     
   end
   
+  def share
+    @location = Location.find(params[:id])
+  end
   
   def events
     @location = Location.find(params[:id])
     @events = @location.events
+  end
+  
+  def social_links
+    @location = Location.find(params[:id])
+    @social_links = @location.social_links
+  end
+  
+  def social_links
+    @location = Location.find(params[:id])
+    @social_links = @location.social_links
+  end
+  
+  def edit_social_links
+    @location = Location.find(params[:id])
+    @facebook = @location.social_links.find_by_channel('Facebook')
+    @instagram = @location.social_links.find_by_channel('Instagram')
+    @youtube = @location.social_links.find_by_channel('YouTube')
+    @soundcloud = @location.social_links.find_by_channel('SoundCloud')
+    
+    if @facebook.nil? && params[:facebook] != ""
+      SocialLink.create(channel: 'Facebook', url: params[:facebook], location_id: @location.id)
+    elsif !@facebook.nil? && params[:facebook] != ""
+      @facebook.update(url: params[:facebook])
+    elsif !@facebook.nil? && params[:facebook] == ""
+      @facebook.delete
+    end
+    
+    if @instagram.nil? && params[:instagram] != ""
+      SocialLink.create(channel: 'Instagram', url: params[:instagram], location_id: @location.id)
+    elsif !@instagram.nil? && params[:instagram] != ""
+      @instagram.update(url: params[:instagram])
+    elsif !@instagram.nil? && params[:instagram] == ""
+      @instagram.delete
+    end
+    
+    if @youtube.nil? && params[:youtube] != ""
+      SocialLink.create(channel: 'YouTube', url: params[:youtube], location_id: @location.id)
+    elsif !@youtube.nil? && params[:youtube] != ""
+      @youtube.update(url: params[:youtube])
+    elsif !@youtube.nil? && params[:youtube] == ""
+      @youtube.delete
+    end
+    
+    if @soundcloud.nil? && params[:soundcloud] != ""
+      SocialLink.create(channel: 'SoundCloud', url: params[:soundcloud], location_id: @location.id)
+    elsif !@soundcloud.nil? && params[:soundcloud] != ""
+      @soundcloud.update(url: params[:soundcloud])
+    elsif !@soundcloud.nil? && params[:soundcloud] == ""
+      @soundcloud.delete
+    end
+    
   end
   
   private

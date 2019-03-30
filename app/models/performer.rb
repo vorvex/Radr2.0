@@ -23,12 +23,21 @@ class Performer < ApplicationRecord
     return arr
   end
   
+  def url 
+    return 'https://radr2-leondahmer.codeanyapp.com' + '/performer/' + self.id.to_s
+  end
+  
   def user
     if self.user_id.nil?
       return nil
     else
       User.find(self.user_id)
     end
+  end
+  
+  def images
+    arr = []
+    arr << self.profile_image
   end
   
 end

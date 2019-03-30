@@ -645,6 +645,73 @@ label {
   }
 }
 
+/* Share */
+
+.share-card {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 5px;
+  overflow: hidden;
+  border: solid thin lightgrey;
+}
+
+.share-card img {
+  width: 100%;
+}
+
+.share-card-inner {
+  padding: 10px;
+}
+
+.share-card-inner h3 {
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.share-card-inner span {
+  color: grey;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.share-footer {
+  display: block;
+  width: 100vw;
+  position: fixed;
+  bottom: 0px;
+}
+
+.share-footer-top {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.share-button {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    color: white;
+    border-radius: 30px;
+    background: #DD2476;
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.share-footer-bottom {
+
+  padding: 10px;
+  display: block;
+  color: black;
+  cursor: pointer;
+}
+
+
 /* Footer */
 
 .footer {

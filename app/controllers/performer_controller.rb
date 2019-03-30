@@ -74,6 +74,15 @@ class PerformerController < ApplicationController
     @events = @performer.events
   end
   
+  def share
+    @resource = Performer.find(params[:id])
+  end
+  
+  def social_links
+    @resource = Performer.find(params[:id])
+    @social_links = @resource.social_links
+  end
+  
   def delete
   end
 end

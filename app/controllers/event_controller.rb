@@ -1,5 +1,6 @@
 class EventController < ApplicationController
   skip_before_action :verify_authenticity_token
+  layout 'dashboard'
   
   def create_event1 # Name, Category, Start & Endtime
     Time.zone = "Berlin"
@@ -100,6 +101,10 @@ class EventController < ApplicationController
     
   end
 
+  def share #Tickets & Social Links
+    @resource = Event.find(params[:id])  
+  end
+  
   def remove_image
     
   end
