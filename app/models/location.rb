@@ -23,7 +23,7 @@ class Location < ApplicationRecord
   end
   
   def url 
-    return 'https://radr2-leondahmer.codeanyapp.com' + '/location/' + self.locality + "/" + self.name 
+    return '/location/' + self.locality + "/" + self.name 
   end
   
   def open? #1
