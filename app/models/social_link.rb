@@ -1,6 +1,7 @@
 class SocialLink < ApplicationRecord
   has_one :performer
   has_one :location
+  has_one :event
   
   def self.channels
     arr = ['Instagram', 'Facebook', 'SoundCloud', 'YouTube']

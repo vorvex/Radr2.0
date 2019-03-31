@@ -115,10 +115,43 @@ class EventController < ApplicationController
     @resource = Event.find(params[:id])  
   end
   
-  def remove_image
-    
+  def edit_images
+    @event = Event.find(params[:id])
   end
+  
+  def edit
+    @event = Event.find(params[:id])
+    @start_date = @event.start_time.month.to_s.rjust(2, '0') + "." + @event.start_time.month.to_s.rjust(2, '0') + "." + @event.start_time.year.to_s
+    @end_date = @event.end_time.month.to_s.rjust(2, '0') + "." + @event.end_time.month.to_s.rjust(2, '0') + "." + @event.end_time.year.to_s
+  end
+  
+  def update
+    @event = Event.find(params[:id])
+    name = params[:event][:name]
+    location = Location.find(params[:event][:location_id])
+    startTime = params[:event][:start_date] + " " + params[:event][:start_time]
+    endTime = params[:event][:end_date] + " " + params[:event][:end_time]
+    
+    path = (location.locality + " " + name).downcase.gsub(" ", "-")
+    x = 0
+    while !Event.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    
+    @event.start_time = Time.zone.strptime(startTime, "%d.%m.%Y %H:%M")
+    if endTime != " "
+      @event.end_time = Time.zone.strptime(endTime, "%d.%m.%Y %H:%M")
+    end
+    
+    @event.update(name: name , description: params[:description], category: params[:event][:category], location_id: location.id, path: path )
+    @event.save
 
+  end
+  
   def delete
   end
   

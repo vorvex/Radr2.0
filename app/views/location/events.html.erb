@@ -2,7 +2,7 @@
 <div class="container">
   <% @events.each do |event| %>
   <div class="card">
-    <a href="/e/<%= event.id %>/edit-images" class="card-img-top edit-image">
+    <a href="/e/<%= event.id %>/edit_images" class="card-img-top edit-image">
       <img src="<% if event.images_thumbnail.attached?  %><%= url_for(event.images_thumbnail) %><% else %>/images/blurred-image.jpg<% end %>" alt="<%= event.name %>">
     </a>
     <div class="card-body">

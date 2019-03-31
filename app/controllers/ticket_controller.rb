@@ -4,7 +4,7 @@ class TicketController < ApplicationController
     @container = params[:container]
     if @ticket.save
       respond_to do |format|
-        format.js { render partial: 'social_li/create' }
+        format.js { render partial: 'ticket/create' }
       end
     end
   end

@@ -21,11 +21,11 @@ Rails.application.routes.draw do
   
   get 'l/:id/edit_informations' => 'location#edit_informations'
   get 'p/:id/edit_informations' => 'performer#edit_informations'
-  get 'e/:id/edit_informations' => 'event#edit_informations'
+  get 'e/:id/edit' => 'event#edit'
 
   patch 'l/:id/edit_informations' => 'location#update_informations', as: :edit_location_informations
   patch 'p/:id/edit_informations' => 'performer#update_informations', as: :edit_performer_informations
-  patch 'e/:id/edit_informations' => 'event#update_informations', as: :edit_event_informations
+  patch 'e/:id/edit' => 'event#update', as: :update_event
   
   get 'l/:id/share' => 'location#share'
   get 'p/:id/share' => 'performer#share'

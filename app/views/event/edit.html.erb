@@ -1,2 +1,64 @@
-<h1>Event#edit</h1>
-<p>Find me in app/views/event/edit.html.erb</p>
+<%= render 'dashboard/shared/header3', header: 'Event bearbeiten' %>
+<div class="container">
+  <%= form_for(@event, :html => {role: "form", id: "form1"}, url: update_event_url(@event.id)) do |f| %>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <label for="category">Kategorie</label>
+      <%= f.select(:category, Event.categories, {}, {class: "form-control"}) %>
+    </div>
+    <div class="form-group">
+      <label for="location">Location</label>
+      <%= f.collection_select(:location_id, current_user.locations.all, :id, :name, {}, {:class=>"form-control"}) %>
+      <small id="locationHelp" class="form-text text-muted">Wählen Sie einen Veranstaltungsort aus.</small>
+    </div>
+    <label for="start_date">Startdatum</label>
+    <div class="row" style="margin-bottom: 10px">
+      <div class="col-8">
+        <%= f.text_field :start_date, placeholder: '01.01.2019', 'data-type': 'date', class: "form-control date", readonly: 'true', value: @start_date %>
+      </div>
+      <div class="col-4">
+        <%= f.time_field :start_time, placeholder: '12:00', 'data-type': 'time', class: "form-control", style: "text-align: center" %>
+      </div>
+    </div>
+    <label for="start_date">Enddatum</label>
+    <div class="row" style="margin-bottom: 10px">
+      <div class="col-8">
+        <%= f.text_field :end_date, placeholder: '01.01.2019', 'data-type': 'date', class: "form-control date", readonly: 'true', value: @end_date %>
+      </div>
+      <div class="col-4">
+        <%= f.time_field :end_time, placeholder: '12:00', 'data-type': 'time', class: "form-control", style: "text-align: center" %>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Beschreibung</label>
+      <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>
+      <small id="descriptionHelp" class="form-text text-muted">Tragen Sie hier weitere Informationen zu Ihrer Location ein</small>
+    </div>
+  <% end %>
+</div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Aktualisieren</a> 
+</div>
+<script>
+  $('#button1').on('click', function(){
+    $('#form1').submit();
+  });
+</script>
+<script src="/jquery.timepicker.js"></script>
+<script src="/modernizr.touch.js"></script>
+<script>
+  $( function() {
+    $("*[data-type='date']").datepicker({
+        language: 'de-DE',
+        weekStart: 1,
+        format: 'dd.mm.yyyy',
+        daysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+        daysMin: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+        months: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+        monthsShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez']
+});
+  });
+</script>

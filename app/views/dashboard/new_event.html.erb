@@ -145,10 +145,10 @@
               <div class="input-group input-group-sm" style="margin-bottom: 5px;">
                 <%= f.select(:status, Ticket.stati, {}, {class: "form-control"}) %>
               </div>
-              <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+              <div class="input-group input-group-sm" style="margin-bottom: 5px; display: flex; flex-wrap: nowrap;">
                 <%= f.number_field(:price, in: 0.00..10000.00, placeholder:'30,00', class:"form-control")%>
                 <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">€</span>
+                  <span class="input-group-text" style="font-size: 12px;" id="basic-addon2">€</span>
                 </div>
               </div>
               <div class="input-group input-group-sm" style="margin-bottom: 5px;">
