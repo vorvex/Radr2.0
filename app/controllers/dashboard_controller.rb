@@ -2,7 +2,12 @@ class DashboardController < ApplicationController
   before_action :authenticate_user!
   layout 'dashboard'
   
+  def first_login
+    
+  end
+  
   def index
+    has_profile?
     @user = current_user
     
     if params[:profile] != nil
@@ -80,5 +85,10 @@ class DashboardController < ApplicationController
   
 private
   
+  def has_profile?
+    if !current_user.locations.any? || !current_user.performers.any?
+      redirect_to first_login_path
+    end
+  end
   
 end

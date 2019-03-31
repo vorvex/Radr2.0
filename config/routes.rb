@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   
   root 'dashboard#index'
   
+  get 'first_login' => 'dashboard#first_login', as: :first_login
+  
   get 'l/show/:id' => 'dashboard#show_location', as: :show_location
   get 'p/show/:id' => 'dashboard#show_performer', as: :show_performer
   
