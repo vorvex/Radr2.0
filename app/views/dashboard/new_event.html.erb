@@ -103,7 +103,7 @@
           </div>
           <button type="submit" class="btn btn-primary">Performer einladen</button>
         <% end %>
-        <%= form_for(Event.find(1), :html => {role: "form", id: "form3"}, url: create_event3_url(Event.find(1))) do |f| %>
+        <%= form_for(Event.first, :html => {role: "form", id: "form3"}, url: create_event3_url(Event.first)) do |f| %>
           <div class="form-group">
             <label for="description">Beschreibung</label>
             <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>
