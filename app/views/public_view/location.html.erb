@@ -44,6 +44,11 @@
   <%= render "public_view/shared/opening_hours" %>
   <%= render "public_view/shared/description" %>
   <%= render "public_view/shared/map", resource: @resource %>
+  <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
+    <iframe width="100%" style="min-height: 200px;" src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <% end %>
+  <% if !@resource.social_links.find_by_channel('SoundCloud').nil? %>
+  <% end %>
   <% if @resource.events.upcoming.any? %>
     <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
   <% end %>

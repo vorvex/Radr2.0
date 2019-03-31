@@ -218,6 +218,10 @@ class LocationController < ApplicationController
       @soundcloud.delete
     end
     
+    path = '/?profile=' + @location.id.to_s + '&type=location'
+    
+    redirect_to path
+    
   end
   
   private
