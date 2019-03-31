@@ -1,6 +1,6 @@
 <% if !@resource.performer.user.nil? %>
 <h2 style="margin-bottom: 10px !important">Attending Artist</h2>
-<a data-type="inbound-link" class="oh-head" href="/performer/<%= @resource.performer.id %>" >
+<a data-type="inbound-link" class="oh-head" href="<%= @resource.url %>" >
   <img src="<%= url_for(@resource.performer.profile_image_thumbnail) unless !@resource.performer.profile_image_thumbnail.attached? %>" alt="" class="oh-head-img">
   <div>
     <h2><%= @resource.performer.name %></h2>

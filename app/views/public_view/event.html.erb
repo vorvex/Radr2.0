@@ -36,9 +36,11 @@
       <h1><%= @resource.name %></h1>
       <span class="subheader"><%= @resource.category %></span>
     </div>
-    <a href="" class="social-button">
-      <img src="/images/facebook.svg" alt="Facebook Event">
-    </a>
+    <% if @resource.facebook_event != "" %>
+      <a href="<%= @resource.facebook_event %>" class="social-button">
+        <img src="/images/facebook.svg" alt="Facebook Event">
+      </a>
+    <% end %>
   </div>
   <%= render "public_view/shared/location" %>
   <%= render "public_view/shared/description" %>
@@ -50,7 +52,7 @@
 </div>
 <% if @resource.tickets.any? %>
   <div class="footer">
-    <a data-type="inbound-link" href="/event/<%= @resource.id %>/tickets" class="footer-link">Ticketinfos</a>
+    <a data-type="inbound-link" href="<%= @resource.url %>/tickets" class="footer-link">Ticketinfos</a>
   </div>
 <% end %>
 <script>

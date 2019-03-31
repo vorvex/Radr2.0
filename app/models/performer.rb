@@ -24,7 +24,7 @@ class Performer < ApplicationRecord
   end
   
   def url 
-    return 'https://radr2-leondahmer.codeanyapp.com' + '/performer/' + self.id.to_s
+    return '/performer/' + self.path
   end
   
   def user
@@ -38,6 +38,19 @@ class Performer < ApplicationRecord
   def images
     arr = []
     arr << self.profile_image
+  end
+  
+  def path_str
+    path = self.name.downcase.gsub(" ", "-")
+    x = 0
+    while !Performer.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    return path
   end
   
 end

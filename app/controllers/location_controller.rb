@@ -14,8 +14,18 @@ class LocationController < ApplicationController
     lat = params[:lat]
     lng = params[:lng]
     
+    path = (locality + " " + name).downcase.gsub(" ", "-")
+    x = 0
+    while !Location.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    
     @location = Location.create(user_id: current_user.id, name: name, category: category, formatted_address: formatted_address, 
-                                route: route, street_number: street_number, postal_code: postal_code, locality: locality, lat: lat, lng: lng)
+                                route: route, street_number: street_number, postal_code: postal_code, locality: locality, lat: lat, lng: lng, path: path)
     
     if @location.save
       respond_to do |format|

@@ -35,9 +35,11 @@
       <h1><%= @resource.name %></h1>
       <span class="subheader"><%= @resource.category %></span>
     </div>
-    <a href="" class="social-button">
+    <% if !@resource.social_links.find_by_channel('Facebook').nil? %>
+    <a href="<%= @resource.social_links.find_by_channel('Facebook').url %>" class="social-button">
       <img src="/images/facebook.svg" alt="Facebook Event">
     </a>
+    <% end %>
   </div>  
   <%= render "public_view/shared/opening_hours" %>
   <%= render "public_view/shared/description" %>

@@ -23,13 +23,32 @@ class Location < ApplicationRecord
   end
   
   def url 
-    return '/location/' + self.locality + "/" + self.name 
+    return '/location/' + self.path
+  end
+  
+  def path_str
+    path = (self.locality + " " + self.name).downcase.gsub(" ", "-")
+    x = 0
+    while !Location.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    return path
   end
   
   def open? #1
-    today = self.opening_hours.find_by_week_day(Date.today.wday)
     Time.zone = "Berlin"
     now = Time.zone.now.hour.to_f + (Time.zone.now.min.to_f / 60)
+    if now < 5
+      today = self.opening_hours.find_by_week_day(Date.today.wday - 1)
+      now += 24
+    else
+      today = self.opening_hours.find_by_week_day(Date.today.wday)
+    end
+    
     if today.nil? #2
       return false
     else #2

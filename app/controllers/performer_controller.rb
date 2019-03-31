@@ -3,10 +3,19 @@ class PerformerController < ApplicationController
   layout 'dashboard'
   
   def create_performer1 # Name, Category, Start & Endtime
-    Time.zone = "Berlin"
     name = params[:performername]
     
-    @performer = Performer.new(user_id: current_user.id, name: params[:performername], category: params[:performer][:category], description: params[:description])
+    path = name.downcase.gsub(" ", "-")
+    x = 0
+    while !Performer.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    
+    @performer = Performer.new(user_id: current_user.id, name: params[:performername], category: params[:performer][:category], description: params[:description], path: path)
 
     @performer.save
     respond_to do |format|

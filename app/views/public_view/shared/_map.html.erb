@@ -1,7 +1,7 @@
 <div class="map-holder">
   <iframe title="google maps" width="100%" height="140px" frameborder="0" style="border:0" data-src="https://www.google.com/maps/embed/v1/view?zoom=16&center=<%= resource.lat %>%2C<%= resource.lng %>&key=AIzaSyBNAXfMrJDNWqcq8bW6OhWgZd6XUi-F1UI" ></iframe>
 </div>
-<a class="oh-head" href="https://maps.google.com/?ll=<%= resource.lat %>, <%= resource.lng %>" target="_blank" rel="noreferrer">
+<a class="oh-head" href="https://www.google.com/maps/place/<%= resource.formatted_address %>" target="_blank" rel="noreferrer">
   <span class="oh-icon">          
     <svg width="18px" height="24px" viewBox="0 0 18 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

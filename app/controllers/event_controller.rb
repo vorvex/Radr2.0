@@ -9,7 +9,17 @@ class EventController < ApplicationController
     startTime = params[:event][:start_date] + " " + params[:event][:start_time]
     endTime = params[:event][:end_date] + " " + params[:event][:end_time]
     
-    @event = Event.new(location: location, name: name)
+    path = (location.locality + " " + name).downcase.gsub(" ", "-")
+    x = 0
+    while !Event.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    
+    @event = Event.new(location: location, name: name, path: path)
     
     @event.start_time = Time.zone.strptime(startTime, "%d.%m.%Y %H:%M")
     if endTime != " "

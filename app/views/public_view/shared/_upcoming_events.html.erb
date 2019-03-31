@@ -3,7 +3,7 @@
   <div class="slick-carousel">
     <% events.each do |event|  %>
       <% if @resource.name != event.name %>
-      <a href="/event/<%= event.city %>/<%= event.id %>/<%= event.name %>" data-type="inbound-link" class="preview">
+      <a href="<%= event.url %>" data-type="inbound-link" class="preview">
         <div class="preview-inner">
           <div>
             <h4><%= event.name %></h4><span><%= event.category %></span>

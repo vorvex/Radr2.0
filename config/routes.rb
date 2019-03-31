@@ -90,9 +90,9 @@ Rails.application.routes.draw do
 
   # Event, Location & Performer Views
   
-  get 'location/:city/:name' => 'public_view#location'
-  get 'performer/:id' => 'public_view#performer'
-  get 'event/:city/:id/:name/' => 'public_view#event'
-  get 'event/:id/tickets' => 'public_view#tickets'
+  get 'location/:path' => 'public_view#location'
+  get 'performer/:path' => 'public_view#performer'
+  get 'event/:path' => 'public_view#event'
+  get 'event/:path/tickets' => 'public_view#tickets'
   
 end

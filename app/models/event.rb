@@ -3,6 +3,7 @@ class Event < ApplicationRecord
   has_one :performer
   belongs_to :location
   
+  
   has_one_attached :images_thumbnail
   has_many_attached :images
   
@@ -132,7 +133,21 @@ class Event < ApplicationRecord
   end
   
   def url 
-    return 'https://radr2-leondahmer.codeanyapp.com' + '/event/' + self.location.locality + "/" + self.id.to_s + "/" + self.name 
+    return '/event/' + self.path 
+  end
+  
+  def path_str
+    path = (self.location.locality + " " + self.name).downcase.gsub(" ", "-")
+    x = 0
+    while !Event.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    
+    return path
   end
   
 end
