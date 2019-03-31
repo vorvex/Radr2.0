@@ -38,9 +38,11 @@
       <small id="descriptionHelp" class="form-text text-muted">Tragen Sie hier weitere Informationen zu Ihrer Location ein</small>
     </div>
   <% end %>
+  <%= button_to "Event löschen", delete_event_url(:id => @event.id), method: :delete, data: { confirm: 'Sind sie sich sicher?'}, class: "btn", :remote => true %>
 </div>
 <div class="footer">
   <a href='' class="footer-link" id="button1">Aktualisieren</a> 
+  
 </div>
 <script>
   $('#button1').on('click', function(){

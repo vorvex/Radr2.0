@@ -153,6 +153,10 @@ class EventController < ApplicationController
   end
   
   def delete
+    @event = Event.find(params[:id])    
+    @event.delete
+    
+    redirect_to "/"
   end
   
   private

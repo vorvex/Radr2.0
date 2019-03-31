@@ -80,13 +80,13 @@ Rails.application.routes.draw do
   patch 'ticket/edit/:id' => 'ticket#edit'
   patch 'performer/edit/:id' => 'performer#edit', as: :edit_performer
   
-  delete 'event/delete' => 'event#delete'
-  delete 'location/delete' => 'location#delete'
+  delete 'event/delete/:id' => 'event#delete', as: :delete_event
+  delete 'location/delete/:id' => 'location#delete'
   delete 'delete_image/:id' => 'dashboard#delete_image', as: :delete_image
-  delete 'opening_hour/delete' => 'opening_hour#delete'
-  delete 'social_link/delete' => 'social_link#destroy', as: :destroy_link
-  delete 'ticket/delete' => 'ticket#destroy', as: :destroy_ticket
-  delete 'performer/delete' => 'performer#delete'
+  delete 'opening_hour/delete/:id' => 'opening_hour#delete'
+  delete 'social_link/delete/:id' => 'social_link#destroy', as: :destroy_link
+  delete 'ticket/delete/:id' => 'ticket#destroy', as: :destroy_ticket
+  delete 'performer/delete/:id' => 'performer#delete'
   
   devise_for :users
 
