@@ -1,4 +1,4 @@
-<a data-type="inbound-link" class="oh-head" href="<%= @resource.url %>">
+<a data-type="inbound-link" class="oh-head" href="<%= @resource.location.url %>">
   <img src="<% if @resource.location.thumbnail.attached? %><%= url_for(@resource.location.thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="oh-head-img">
   <div>
     <h2><%= @resource.location.name %></h2>
