@@ -86,7 +86,7 @@ class DashboardController < ApplicationController
 private
   
   def has_profile?
-    if !current_user.locations.any? || !current_user.performers.any?
+    if !current_user.locations.any? && !current_user.performers.any?
       redirect_to first_login_path
     end
   end
