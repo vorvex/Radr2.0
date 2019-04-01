@@ -120,7 +120,7 @@
         ]
         <% if !@resource.performer.nil? %>,
         "performer": {
-          "@type": "<%= @resource.performer.category_schema %>",
+          "@type": "<%= @resource.performer.category %>",
           "name": "<%= @resource.performer.name %>"
         }
         <% end %>
