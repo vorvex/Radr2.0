@@ -118,12 +118,6 @@
           }<% if index < @resource.tickets.length %>,<% end %>
         <% end %> 
         ]
-        <% if !@resource.performer.nil? %>,
-        "performer": {
-          "@type": "<%= @resource.performer.category %>",
-          "name": "<%= @resource.performer.name %>"
-        }
-        <% end %>
       }
     </script>
 <% end %>
