@@ -23,6 +23,10 @@ class Performer < ApplicationRecord
     return arr
   end
   
+  def category_schema
+    return self.category
+  end
+  
   def url 
     return '/performer/' + self.path
   end

@@ -7,14 +7,16 @@ class Ticket < ApplicationRecord
     return arr
   end
   
-  def status_str
+  def status_schema
     case self.status
-      when "https://schema.org/InStock"
-        "Verfügbar"
-      when "https://schema.org/SoldOut"
-        "Ausverkauft"
-      when "https://schema.org/PreOrder"
-        "Vorverkauf"
+      when 'Verfügbar'
+        return "https://schema.org/InStock"
+      when 'Abendkasse'
+        return "https://schema.org/InStock"
+      when 'Ausverkauft'
+        return "https://schema.org/SoldOut"
+      when 'Vorverkauf'
+        return "https://schema.org/PreOrder"
     end
   end
   

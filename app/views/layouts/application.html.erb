@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="de" >
   <head>
-    <title>Radr</title>
+    <title><%= @title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css">
     <%= render 'application/favicon' %>
+    <%= render 'application/meta' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
