@@ -41,8 +41,12 @@
         "@context": "https://schema.org",
         "@type": "Event",
         "name": "<%= event.name %>",
+        <% if !event.start_time.nil %>
         "startDate": "<%= event.start_time.iso8601 %>",
+        <% end %>
+        <% if !event.end_time.nil %>
         "endDate": "<%= event.end_time.iso8601 %>",
+        <% end %>
         "location": {
           "@type": "Place",
           "name": "<%= @resource.name %>",
@@ -81,8 +85,12 @@
         "@context": "https://schema.org",
         "@type": "Event",
         "name": "<%= @resource.name %>",
+        <% if !@resource.start_time.nil %>
         "startDate": "<%= @resource.start_time.iso8601 %>",
+        <% end %>
+        <% if !@resource.end_time.nil %>
         "endDate": "<%= @resource.end_time.iso8601 %>",
+        <% end %>
         "location": {
           "@type": "Place",
           "name": "<%= @resource.location.name %>",
