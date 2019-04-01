@@ -121,6 +121,7 @@ class EventController < ApplicationController
   
   def edit
     @event = Event.find(params[:id])
+    @social_links = @event.social_links
     @start_date = @event.start_time.month.to_s.rjust(2, '0') + "." + @event.start_time.month.to_s.rjust(2, '0') + "." + @event.start_time.year.to_s
     @end_date = @event.end_time.month.to_s.rjust(2, '0') + "." + @event.end_time.month.to_s.rjust(2, '0') + "." + @event.end_time.year.to_s
   end
@@ -148,8 +149,51 @@ class EventController < ApplicationController
     end
     
     @event.update(name: name , description: params[:description], category: params[:event][:category], location_id: location.id, path: path )
+    
+    @facebook = @event.social_links.find_by_channel('Facebook')
+    @instagram = @event.social_links.find_by_channel('Instagram')
+    @youtube = @event.social_links.find_by_channel('YouTube')
+    @soundcloud = @event.social_links.find_by_channel('SoundCloud')
+    
+    if @facebook.nil? && params[:facebook] != ""
+      SocialLink.create(channel: 'Facebook', url: params[:facebook], location_id: @location.id)
+    elsif !@facebook.nil? && params[:facebook] != ""
+      @facebook.update(url: params[:facebook])
+    elsif !@facebook.nil? && params[:facebook] == ""
+      @facebook.delete
+    end
+    
+    if @instagram.nil? && params[:instagram] != ""
+      SocialLink.create(channel: 'Instagram', url: params[:instagram], location_id: @location.id)
+    elsif !@instagram.nil? && params[:instagram] != ""
+      @instagram.update(url: params[:instagram])
+    elsif !@instagram.nil? && params[:instagram] == ""
+      @instagram.delete
+    end
+    
+    if @youtube.nil? && params[:youtube] != ""
+      SocialLink.create(channel: 'YouTube', url: params[:youtube], location_id: @location.id)
+    elsif !@youtube.nil? && params[:youtube] != ""
+      @youtube.update(url: params[:youtube])
+    elsif !@youtube.nil? && params[:youtube] == ""
+      @youtube.delete
+    end
+    
+    if @soundcloud.nil? && params[:soundcloud] != ""
+      SocialLink.create(channel: 'SoundCloud', url: params[:soundcloud], location_id: @location.id)
+    elsif !@soundcloud.nil? && params[:soundcloud] != ""
+      @soundcloud.update(url: params[:soundcloud])
+    elsif !@soundcloud.nil? && params[:soundcloud] == ""
+      @soundcloud.delete
+    end
+    
     @event.save
 
+  end
+  
+  def tickets
+    @event = Event.find(params[:id])
+    @tickets = Event.tickets
   end
   
   def delete

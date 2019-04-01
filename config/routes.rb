@@ -35,6 +35,8 @@ Rails.application.routes.draw do
   get 'p/:id/social_links' => 'performer#social_links'
   get 'e/:id/social_links' => 'event#social_links'
   
+  get 'e/:id/tickets' => 'event#tickets'
+  
   patch 'l/:id/social_links' => 'location#edit_social_links', as: :edit_location_social_links
   patch 'p/:id/social_links' => 'performer#edit_social_links', as: :edit_performer_social_links
   patch 'e/:id/social_links' => 'event#edit_social_links', as: :edit_event_social_links

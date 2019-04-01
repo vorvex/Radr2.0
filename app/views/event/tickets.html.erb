@@ -1,0 +1,15 @@
+<%= render 'dashboard/shared/header3', header: 'Tickets bearbeiten'%>
+<div class="container">
+  
+  <%= form_for(@event, :html => {role: "form", id: "form1"}, url: update_ticket_url(@event.id)) do |f| %>
+    
+  <% end %>
+</div>
+<div class="footer">
+  <a class="footer-link" id="button1">Aktualisieren</a>
+</div>
+<script>
+  $('#button1').on('click', function(){
+    $('#form1').submit();
+  });
+</script>

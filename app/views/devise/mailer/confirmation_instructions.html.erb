@@ -1,5 +1,16 @@
-<p>Welcome <%= @email %>!</p>
-
-<p>You can confirm your account email through the link below:</p>
-
-<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
+<h1 style="margin-top: 0px;">Willkommen bei Radr</h1> Herzlich Willkommen wir freuen uns, das Sie sich für einen Test von Radr entschieden haben. Bitte aktivieren Sie als erstes Ihren Akkount über den Button/Link um Radr zu benutzen. <br>
+                      <br>
+                      
+                      <!-- Button : Begin -->
+                      
+                      <table cellspacing="0" cellpadding="0" border="0" align="center" style="margin: auto;">
+                        <tr>
+                          <td style="border-radius: 5px; background: #DD2476; text-align: center;" class="button-td"><a href="<%= confirmation_url(@resource, confirmation_token: @token) %>" style="background: #DD2476; border: 15px solid #DD2476; padding: 0 10px;color: #ffffff; font-family: sans-serif; font-size: 13px; line-height: 1.1; text-align: center; text-decoration: none; display: block; border-radius: 3px; font-weight: bold;" class="button-a"> 
+                            <!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]-->Email bestätigen<!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;<![endif]--> 
+                            </a></td>
+                        </tr>
+                      </table>
+                      
+                      <!-- Button : END --> 
+                      <br>
+                      Wenn Sie weitere Fragen zur Benutzung von Radr haben können Sie uns gerne jederzeit per Email kontaktieren. Die Email dafür ist kontakt@the-radr.com. Diese Email ist nur zum versenden von automatisierten Emails und sollte demnach nicht angeschrieben werden. 

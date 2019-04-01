@@ -174,11 +174,6 @@ class LocationController < ApplicationController
     @social_links = @location.social_links
   end
   
-  def social_links
-    @location = Location.find(params[:id])
-    @social_links = @location.social_links
-  end
-  
   def edit_social_links
     @location = Location.find(params[:id])
     @facebook = @location.social_links.find_by_channel('Facebook')

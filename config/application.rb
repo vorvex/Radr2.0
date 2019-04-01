@@ -22,6 +22,7 @@ module Radr
       Devise::ConfirmationsController.layout "dashboard"
       Devise::UnlocksController.layout "dashboard"
       Devise::PasswordsController.layout "dashboard"
+      Devise::Mailer.layout "devisemail"
   end
   end
 end
