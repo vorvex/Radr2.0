@@ -4,3 +4,73 @@
   <a href="/neue-location" id="location">Location</a>
   <p>Erstelle entweder einen Performer oder eine Location</p>
 </div>
+<script>
+  var location_id = 0;
+  Dropzone.options.myDropzone = {
+ url: '/location/4/add_images',
+ transformFile: function(file, done) {
+  // Create Dropzone reference for use in confirm button click handler
+  var myDropZone = this;
+  // Create the image editor overlay
+  var editor = document.createElement('div');
+  editor.style.position = 'fixed';
+  editor.style.left = 0;
+  editor.style.right = 0;
+  editor.style.top = 0;
+  editor.style.bottom = 0;
+  editor.style.zIndex = 9999;
+  editor.style.backgroundColor = '#000';
+  document.body.appendChild(editor);
+  // Create confirm button at the top left of the viewport
+  var buttonConfirm = document.createElement('button');
+  buttonConfirm.className = 'btn btn-primary';
+  buttonConfirm.style.position = 'absolute';
+  buttonConfirm.style.right = '10px';
+  buttonConfirm.style.top = '10px';
+  buttonConfirm.style.zIndex = 9999;
+  buttonConfirm.textContent = 'Confirm';
+  editor.appendChild(buttonConfirm);
+  buttonConfirm.addEventListener('click', function() {
+    // Get the canvas with image data from Cropper.js
+    var canvas = cropper.getCroppedCanvas({
+      maxWidth: 1500,
+      maxHeight: 880
+    });
+    // Turn the canvas into a Blob (file object without a name)
+    canvas.toBlob(function(blob) {
+      // Create a new Dropzone file thumbnail
+      myDropZone.createThumbnail(
+        blob,
+        myDropZone.options.thumbnailWidth,
+        myDropZone.options.thumbnailHeight,
+        myDropZone.options.thumbnailMethod,
+        false, 
+        function(dataURL) {
+          
+          // Update the Dropzone file thumbnail
+          myDropZone.emit('thumbnail', file, dataURL);
+          // Return the file to Dropzone
+          done(blob);
+      });
+    });
+    // Remove the editor from the view
+    document.body.removeChild(editor);
+  });
+  // Create an image node for Cropper.js
+  var image = new Image();
+  image.src = URL.createObjectURL(file);
+  editor.appendChild(image);
+  
+  // Create Cropper.js
+  var cropper = new Cropper(image, { aspectRatio: 1.7 });
+},
+    init: function() {
+    this.on("processing", function(file) {
+      this.options.url = 'location/' + location_id + '/add_images';
+    });
+  }
+    
+};
+  
+$('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
+</script>
