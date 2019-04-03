@@ -19,7 +19,7 @@ class EventController < ApplicationController
       path +=  x.to_s
     end
     
-    @event = Event.new(location: location, name: name, path: path)
+    @event = Event.new(location: location, name: name, path: path, user_id: current_user.id)
     
     @event.start_time = Time.zone.strptime(startTime, "%d.%m.%Y %H:%M")
     if endTime != " "

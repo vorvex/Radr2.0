@@ -7,11 +7,13 @@
     </a>
     <div class="card-body">
       <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;"><%= event.name %></h5>
-      <h6 class="card-subtitle mb-2 text-muted"><%= event.time_str %></h6>
-      <a href="/e/<%= event.id %>/edit" class="card-link">Bearbeiten</a>
-      <a href="/e/<%= event.id %>/tickets" class="card-link">Ticketoptionen</a>
-      <a href="/e/<%= event.id %>/share" class="card-link">Link teilen</a>
+      <h6 class="card-subtitle mb-2 text-muted"><%= event.time_str %></h6>   
     </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" style="padding: 12px 10px"><a href="/e/<%= event.id %>/edit" class="card-link">Bearbeiten</a></li>
+      <li class="list-group-item" style="padding: 12px 10px"><a href="/e/<%= event.id %>/tickets" class="card-link">Ticketoptionen</a></li>
+      <li class="list-group-item" style="padding: 12px 10px"><a href="/e/<%= event.id %>/share" class="card-link">Link teilen</a></li>
+    </ul>
   </div>
   <% end %>
 </div>

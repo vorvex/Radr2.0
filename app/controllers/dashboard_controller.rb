@@ -83,6 +83,16 @@ class DashboardController < ApplicationController
     end
   end
   
+  def profiles
+    @user = current_user
+    
+  end
+  
+  def abo
+    @user = current_user
+    
+  end
+  
 private
   
   def has_profile?

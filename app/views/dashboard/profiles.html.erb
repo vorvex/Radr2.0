@@ -1,0 +1,27 @@
+<%= render 'dashboard/shared/header3', header: 'Profile bearbeiten' %>
+<div class="container">
+  <% @user.locations.each do |profile| %>
+    <div class="card" data-id="location<%= profile.id %>">
+      <div class="card-header">
+        <%= profile.name %>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a href="/?profile=<%= profile.id %>&type=location">Profil anzeigen</a></li>
+        <li class="list-group-item" hidden><a href="">Profil Übertragen</a></li>
+        <li class="list-group-item"><%= button_to "Profil löschen", delete_location_url(profile.id), data: { confirm: "Sind Sie sich wirklich sicher?" }, style: "padding: 0; color: #337ab7; font-size: 14px; font-family: hero-new;", method: :delete, :remote => true %></li>
+      </ul>
+    </div>
+  <% end %>
+  <% @user.performers.each do |profile| %>
+    <div class="card" data-id="performer<%= profile.id %>" >
+      <div class="card-header">
+        <%= profile.name %>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a href="/?profile=<%= profile.id %>&type=performer">Profil anzeigen</a></li>
+        <li class="list-group-item" hidden><a href="">Profil Übertragen</a></li>
+        <li class="list-group-item"><%= button_to "Profil löschen", delete_performer_url(profile.id), data: { confirm: "Sind Sie sich wirklich sicher?" }, style: "padding: 0; color: #337ab7; font-size: 14px; font-family: hero-new;", method: :delete, :remote => true %></li>
+      </ul>
+    </div>
+  <% end %>
+</div>

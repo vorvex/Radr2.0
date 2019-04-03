@@ -1,10 +1,10 @@
 <%= render 'dashboard/shared/header2', header: 'Link teilen', link: @resource.id, type: 'performer' %>
 <div class="container">
-  <div class="share-card" style="max-width: 500px">
+  <div class="share-card" style="max-width: 400px; width: 80%;">
     <img src="<%= url_for(@resource.images.first) %>" alt="">
       <div class="share-card-inner">
         <h3><%= @resource.name %></h3>
-        <span><%= @resource.time_str %>, <%= @resource.location.name %></span>
+        <span><%= @resource.description[0..100] %></span>
       </div> 
   </div>  
 </div>

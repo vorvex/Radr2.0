@@ -2,10 +2,12 @@
 <div class="editdropzone"> 
   <div class="dropzone" id="myDropzone"></div>
 </div>
-<div class="edit-image-container" style="width: 100vw;" data-id="<%= @performer.profile_image.id %>">
-  <img src="<%= url_for(@performer.profile_image) %>" alt="" width="100%">
-  <%= button_to "Löschen", delete_image_url(:id => @performer.profile_image.id), method: :delete, data: { confirm: 'Sind sie sich sicher?'}, :remote => true %>
-</div>
+<% if @performer.profile_image.attached? %>
+  <div class="edit-image-container" style="width: 100vw;" data-id="<%= @performer.profile_image.id %>">
+    <img src="<%= url_for(@performer.profile_image) %>" alt="" width="100%">
+    <%= button_to "Löschen", delete_image_url(:id => @performer.profile_image.id), method: :delete, data: { confirm: 'Sind sie sich sicher?'}, :remote => true %>
+  </div>
+<% end %>
 <div id="image-upload">  
   <svg width="32px" height="28px" viewBox="0 0 32 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g id="Page-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">

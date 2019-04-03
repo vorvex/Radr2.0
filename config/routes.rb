@@ -45,6 +45,9 @@ Rails.application.routes.draw do
   patch 'l/:id/opening_hours' => 'location#update_opening_hours', as: :update_opening_hours
   
   get 'einstellungen' => 'dashboard#settings'
+  get 'einstellungen/profiles' => 'dashboard#profiles'
+  get 'einstellungen/abonnement' => 'dashboard#abo'
+  
   get 'neue-location' => 'dashboard#new_location'
   get 'neuer-performer' =>'dashboard#new_performer'
   get 'neues-event' => 'dashboard#new_event'
@@ -83,12 +86,12 @@ Rails.application.routes.draw do
   patch 'performer/edit/:id' => 'performer#edit', as: :edit_performer
   
   delete 'event/delete/:id' => 'event#delete', as: :delete_event
-  delete 'location/delete/:id' => 'location#delete'
+  delete 'location/delete/:id' => 'location#delete', as: :delete_location
   delete 'delete_image/:id' => 'dashboard#delete_image', as: :delete_image
   delete 'opening_hour/delete/:id' => 'opening_hour#delete'
   delete 'social_link/delete/:id' => 'social_link#destroy', as: :destroy_link
   delete 'ticket/delete/:id' => 'ticket#destroy', as: :destroy_ticket
-  delete 'performer/delete/:id' => 'performer#delete'
+  delete 'performer/delete/:id' => 'performer#delete', as: :delete_performer
   
   devise_for :users
 

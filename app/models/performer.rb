@@ -7,7 +7,9 @@ class Performer < ApplicationRecord
   has_one_attached :profile_image_thumbnail
   
   def events
-    Event.where('performer_id IS ?', self.id)
+    user = User.find(self.user_id)
+    
+    Event.where('user_id IS ?', user.id).where('performer_id IS ?', self.id)
   end
   
   def upcoming_events

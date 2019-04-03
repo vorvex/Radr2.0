@@ -92,6 +92,12 @@ class PerformerController < ApplicationController
     @social_links = @resource.social_links
   end
   
-  def delete
+   def delete
+    @profile = Performer.find(params[:id])
+    @profile.delete
+    
+    respond_to do |format|
+      format.js { render partial: 'performer/destroyed' }
+    end
   end
 end

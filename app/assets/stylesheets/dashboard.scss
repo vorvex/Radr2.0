@@ -67,13 +67,31 @@ h2 {
 }
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
+  }
 body.dashboard {
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
   background-color: #ffffff;
   padding-top: 60px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #DD2476;
+    border-color: #DD2476;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle, .btn-primary:not(:disabled):not(.disabled):hover {
+    color: #fff;
+    background-color: #DD2476;
+    border-color: #DD2476;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+    color: #fff;
+    background-color: #DD2476;
+    border-color: #DD2476;
 }
 
 // Header
@@ -640,7 +658,6 @@ label {
 @media (min-width: 768px) {
   .card {
     display: inline-flex;
-    height: 280px;
     margin-bottom: 10px;
     width: 49%;
   }

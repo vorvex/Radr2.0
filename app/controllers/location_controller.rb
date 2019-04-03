@@ -219,6 +219,15 @@ class LocationController < ApplicationController
     
   end
   
+  def delete
+    @profile = Location.find(params[:id])
+    @profile.delete
+    
+    respond_to do |format|
+      format.js { render partial: 'location/destroyed' }
+    end
+  end
+  
   private
   
   
