@@ -21,9 +21,9 @@ class EventController < ApplicationController
     
     @event = Event.new(location: location, name: name, path: path, user_id: current_user.id)
     
-    @event.start_time = Time.zone.strptime(startTime, "%d.%m.%Y %H:%M")
+    @event.start_time = Time.strptime(startTime, "%d.%m.%Y %H:%M")
     if endTime != " "
-      @event.end_time = Time.zone.strptime(endTime, "%d.%m.%Y %H:%M")
+      @event.end_time = Time.strptime(endTime, "%d.%m.%Y %H:%M")
     end
     @event.save
     respond_to do |format|
@@ -133,30 +133,21 @@ class EventController < ApplicationController
     startTime = params[:event][:start_date] + " " + params[:event][:start_time]
     endTime = params[:event][:end_date] + " " + params[:event][:end_time]
     
-    path = (location.locality + " " + name).downcase.gsub(" ", "-")
-    x = 0
-    while !Event.find_by_path(path).nil?
-      if x > 0
-        path.chop!
-      end
-      x += 1
-      path +=  x.to_s
-    end
-    
-    @event.start_time = Time.zone.strptime(startTime, "%d.%m.%Y %H:%M")
+    @event.start_time = Time.strptime(startTime, "%d.%m.%Y %H:%M")
     if endTime != " "
-      @event.end_time = Time.zone.strptime(endTime, "%d.%m.%Y %H:%M")
+      @event.end_time = Time.strptime(endTime, "%d.%m.%Y %H:%M")
     end
     
-    @event.update(name: name , description: params[:description], category: params[:event][:category], location_id: location.id, path: path )
+    @event.update(name: name , description: params[:description], category: params[:event][:category], location_id: location.id )
     
     @facebook = @event.social_links.find_by_channel('Facebook')
     @instagram = @event.social_links.find_by_channel('Instagram')
     @youtube = @event.social_links.find_by_channel('YouTube')
     @soundcloud = @event.social_links.find_by_channel('SoundCloud')
+    @webseite = @event.social_links.find_by_channel('Webseite')
     
     if @facebook.nil? && params[:facebook] != ""
-      SocialLink.create(channel: 'Facebook', url: params[:facebook], location_id: @location.id)
+      SocialLink.create(channel: 'Facebook', url: params[:facebook], event_id: @event.id)
     elsif !@facebook.nil? && params[:facebook] != ""
       @facebook.update(url: params[:facebook])
     elsif !@facebook.nil? && params[:facebook] == ""
@@ -164,7 +155,7 @@ class EventController < ApplicationController
     end
     
     if @instagram.nil? && params[:instagram] != ""
-      SocialLink.create(channel: 'Instagram', url: params[:instagram], location_id: @location.id)
+      SocialLink.create(channel: 'Instagram', url: params[:instagram], event_id: @event.id)
     elsif !@instagram.nil? && params[:instagram] != ""
       @instagram.update(url: params[:instagram])
     elsif !@instagram.nil? && params[:instagram] == ""
@@ -172,7 +163,7 @@ class EventController < ApplicationController
     end
     
     if @youtube.nil? && params[:youtube] != ""
-      SocialLink.create(channel: 'YouTube', url: params[:youtube], location_id: @location.id)
+      SocialLink.create(channel: 'YouTube', url: params[:youtube], event_id: @event.id)
     elsif !@youtube.nil? && params[:youtube] != ""
       @youtube.update(url: params[:youtube])
     elsif !@youtube.nil? && params[:youtube] == ""
@@ -180,11 +171,19 @@ class EventController < ApplicationController
     end
     
     if @soundcloud.nil? && params[:soundcloud] != ""
-      SocialLink.create(channel: 'SoundCloud', url: params[:soundcloud], location_id: @location.id)
+      SocialLink.create(channel: 'SoundCloud', url: params[:soundcloud], event_id: @event.id)
     elsif !@soundcloud.nil? && params[:soundcloud] != ""
       @soundcloud.update(url: params[:soundcloud])
     elsif !@soundcloud.nil? && params[:soundcloud] == ""
       @soundcloud.delete
+    end
+    
+    if @webseite.nil? && params[:webseite] != ""
+      SocialLink.create(channel: 'Webseite', url: params[:webseite], event_id: @event.id)
+    elsif !@webseite.nil? && params[:webseite] != ""
+      @webseite.update(url: params[:webseite])
+    elsif !@webseite.nil? && params[:webseite] == ""
+      @webseite.delete
     end
     
     @event.save

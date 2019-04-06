@@ -8,6 +8,21 @@ class PublicViewController < ApplicationController
     @image = url_for(@resource.images.first)
     @description = @resource.description
     @type = "Location"
+    
+    @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
+    
+    if !@soundcloud.nil?
+      require 'soundcloud'
+      # create a client object with your app credentials
+      client = Soundcloud.new(:client_id => 'L4uORyiM1NIPHMzZNvMUHBdeFbhHkW9b')
+
+      # get a tracks oembed data
+      track_url = @soundcloud.url
+      embed_info = client.get('/oembed', :url => track_url)
+
+      # print the html for the player widget
+      @soundcloud_iframe = embed_info['html']
+    end
   end
 
   def event
@@ -17,6 +32,21 @@ class PublicViewController < ApplicationController
     @image = url_for(@resource.images.first)
     @description = @resource.description
     @type = "Event"
+    
+    @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
+    
+    if !@soundcloud.nil?
+      require 'soundcloud'
+      # create a client object with your app credentials
+      client = Soundcloud.new(:client_id => 'L4uORyiM1NIPHMzZNvMUHBdeFbhHkW9b')
+
+      # get a tracks oembed data
+      track_url = @soundcloud.url
+      embed_info = client.get('/oembed', :url => track_url)
+
+      # print the html for the player widget
+      @soundcloud_iframe = embed_info['html']
+    end
   end
 
   def performer
@@ -26,6 +56,21 @@ class PublicViewController < ApplicationController
     @image = url_for(@resource.profile_image)
     @description = @resource.description
     @type = "Performer"
+    
+    @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
+    
+    if !@soundcloud.nil?
+      require 'soundcloud'
+      # create a client object with your app credentials
+      client = Soundcloud.new(:client_id => 'L4uORyiM1NIPHMzZNvMUHBdeFbhHkW9b')
+
+      # get a tracks oembed data
+      track_url = @soundcloud.url
+      embed_info = client.get('/oembed', :url => track_url)
+
+      # print the html for the player widget
+      @soundcloud_iframe = embed_info['html']
+    end
   end
   
   def tickets

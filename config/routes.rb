@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root 'dashboard#index'
   
   get 'first_login' => 'dashboard#first_login', as: :first_login
+  get 'first_event' => 'dashboard#first_event', as: :first_event
   
   get 'l/show/:id' => 'dashboard#show_location', as: :show_location
   get 'p/show/:id' => 'dashboard#show_performer', as: :show_performer
@@ -46,7 +47,19 @@ Rails.application.routes.draw do
   
   get 'einstellungen' => 'dashboard#settings'
   get 'einstellungen/profiles' => 'dashboard#profiles'
-  get 'einstellungen/abonnement' => 'dashboard#abo'
+  get 'einstellungen/abo' => 'dashboard#abo'
+  get 'einstellungen/abo/plans' => 'payment#plans'
+  get 'einstellungen/abo/bezahlen' => 'payment#payment_method'
+  get 'select_abo' => 'payment#select_abo', as: :select_abo
+  
+  get 'success' => 'payment#success'  
+  get 'cancel' => 'payment#cancel'
+  
+  post 'webhook/customer_updated' => 'payment#customer_updated'
+  post 'webhook/charge' => 'payment#charge'
+  post 'webhook/invoice_created' => 'payment#invoice_created'
+  
+  
   
   get 'neue-location' => 'dashboard#new_location'
   get 'neuer-performer' =>'dashboard#new_performer'

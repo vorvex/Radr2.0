@@ -12,8 +12,10 @@ gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 gem "aws-sdk-s3", require: false
 gem "tinify"
 gem 'colorscore', '~> 0.0.5'
-
+gem 'stripe'
 gem 'rails_real_favicon'
+
+gem 'soundcloud', '~> 0.3.4'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'

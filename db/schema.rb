@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_03_120541) do
+ActiveRecord::Schema.define(version: 2019_04_06_111218) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(version: 2019_04_03_120541) do
     t.datetime "updated_at", null: false
     t.string "path"
     t.integer "user_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "url"
+    t.string "pdf"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "locations", force: :cascade do |t|
@@ -128,6 +136,16 @@ ActiveRecord::Schema.define(version: 2019_04_03_120541) do
     t.string "plan", default: "free", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cc_name"
+    t.string "cc_exp_year"
+    t.string "cc_exp_month"
+    t.string "cc_last_four"
+    t.string "cc_brand"
+    t.string "cc_fingerprint"
+    t.string "subscription_id"
+    t.string "customer_id"
+    t.boolean "onboarding"
+    t.boolean "locked", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

@@ -6,16 +6,20 @@ class User < ApplicationRecord
   
   has_many :locations, dependent: :destroy
   has_many :performers, dependent: :destroy
+  has_many :events, dependent: :destroy
+  has_many :invoices, dependent: :destroy
 
-  def events
-    arr = Array.new
-    self.locations.each do |location|
-      arr << location.events
+
+  
+  def plan_str
+    case self.plan
+      when "free"
+        return "Kostenlos"
+      when "Gold"
+        return "Gold"
+      when "Platin"
+        return "Platin"
     end
-    self.performers.each do |performer|
-      arr << performer.events
-    end
-    return arr.flatten
   end
   
 end

@@ -6,8 +6,14 @@ class DashboardController < ApplicationController
     
   end
   
+  def first_event
+    
+  end
+  
   def index
-    has_profile?
+    finish_onboarding
+    onboarding_done?
+    
     @user = current_user
     
     if params[:profile] != nil
@@ -89,8 +95,7 @@ class DashboardController < ApplicationController
   end
   
   def abo
-    @user = current_user
-    
+    @user = current_user    
   end
   
 private
@@ -98,6 +103,28 @@ private
   def has_profile?
     if !current_user.locations.any? && !current_user.performers.any?
       redirect_to first_login_path
+    end
+  end
+  
+  def finish_onboarding
+    if params[:onboardingfinished]
+      current_user.onboarding = true
+      current_user.save!
+    end
+  end
+  
+  def onboarding_done?
+    if !current_user.locations.any? && !current_user.performers.any?      
+      redirect_to first_login_path
+      return
+    else
+      if current_user.onboarding != true
+        if current_user.events.length == 0
+          redirect_to first_event_path
+        else
+          redirect_to select_abo_path
+        end
+      end
     end
   end
   

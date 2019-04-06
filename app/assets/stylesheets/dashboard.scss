@@ -34,7 +34,7 @@ p, span, a, .subheader, svg {
   font-family: hero-new;
   font-weight: 400;
   font-size: 14px;
-  font-height: 20px;
+  line-height: 20px;
 }
 
 h1 {
@@ -577,6 +577,18 @@ label {
     justify-content: center;
 }
 
+.dz-default:before {
+    content: '';
+    background-image: url(/images/add_images.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 30%;
+    opacity: 0.5;
+}
+
 .dropzone .dz-preview.dz-image-preview {
     background: transparent;
 }
@@ -907,4 +919,222 @@ label {
     left: 50vw;
     text-align: center;
   }  
+}
+
+/* First event */
+  .febg {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    background-position: center;
+    background-size: cover;
+    background-image: url('/images/first-event-bg.jpg')
+  }
+  
+  .febg h1 {
+    position: fixed;
+    color: white;
+    width: 100vw;
+    text-align: center;
+    top: 20px;
+  }
+
+  .febg-footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+  }
+
+  .febg-footer a {
+    display: block;
+  }
+    
+  .febg-footer a {
+    height: 40px;
+    width: calc(100% - 20px);
+    max-width: 500px;
+    margin: auto;    
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+  
+  .febg-footer .btn-secondary {
+    color: #FF3366;
+    background: white;
+    margin-bottom: 0px;
+}
+
+/* Abonnement */
+
+.abo-container {
+  width: 100%;
+}
+
+.abo-container .top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+
+.abo-container .top h2 {
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.abo-container .top a {
+  text-align: right;
+  color: black;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+#abonnement {
+  display: flex;
+  border-radius: 5px;
+  background-color: #FBFBFB;
+  justify-content: flex-start;
+  padding: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#abonnement img {
+  height: 40px;
+  opacity: 0.5;
+  margin-right: 20px
+}
+
+#abonnement span {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 500;
+}
+
+
+
+#bezahlmethode {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #FBFBFB;
+  margin-bottom: 20px;
+}
+
+#bezahlmethode img {
+  margin-right: 20px;
+  height: 40px;
+}
+
+#rechnungen {
+  
+}
+
+.invoice {
+  display: flex;
+  padding: 10px;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  justify-content: space-between;
+  align-content: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.invoice.inactive {
+  background-color: #FBFBFB;
+  box-shadow: none;
+}
+
+.invoice span {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 500;
+}
+
+.invoice a {
+  border: solid 1px #4F4F4F;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  padding: 4px 10px;
+  color: #4F4F4F;
+  background: transparent;
+}
+
+/* Abonnement - Plans */
+
+.pricing-container {
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+.pricing-top {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: end;
+  flex-direction: row;
+}
+
+.pricing-top span {
+  flex-grow: 10;
+}
+
+.pricing-top img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.pricing-top svg {
+  margin-right: 40px;
+}
+
+.pricing-btn {
+  border: solid 2px #FF3366;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  padding: 8px 0;
+  width: 120px;
+  color: white;
+  background: #FF3366;
+}
+
+.pricing-btn.selected {
+  color: #FF3366;
+  background: transparent;
+}
+
+.pricing-bottom {
+  display: none;
+  width: 100%;
+}
+
+.pricing-bottom hr {
+  width: 100%;
+  background: #BDBDBD;
+  margin: 10px 0px;
+}
+
+.pricing-par {
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0px;
 }

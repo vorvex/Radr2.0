@@ -88,8 +88,62 @@ class PerformerController < ApplicationController
   end
   
   def social_links
-    @resource = Performer.find(params[:id])
-    @social_links = @resource.social_links
+    @performer = Performer.find(params[:id])
+    @social_links = @performer.social_links
+  end
+  
+  def edit_social_links
+    @performer = Performer.find(params[:id])
+    @facebook = @performer.social_links.find_by_channel('Facebook')
+    @instagram = @performer.social_links.find_by_channel('Instagram')
+    @youtube = @performer.social_links.find_by_channel('YouTube')
+    @soundcloud = @performer.social_links.find_by_channel('SoundCloud')
+    @webseite = @performer.social_links.find_by_channel('Webseite')
+    
+    if @facebook.nil? && params[:facebook] != ""
+      SocialLink.create(channel: 'Facebook', url: params[:facebook], performer_id: @performer.id)
+    elsif !@facebook.nil? && params[:facebook] != ""
+      @facebook.update(url: params[:facebook])
+    elsif !@facebook.nil? && params[:facebook] == ""
+      @facebook.delete
+    end
+    
+    if @instagram.nil? && params[:instagram] != ""
+      SocialLink.create(channel: 'Instagram', url: params[:instagram], performer_id: @performer.id)
+    elsif !@instagram.nil? && params[:instagram] != ""
+      @instagram.update(url: params[:instagram])
+    elsif !@instagram.nil? && params[:instagram] == ""
+      @instagram.delete
+    end
+    
+    if @youtube.nil? && params[:youtube] != ""
+      SocialLink.create(channel: 'YouTube', url: params[:youtube], performer_id: @performer.id)
+    elsif !@youtube.nil? && params[:youtube] != ""
+      @youtube.update(url: params[:youtube])
+    elsif !@youtube.nil? && params[:youtube] == ""
+      @youtube.delete
+    end
+    
+    if @soundcloud.nil? && params[:soundcloud] != ""
+      SocialLink.create(channel: 'SoundCloud', url: params[:soundcloud], performer_id: @performer.id)
+    elsif !@soundcloud.nil? && params[:soundcloud] != ""
+      @soundcloud.update(url: params[:soundcloud])
+    elsif !@soundcloud.nil? && params[:soundcloud] == ""
+      @soundcloud.delete
+    end
+    
+    if @webseite.nil? && params[:webseite] != ""
+      SocialLink.create(channel: 'Webseite', url: params[:webseite], performer_id: @performer.id)
+    elsif !@webseite.nil? && params[:webseite] != ""
+      @webseite.update(url: params[:webseite])
+    elsif !@webseite.nil? && params[:webseite] == ""
+      @webseite.delete
+    end
+    
+    path = '/?profile=' + @performer.id.to_s + '&type=performer'
+    
+    redirect_to path
+    
   end
   
    def delete

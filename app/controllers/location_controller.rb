@@ -180,6 +180,7 @@ class LocationController < ApplicationController
     @instagram = @location.social_links.find_by_channel('Instagram')
     @youtube = @location.social_links.find_by_channel('YouTube')
     @soundcloud = @location.social_links.find_by_channel('SoundCloud')
+    @webseite = @location.social_links.find_by_channel('Webseite')
     
     if @facebook.nil? && params[:facebook] != ""
       SocialLink.create(channel: 'Facebook', url: params[:facebook], location_id: @location.id)
@@ -211,6 +212,14 @@ class LocationController < ApplicationController
       @soundcloud.update(url: params[:soundcloud])
     elsif !@soundcloud.nil? && params[:soundcloud] == ""
       @soundcloud.delete
+    end
+    
+    if @webseite.nil? && params[:webseite] != ""
+      SocialLink.create(channel: 'Webseite', url: params[:webseite], location_id: @location.id)
+    elsif !@webseite.nil? && params[:webseite] != ""
+      @webseite.update(url: params[:webseite])
+    elsif !@webseite.nil? && params[:webseite] == ""
+      @webseite.delete
     end
     
     path = '/?profile=' + @location.id.to_s + '&type=location'

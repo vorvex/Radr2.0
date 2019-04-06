@@ -82,8 +82,21 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon4"><img src="/images/soundcloud.svg" alt="Soundcloud" width="20px"></span>
         </div>
-        <input type="text" placeholder="Link" aria-label="soundcloud" id="soundcloud" aria-describedby="basic-addon4" name="soundcloud" class="form-control
+        <input type="text" placeholder="http://soundcloud.com/username" aria-label="soundcloud" id="soundcloud" aria-describedby="basic-addon4" name="soundcloud" class="form-control
         <% if !@social_links.find_by_channel('SoundCloud').nil? %>is-valid" value="<%= @social_links.find_by_channel('SoundCloud').url %><% end %>">
+        <small></small>
+      </div>
+    </div>
+  
+  <!-- Webseite -->
+    <div class="form-group mb-3">
+      <label for="webseite">Webseite</label>
+      <div class="input-group" style="flex-wrap: nowrap; display: flex;">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon4"><img src="/images/website.svg" alt="Website" width="20px"></span>
+        </div>
+        <input type="text" placeholder="www.beispiel.de" aria-label="webseite" id="webseite" aria-describedby="basic-addon4" name="webseite" class="form-control
+        <% if !@social_links.find_by_channel('Webseite').nil? %>is-valid" value="<%= @social_links.find_by_channel('Webseite').url %><% end %>">
       </div>
     </div>
   <% end %>

@@ -1,0 +1,162 @@
+<nav class="radr-navbar">
+
+    <span class="centered">Abonnement wählen</span>
+  
+      <div class="menu">
+        <div id="hamburger" class="hamburger-icon-container">                        
+          <span id="top"></span>
+          <span id="midleft"></span>
+          <span id="midright"></span>
+          <span id="bottom"></span>
+        </div>
+        
+        <ul>
+          <li><a href="/" data-type="inbound-link">Dashboard</a></li>
+          <li><a href="/neues-event" data-type="inbound-link">Event erstellen</a></li>
+          <li><a href="/neue-location" data-type="inbound-link">Location erstellen</a></li>
+          <li><a href="/einstellungen" data-type="inbound-link">Einstellungen</a></li>
+          <li><%= link_to "Abmelden", destroy_user_session_path, :method => :delete %></li>
+        </ul>
+        
+      </div>
+</nav>
+<script>
+  $('#hamburger').on('click', function(){
+    $('.menu').toggleClass('active');
+  })
+</script>
+<div class="container">
+
+  <div class="pricing-container" style="z-index: 3;">
+    <div class="pricing-top">
+      <img src="/images/Free@2x.png" alt="Free">
+      <span></span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="84" height="40" viewBox="0 0 84 40">
+        <g fill="none" fill-rule="evenodd" font-family="hero-new" transform="translate(0 -4)">
+          <text fill="#000" font-size="24">
+            <tspan x="14" y="25">0,00€</tspan>
+          </text>
+          <text fill="#FF2D55" font-size="12">
+            <tspan x="40" y="40"></tspan>
+          </text>
+        </g>
+      </svg>
+      <a class="pricing-btn" href="/?onboardingfinished=true">Select</a>
+    </div>
+    <div class="pricing-bottom" style="display: block">
+      <hr>
+      <p class="pricing-par">
+        1 Location & 1 Performer <br/>
+        3 Veranstaltungen pro Monat <br/>
+        3 Bilder pro Profil/Veranstaltung <br/>
+        1000 Profilansichten pro Monat <br/>
+        Keine Ticketlinks
+      </p>
+    </div>
+  </div>
+  
+  <div class="pricing-container" style="z-index: 2;">
+    <div class="pricing-top">
+      <img src="/images/Gold@2x.png" alt="Gold">
+      <span></span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="84" height="40" viewBox="0 0 84 40">
+        <g fill="none" fill-rule="evenodd" font-family="hero-new" transform="translate(0 -4)">
+          <text fill="#000" font-size="24">
+            <tspan x="0" y="25">20,00€</tspan>
+          </text>
+          <text fill="#FF2D55" font-size="12">
+            <tspan x="40" y="40">/monat</tspan>
+          </text>
+        </g>
+      </svg>
+      <button class="pricing-btn" id="checkout-button-gold" role="link">Select</button>
+    </div>
+    <div id="error-message-gold"></div>
+    <div class="pricing-bottom" style="display: block">
+      <hr>
+      <p class="pricing-par">
+        10 Locations & 10 Performer <br/>
+        100 Veranstaltungen pro Monat <br/>
+        10 Bilder pro Profil/Veranstaltung <br/>
+        Unbegrenzte Profilansichten pro Monat <br/>
+        Ticketlinks 
+      </p>
+    </div>
+  </div>
+  
+  <div class="pricing-container" style="z-index: 1;">
+    <div class="pricing-top">
+      <img src="/images/Platin@2x.png" alt="Platin">
+      <span></span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="84" height="40" viewBox="0 0 84 40">
+        <g fill="none" fill-rule="evenodd" font-family="hero-new" transform="translate(0 -4)">
+          <text fill="#000" font-size="24">
+            <tspan x="0" y="25">50,00€</tspan>
+          </text>
+          <text fill="#FF2D55" font-size="12">
+            <tspan x="40" y="40">/monat</tspan>
+          </text>
+        </g>
+      </svg>
+      <button class="pricing-btn" id="checkout-button-platin" role="link">Select</button>
+    </div>
+    <div id="error-message-platin"></div>
+    <div class="pricing-bottom" style="display: block">
+      <hr>
+      <p class="pricing-par">
+        Unbegrenzte Anzahl von Locations, Performern, <br/>
+        Veranstaltungen & Profilansichten <br/>
+        20 Bilder pro Profil/Veranstaltung <br/>
+        Automatische Erstellung von Eventseite wenn ein Facebook-Event erstellt wird
+      </p>
+    </div>
+  </div>
+  
+</div>
+<script>
+  $('.pricing-container').on('click', function(){
+    if ($('button').filter(function() { return $(this).is(":hover"); }).length) {      
+    } else {
+    $(this).children('.pricing-bottom').slideToggle();
+  }});
+</script>
+<!-- Load Stripe.js on your website. -->
+<script src="https://js.stripe.com/v3"></script>
+
+<script>
+  var stripe = Stripe('pk_test_J1sgz5l3WKOCVy7Lm5SgqSUB', {
+    betas: ['checkout_beta_4']
+  });
+
+  var checkoutButtonGold = document.getElementById('checkout-button-gold');
+  checkoutButtonGold.addEventListener('click', function () {
+    // When the customer clicks on the button, redirect
+    // them to Checkout.
+    stripe.redirectToCheckout({
+      sessionId: "<%= @gold_session.id %>",
+      }).then(function (result) {
+        if (result.error) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer.
+          var displayError = document.getElementById('error-message-gold');
+          displayError.textContent = result.error.message;
+        }
+      });
+  });
+  
+  var checkoutButtonPlatin = document.getElementById('checkout-button-platin');
+  checkoutButtonPlatin.addEventListener('click', function () {
+    // When the customer clicks on the button, redirect
+    // them to Checkout.
+    stripe.redirectToCheckout({
+      sessionId: "<%= @platin_session.id %>",
+      }).then(function (result) {
+        if (result.error) {
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer.
+          var displayError = document.getElementById('error-message-platin');
+          displayError.textContent = result.error.message;
+        }
+      });
+  });
+</script>
