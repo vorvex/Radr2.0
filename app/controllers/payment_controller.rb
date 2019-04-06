@@ -81,8 +81,8 @@ class PaymentController < ApplicationController
     Stripe.api_version = "2018-11-08; checkout_sessions_beta=v1"
     
     @user = current_user
-    success = 'https://radr2-leondahmer.codeanyapp.com/success'
-    cancel = 'https://radr2-leondahmer.codeanyapp.com/cancel'
+    success = 'https://radr2.herokuapp.com/success'
+    cancel = 'https://radr2.herokuapp.com/cancel'
     
       
         @gold_session = Stripe::Checkout::Session.create({
@@ -112,8 +112,8 @@ class PaymentController < ApplicationController
     Stripe.api_version = "2018-11-08; checkout_sessions_beta=v1"
     
     @user = current_user
-    success = 'https://radr2-leondahmer.codeanyapp.com/success'
-    cancel = 'https://radr2-leondahmer.codeanyapp.com/cancel'
+    success = 'https://radr2.herokuapp.com/success'
+    cancel = 'https://radr2.herokuapp.com/cancel'
     
       
         @gold_session = Stripe::Checkout::Session.create({
