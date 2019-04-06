@@ -21,6 +21,7 @@ class PaymentController < ApplicationController
       subscription_id = params[:data][:object][:subscriptions][:data].first[:id]      
       @user.subscription_id = subscription_id
       @user.plan = nickname
+      @user.onboarding = true
     end
     
     @user.save!
