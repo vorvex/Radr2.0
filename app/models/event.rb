@@ -1,8 +1,8 @@
 class Event < ApplicationRecord
-  has_many :tickets, dependent: :destroy
+  has_many :tickets, :dependent => :delete_all
   has_one :performer
   belongs_to :location
-  has_many :social_links, dependent: :destroy
+  has_many :social_links, :dependent => :delete_all
   
   has_one_attached :images_thumbnail
   has_many_attached :images

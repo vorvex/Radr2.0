@@ -18,3 +18,22 @@ location_id = <%= @location.id %>;
 
 $('#myDropzone').dropzone();
 $('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
+
+var businessHoursManager = $("#business-hours").businessHours({
+    postInit:function(){
+        $('.operationTimeFrom, .operationTimeTill').timepicker({
+            'timeFormat': 'H:i',
+            'step': 15
+            });
+        $('.operationTimeFrom, .operationTimeTill, .operationState').on('change', function(){
+          $("textarea#opening_hours").val(JSON.stringify(businessHoursManager.serialize()));
+        });
+    },
+    dayTmpl:'<div class="dayContainer" >' +
+        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"></div>' +
+        '<div class="weekday"></div>' +
+        '<div class="operationDayTimeContainer">' +
+        '<div class="operationTime input-group"><input type="text" name="startTime" class="form-control operationTimeFrom" value=""></div>' +
+        '<div class="operationTime input-group"><input type="text" name="endTime" class="form-control operationTimeTill" value=""></div>' +
+        '</div></div>'
+});

@@ -1,6 +1,6 @@
 class Performer < ApplicationRecord
   has_one :user
-  has_many :social_links, dependent: :destroy
+  has_many :social_links, :dependent => :delete_all
   has_many :events
   
   has_one_attached :profile_image

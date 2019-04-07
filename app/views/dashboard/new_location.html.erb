@@ -132,31 +132,12 @@
 <!-- JQuery Business Hours -->
 <script src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
 <script src="/jquery.businessHours.min.js"></script>
-<script>
-  var businessHoursManager = $("#business-hours").businessHours({
-                    postInit:function(){
-                        $('.operationTimeFrom, .operationTimeTill').timepicker({
-                            'timeFormat': 'H:i',
-                            'step': 15
-                            });
-                        $('.operationTimeFrom, .operationTimeTill, .operationState').on('change', function(){
-                          $("textarea#opening_hours").val(JSON.stringify(businessHoursManager.serialize()));
-                        });
-                    },
-                    dayTmpl:'<div class="dayContainer" >' +
-                        '<div data-original-title="" class="colorBox"><input type="checkbox" class="invisible operationState"></div>' +
-                        '<div class="weekday"></div>' +
-                        '<div class="operationDayTimeContainer">' +
-                        '<div class="operationTime input-group"><input type="text" name="startTime" class="form-control operationTimeFrom" value=""></div>' +
-                        '<div class="operationTime input-group"><input type="text" name="endTime" class="form-control operationTimeTill" value=""></div>' +
-                        '</div></div>'
-                });
-</script>
 <!-- Dropzone JS -->
 <script src="https://unpkg.com/dropzone"></script>
 <script src="https://unpkg.com/cropperjs"></script>
 <script>
   var location_id = 0;
+  $(window).ready(function(){
       Dropzone.options.myDropzone = {
        url: '/location/4/add_images',
        transformFile: function(file, done) {
@@ -224,6 +205,8 @@
     };
 
     $('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
+    
+  });
 </script>
 <!-- Step 1 -->
 <script>
