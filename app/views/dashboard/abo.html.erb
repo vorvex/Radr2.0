@@ -58,5 +58,15 @@
           </div>
         <% end %>
     </div>
+      <%= form_for(@user, :html => {role: "form", id: "rechnung_email"}, url: update_invoice_mail_url) do |f| %>
+        <span>Rechnung per Email senden</span>
+        <button class="toggle_check<% if @user.bill_per_email %> active<% end %>"></button>
+      <% end %>    
+    </div>
   </div>
-</div>
+<script>
+    $(document).ready(function() { 
+            $('#rechnung_email').ajaxForm();
+        });
+</script>
+<script src="/jquery.form.min.js"></script>

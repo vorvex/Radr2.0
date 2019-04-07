@@ -98,6 +98,20 @@ class DashboardController < ApplicationController
     @user = current_user    
   end
   
+  def invoice_email
+    @user = current_user
+    @user.bill_per_email = !@user.bill_per_email
+    if @user.save!
+      respond_to do |format|
+        format.js { render :js => "$('.toggle_check').toggleClass('active');" }
+      end
+    else
+      respond_to do |format|
+        format.js { render :js => "alert('danger', 'Es ist ein Fehler aufgetretten.')" }
+      end
+    end
+  end
+  
 private
   
   def has_profile?

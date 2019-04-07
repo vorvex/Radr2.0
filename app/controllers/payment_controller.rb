@@ -24,7 +24,11 @@ class PaymentController < ApplicationController
       @user.onboarding = true
     end
     
-    @user.save!
+    if @user.save!
+      respond_to do |format|
+        format.js { render :status => 200 }
+      end
+    end
     
   end
   
@@ -61,7 +65,7 @@ class PaymentController < ApplicationController
         @user.update(locked: false)        
         # Send Email to User => "Ihr Akkount wurde erfolgreich freigeschaltet"
       end
-    end   
+    end  
   end
   
   def invoice_created
@@ -79,10 +83,12 @@ class PaymentController < ApplicationController
     
     user.update(paid_for_till: paid_for_till)
     
-    invoice = Invoice.create(user: user, url: invoice_url, pdf: invoice_pdf, date: date, amount_due: amount_due, amount_paid: amount_paid)
+    @invoice = Invoice.create(user: user, url: invoice_url, pdf: invoice_pdf, date: date, amount_due: amount_due, amount_paid: amount_paid)
     
     # Wenn Rechnungen per Email senden = TRUE sende Email an Nutzer mit "Ihre Rechnung von @invoice.date"
-    
+    if user.bill_per_email
+      UserMailer.with(user: @user, invoice: @invoice).invoice_email.deliver_now
+    end
     
   end
   

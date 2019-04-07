@@ -1072,6 +1072,51 @@ label {
   background: transparent;
 }
 
+#rechnung_email {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#rechnung_email span {
+  font-size: 16px;
+}
+
+.toggle_check {
+  -webkit-appearance: none;
+  position: relative;
+  border: solid 2px #BDBDBD;
+  height: 28px;
+  width: 50px;
+  border-radius: 14px;
+  background-color: #BDBDBD;
+}
+
+.toggle_check:focus {
+  outline: none;
+}
+
+.toggle_check:before {
+  content: "";
+  position: absolute;
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+  background-color: white;
+  top: 0;
+  left: 0;
+  transition: 500ms ease;
+}
+
+.toggle_check.active {
+  background-color: #2AC940;
+  border: solid 2px #2AC940;
+}
+
+.toggle_check.active:before {
+  left: 22px;
+}
+
 /* Abonnement - Plans */
 
 .pricing-container {

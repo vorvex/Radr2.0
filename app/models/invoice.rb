@@ -1,8 +1,8 @@
 class Invoice < ApplicationRecord
   belongs_to :user
   
-  def date
-    case self.created_at.month
+  def date_str
+    case self.date.month
       when 1 
         return "Januar" + " " + self.created_at.year 
       when 2

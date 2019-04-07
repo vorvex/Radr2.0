@@ -107,7 +107,9 @@ Rails.application.routes.draw do
   delete 'performer/delete/:id' => 'performer#delete', as: :delete_performer
   
   devise_for :users
-
+  
+  patch 'update_invoice_mail' => 'dashboard#invoice_email', as: :update_invoice_mail
+  
   # Event, Location & Performer Views
   
   get 'location/:path' => 'public_view#location'
