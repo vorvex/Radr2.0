@@ -51,12 +51,12 @@ class PaymentController < ApplicationController
     customer_id = params[:data][:object][:customer]
     @user = User.find_by_customer_id(customer_id)
 
-    if params[:type] == "charge.failed"  
+    if params[:type] == "charge.failed" && !@user.nil?
       if !@user.locked
         @user.update(locked: true)
         # Send Email to User => "Die letzte Bezahlung wurde abgelehnt. Ihr Akkount wurde gesperrt! Bitte kontaktieren Sie den Kunden-Support"
       end
-    elsif params[:type] == "charge.succeeded"
+    elsif params[:type] == "charge.succeeded" && !@user.nil?
       if @user.locked
         @user.update(locked: false)        
         # Send Email to User => "Ihr Akkount wurde erfolgreich freigeschaltet"
