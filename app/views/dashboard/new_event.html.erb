@@ -191,6 +191,8 @@
 <script src="https://unpkg.com/cropperjs"></script>
 <script>
   var event_id = 0;
+  Dropzone.autoDiscover = false;
+  $(document).ready(function(){
   Dropzone.options.myDropzone = {
        url: "/event/4/add_images",
        transformFile: function(file, done) {
@@ -257,6 +259,7 @@
 
     };
     $('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
+  });
 </script>
 <!-- Step 1 -->
 <script>

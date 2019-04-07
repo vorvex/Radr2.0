@@ -113,7 +113,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBNAXfMrJDNWqcq8bW6OhWgZd6XUi-F1UI&libraries=places"></script>
 <script src="/jquery.geocomplete.min.js"></script>
 <script>
-  $(function () {
+  $(document).ready(function(){
     $('#address-lookup').geocomplete({ details: "form" }).bind("geocode:result", function(event, result){
       console.log(result);
       if($('#street_number').val() !== "") {
@@ -137,8 +137,10 @@
 <script src="https://unpkg.com/cropperjs"></script>
 <script>
   var location_id = 0;
-      Dropzone.options.myDropzone = {
-       url: '/location/4/add_images',
+  Dropzone.autoDiscover = false;
+  $(document).ready(function(){
+  $('#myDropzone').dropzone({
+       url: "/location/4/add_images",
        transformFile: function(file, done) {
         // Create Dropzone reference for use in confirm button click handler
         var myDropZone = this;
@@ -201,10 +203,9 @@
         });
       }
 
-    };
-
+    });
     $('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
-
+  });
 </script>
 <!-- Step 1 -->
 <script>
