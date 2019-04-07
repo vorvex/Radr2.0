@@ -16,8 +16,6 @@ form3.attr('action', '/location/create3/' + <%= @location.id %>);
 
 location_id = <%= @location.id %>;
 
-$('#myDropzone').dropzone();
-$('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
 
 var businessHoursManager = $("#business-hours").businessHours({
     postInit:function(){
