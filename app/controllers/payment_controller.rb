@@ -30,23 +30,23 @@ class PaymentController < ApplicationController
   
   def charge
 
-    endpoint_secret = "whsec_ojCwCCT2ucIlJoEAuqB3iBxP6ATO2LRN"
-    
-    payload = request.body.read
-    sig_header = request.env['HTTP_STRIPE_SIGNATURE']
-    event = nil
-
-    begin
-        event = Stripe::Webhook.construct_event(
-            payload, sig_header, endpoint_secret
-        )
-    rescue JSON::ParserError => e
-
-        return
-    rescue Stripe::SignatureVerificationError => e
-
-        return
-    end
+#    endpoint_secret = "whsec_ojCwCCT2ucIlJoEAuqB3iBxP6ATO2LRN"
+#    
+#    payload = request.body.read
+#    sig_header = request.env['HTTP_STRIPE_SIGNATURE']
+#    event = nil
+#
+#    begin
+#        event = Stripe::Webhook.construct_event(
+#            payload, sig_header, endpoint_secret
+#        )
+#    rescue JSON::ParserError => e
+#
+#        return
+#    rescue Stripe::SignatureVerificationError => e
+#
+#        return
+#    end
     
     customer_id = params[:data][:object][:customer]
     @user = User.find_by_customer_id(customer_id)
@@ -70,8 +70,8 @@ class PaymentController < ApplicationController
     invoice_pdf = params[:object][:invoice_pdf]
     invoice_url = params[:object][:hosted_invoice_url]
     date = Time.zone.at(params[:object][:date])
-    amount_due = params[:object][:amount_due]
-    amount_paid = params[:object][:amount_paid]
+    amount_due = params[:object][:amount_due].to_i
+    amount_paid = params[:object][:amount_paid].to_i
     
     paid_for_till = params[:object][:lines][:data].first[:period][:end]
     
