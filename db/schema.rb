@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_06_111218) do
+ActiveRecord::Schema.define(version: 2019_04_07_111024) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -61,6 +61,9 @@ ActiveRecord::Schema.define(version: 2019_04_06_111218) do
     t.string "pdf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date"
+    t.integer "amount_due"
+    t.integer "amount_paid"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -146,6 +149,8 @@ ActiveRecord::Schema.define(version: 2019_04_06_111218) do
     t.string "customer_id"
     t.boolean "onboarding"
     t.boolean "locked", default: false
+    t.date "paid_for_till"
+    t.boolean "bill_per_email", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

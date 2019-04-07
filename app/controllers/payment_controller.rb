@@ -65,13 +65,21 @@ class PaymentController < ApplicationController
   end
   
   def invoice_created
-    customer_id = params[:data][:object][:customer]
-    invoice_pdf = params[:data][:object][:invoice_pdf]
-    invoice_url = params[:data][:object][:hosted_invoice_url]  
+    Time.zone = "Berlin"    
+    customer_id = params[:object][:customer]
+    invoice_pdf = params[:object][:invoice_pdf]
+    invoice_url = params[:object][:hosted_invoice_url]
+    date = Time.zone.at(params[:object][:date])
+    amount_due = params[:object][:amount_due]
+    amount_paid = params[:object][:amount_paid]
+    
+    paid_for_till = params[:object][:lines][:data].first[:period][:end]
     
     user = User.find_by_customer_id(customer_id)
     
-    @invoice = Invoice.create(customer: user, url: invoice_url, pdf: invoice_pdf)
+    user.update(paid_for_till: paid_for_till)
+    
+    invoice = Invoice.create(user: user, url: invoice_url, pdf: invoice_pdf, date: date, amount_due: amount_due, amount_paid: amount_paid)
     
     # Wenn Rechnungen per Email senden = TRUE sende Email an Nutzer mit "Ihre Rechnung von @invoice.date"
     
