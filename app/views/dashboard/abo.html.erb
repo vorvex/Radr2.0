@@ -48,7 +48,7 @@
     <div id="rechnungen">
         <% @user.invoices.each do |invoice| %>
           <div class="invoice">
-            <span><%= invoice.date %></span>
+            <span><%= invoice.date_str %></span>
             <a href="<%= invoice.pdf %>">PDF herunterladen</a>
           </div>
         <% end %>
@@ -69,4 +69,3 @@
             $('#rechnung_email').ajaxForm();
         });
 </script>
-<script src="/jquery.form.min.js"></script>

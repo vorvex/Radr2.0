@@ -81,15 +81,16 @@ class PaymentController < ApplicationController
     
     user = User.find_by_customer_id(customer_id)
     
-    user.update(paid_for_till: paid_for_till)
-    
-    @invoice = Invoice.create(user: user, url: invoice_url, pdf: invoice_pdf, date: date, amount_due: amount_due, amount_paid: amount_paid)
-    
-    # Wenn Rechnungen per Email senden = TRUE sende Email an Nutzer mit "Ihre Rechnung von @invoice.date"
-    if user.bill_per_email
-      UserMailer.with(user: @user, invoice: @invoice).invoice_email.deliver_now
+    if !user.nil?
+      user.update(paid_for_till: paid_for_till)
+
+      @invoice = Invoice.create(user: user, url: invoice_url, pdf: invoice_pdf, date: date, amount_due: amount_due, amount_paid: amount_paid)
+
+      # Wenn Rechnungen per Email senden = TRUE sende Email an Nutzer mit "Ihre Rechnung von @invoice.date"
+      if user.bill_per_email
+        UserMailer.with(user: @user, invoice: @invoice).invoice_email.deliver_now
+      end
     end
-    
   end
   
   def select_abo
