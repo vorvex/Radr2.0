@@ -70,14 +70,14 @@ class PaymentController < ApplicationController
   
   def invoice_created
     Time.zone = "Berlin"    
-    customer_id = params[:object][:customer]
-    invoice_pdf = params[:object][:invoice_pdf]
-    invoice_url = params[:object][:hosted_invoice_url]
-    date = Time.zone.at(params[:object][:date].to_i)
-    amount_due = params[:object][:amount_due].to_i
-    amount_paid = params[:object][:amount_paid].to_i
+    customer_id = params[:data][:object][:customer]
+    invoice_pdf = params[:data][:object][:invoice_pdf]
+    invoice_url = params[:data][:object][:hosted_invoice_url]
+    date = Time.zone.at(params[:data][:object][:date].to_i)
+    amount_due = params[:data][:object][:amount_due].to_i
+    amount_paid = params[:data][:object][:amount_paid].to_i
     
-    paid_for_till = Time.zone.at(params[:object][:lines][:data].first[:period][:end].to_i)
+    paid_for_till = Time.zone.at(params[:data][:object][:lines][:data].first[:period][:end].to_i)
     
     user = User.find_by_customer_id(customer_id)
     
