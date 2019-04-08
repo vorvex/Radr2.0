@@ -73,7 +73,7 @@ class PaymentController < ApplicationController
     customer_id = params[:object][:customer]
     invoice_pdf = params[:object][:invoice_pdf]
     invoice_url = params[:object][:hosted_invoice_url]
-    date = Time.zone.at(params[:object][:date])
+    date = Time.zone.at(params[:object][:date].to_i)
     amount_due = params[:object][:amount_due].to_i
     amount_paid = params[:object][:amount_paid].to_i
     

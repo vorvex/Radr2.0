@@ -49,7 +49,7 @@
         <h2>Profilbild hochladen</h2>
       </div>
       <div class="accordion-body" id="imageupload">
-        <div class="dropzone" id="myDropzone"></div>
+        <form action="/performer/4/add_images" class="dropzone" id="myDropzone"></form>
         <label>Laden Sie Ihr Profilbild hier hoch. Sollte der Ladebalken nicht verschwinden drücken Sie einfach weiter.</label>
       </div>
     </div>
@@ -99,8 +99,9 @@
 <script src="https://unpkg.com/cropperjs"></script>
 <script>
   var performer_id = 0;
-    $(document).ready(function(){
-  $('#myDropzone').dropzone({
+  Dropzone.autoDiscover = false;
+  $(document).ready(function(){
+   myDropzone = new Dropzone("#myDropzone", {
        url: "/performer/1/add_image",
        transformFile: function(file, done) {
         // Create Dropzone reference for use in confirm button click handler

@@ -448,10 +448,15 @@ label {
 
 .accordion-inner.active {
   flex-grow: 10;
+  display: flex;
+  flex-direction: column;
 }
 
 .accordion-inner.active .accordion-body {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-grow: 10;
 }
 
 .accordion-inner.done svg {
@@ -563,6 +568,7 @@ label {
   height: calc(100% - 70px);
   background: #f7f1f1;
   border: solid #efe8e8;
+  flex-grow: 10;
 }
 
 .editdropzone .dropzone {

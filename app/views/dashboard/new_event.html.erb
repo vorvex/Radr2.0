@@ -63,7 +63,7 @@
         <h2>Bilder hochladen</h2>
       </div>
       <div class="accordion-body" id="imageupload">
-        <div class="dropzone" id="myDropzone" style="height: calc(100% - 130px);"></div>
+        <form action="/event/4/add_images" class="dropzone" id="myDropzone"></form>
         <small>Laden Sie Ihre Bilder hier hoch. Sie können durch Klick auf das Feld ein oder mehrere Bilder gleichzeitig hochladen. 
           Sollte der Ladebalken nicht verschwinden drücken Sie einfach weiter.</small>
       </div>
@@ -193,7 +193,7 @@
   var event_id = 0;
   Dropzone.autoDiscover = false;
   $(document).ready(function(){
-  Dropzone.options.myDropzone = {
+   myDropzone = new Dropzone("#myDropzone", {
        url: "/event/4/add_images",
        transformFile: function(file, done) {
         // Create Dropzone reference for use in confirm button click handler

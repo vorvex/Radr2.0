@@ -1,6 +1,6 @@
 <%= render 'dashboard/shared/header2', header: 'Bilder bearbeiten', link: @location.id, type: 'location' %>
 <div class="editdropzone"> 
-  <div class="dropzone" id="myDropzone"></div>
+  <form action="/location/<%= @location.id %>/add_images" class="dropzone" id="myDropzone"></form>
 </div>
 <% @location.images.each do |image| %>
   <div class="edit-image-container" data-id="<%= image.id %>">
@@ -26,7 +26,9 @@
 <script src="https://unpkg.com/dropzone"></script>
 <script src="https://unpkg.com/cropperjs"></script>
 <script>
-  $("#myDropzone").dropzone({ 
+  Dropzone.autoDiscover = false;
+  $(document).ready(function(){
+   myDropzone = new Dropzone("#myDropzone", { 
     url: '/location/<%= @location.id %>/add_images', 
      transformFile: function(file, done) {
       // Create Dropzone reference for use in confirm button click handler
@@ -84,7 +86,7 @@
       // Create Cropper.js
       var cropper = new Cropper(image, { aspectRatio: 1.7 });
     }   
-  });
+  })});
   
 $('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
 </script>
