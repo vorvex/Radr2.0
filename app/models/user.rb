@@ -15,10 +15,8 @@ class User < ApplicationRecord
     case self.plan
       when "free"
         return "Kostenlos"
-      when "Gold"
-        return "Gold"
-      when "Platin"
-        return "Platin"
+    else
+      return self.plan
     end
   end
   

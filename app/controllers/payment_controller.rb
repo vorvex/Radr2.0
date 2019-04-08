@@ -77,7 +77,7 @@ class PaymentController < ApplicationController
     amount_due = params[:object][:amount_due].to_i
     amount_paid = params[:object][:amount_paid].to_i
     
-    paid_for_till = params[:object][:lines][:data].first[:period][:end]
+    paid_for_till = Time.zone.at(params[:object][:lines][:data].first[:period][:end].to_i)
     
     user = User.find_by_customer_id(customer_id)
     
