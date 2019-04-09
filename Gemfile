@@ -14,7 +14,8 @@ gem "tinify"
 gem 'colorscore', '~> 0.0.5'
 gem 'stripe'
 gem 'rails_real_favicon'
-
+gem "chartkick"
+gem 'groupdate'
 gem 'soundcloud', '~> 0.3.4'
 
 # Use Puma as the app server

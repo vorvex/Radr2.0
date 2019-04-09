@@ -32,4 +32,12 @@ class User < ApplicationRecord
     end
   end
   
+  def self.uniq_sessions
+    self.page_views.map { |x| x.session_id }.uniq.length
+  end
+  
+  def profiles
+    self.locations + self.performers
+  end
+  
 end

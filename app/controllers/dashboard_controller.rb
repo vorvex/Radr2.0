@@ -118,6 +118,10 @@ class DashboardController < ApplicationController
     end
   end
   
+  def statistiken
+    @user = current_user
+  end
+  
 private
   
   def has_profile?

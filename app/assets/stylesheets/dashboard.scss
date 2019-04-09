@@ -1189,3 +1189,54 @@ label {
   line-height: 20px;
   margin: 0px;
 }
+
+/* Statitiken */
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff !important;
+    background-color: #007bff;
+}
+
+.statistik-body > h2 {
+  margin-bottom: 10px !important;
+  padding: 0 10px;
+  font-size: 18px !important;
+  font-weight: 400;
+}
+
+.statistik-body .oh-head {
+  margin-bottom: 10px;
+}
+
+.last {
+  text-align: right;
+}
+
+.last h2 {
+  padding-right: 12px;
+  position: relative;
+}
+
+.last h2:after {
+  content: '';
+  width: 10px;
+  height: 24px;
+  display: inline-block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  right: 0px;
+}
+
+.last .positive:after {
+  background-image: url('/images/trend/Positive.svg')
+}
+
+.last .negative:after {
+  background-image: url('/images/trend/Negative.svg')
+}
+
+.last .neutral:after {
+  background-image: url('/images/trend/Neutral.svg')
+}

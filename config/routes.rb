@@ -50,6 +50,7 @@ Rails.application.routes.draw do
   get 'einstellungen/abo' => 'dashboard#abo'
   get 'einstellungen/abo/plans' => 'payment#plans'
   get 'einstellungen/abo/bezahlen' => 'payment#payment_method'
+  get 'statistiken' => 'dashboard#statistiken'
   get 'select_abo' => 'payment#select_abo', as: :select_abo
   
   get 'success' => 'payment#success'  

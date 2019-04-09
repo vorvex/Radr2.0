@@ -77,6 +77,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.2)
       xpath (~> 3.2)
+    chartkick (3.0.2)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     chromedriver-helper (2.1.0)
@@ -108,6 +109,8 @@ GEM
     ffi (1.10.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    groupdate (4.1.1)
+      activesupport (>= 4.2)
     hashie (3.6.0)
     heroku-deflater (0.6.3)
       rack (>= 1.4.5)
@@ -270,10 +273,12 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
   capybara (>= 2.15)
+  chartkick
   chromedriver-helper
   coffee-rails (~> 4.2)
   colorscore (~> 0.0.5)
   devise
+  groupdate
   heroku-deflater
   jbuilder (~> 2.5)
   jquery-rails (~> 4.3, >= 4.3.3)

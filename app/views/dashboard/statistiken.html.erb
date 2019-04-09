@@ -1,0 +1,94 @@
+<%= render 'dashboard/shared/header3', header: 'Statistiken' %>
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="padding: 10px; justify-content: center;">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Gesamt</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="events-tab" data-toggle="tab" href="#events" role="tab" aria-controls="events" aria-selected="false">Events</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="device-tab" data-toggle="tab" href="#device" role="tab" aria-controls="device" aria-selected="false">Geräte</a>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <div class="container">
+      <%= area_chart @user.page_views.group_by_day(:created_at, format: "%a", last: 7).count, discrete: true, legend: false, height: "200px" %>
+      <div class="statistik-body">
+        <div class="oh-head">
+          <div>
+            <h2>Gesamtaufrufe</h2>
+            <span class="subheader">diese Woche</span>
+          </div>
+          <div class="last">
+            <h2 class="<%= @user.page_views.trend %>"><%= @user.page_views.group_by_week(:created_at, last: 2).count.values.last %> Aufrufe</h2>
+            <span class="subheader"><%= @user.page_views.group_by_week(:created_at, last: 2).count.values.first %> letzte Woche</span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+    <div class="statistik-body">
+      <%= line_chart @user.profiles.map { |resource|
+          {name: resource.name, data: resource.page_views.group_by_day(:created_at, format: "%a", last: 7).count, discrete: true, legend: false, height: "200px"}
+      } %>
+       <h2>Aufrufe</h2>
+        <%  @user.locations.each do |resource| %>
+          <div class="oh-head">
+            <div>
+              <h2><%= resource.name %></h2>
+              <span class="subheader">diese Woche</span>
+            </div>
+            <div class="last">
+              <h2 class="<%= resource.page_views.trend %>"><%= resource.page_views.group_by_week(:created_at, last: 2).count.values.last %> Aufrufe</h2>
+              <span class="subheader"><%= resource.page_views.group_by_week(:created_at, last: 2).count.values.first %> letzte Woche</span>
+            </div>
+          </div>
+        <% end %>
+        <%  @user.performers.each do |resource| %>
+          <div class="oh-head">
+            <div>
+              <h2><%= resource.name %></h2>
+              <span class="subheader">diese Woche</span>
+            </div>
+            <div class="last">
+              <h2 class="<%= resource.page_views.trend %>"><%= resource.page_views.group_by_week(:created_at, last: 2).count.values.last %> Aufrufe</h2>
+              <span class="subheader"><%= resource.page_views.group_by_week(:created_at, last: 2).count.values.first %> letzte Woche</span>
+            </div>
+          </div>
+        <% end %>
+        
+    </div>
+  </div>
+  <div class="tab-pane fade" id="events" role="tabpanel" aria-labelledby="events-tab">
+    <div class="statistik-body">
+      <%= line_chart @user.events.map { |resource|
+          {name: resource.name, data: resource.page_views.group_by_day(:created_at, format: "%a", last: 7).count, discrete: true, legend: false, height: "200px"}
+      } %>
+      <h2>Aufrufe</h2>
+      <%  @user.events.each do |resource| %>
+        <div class="oh-head">
+          <div>
+            <h2><%= resource.name %></h2>
+            <span class="subheader">diese Woche</span>
+          </div>
+          <div class="last">
+            <h2 class="<%= resource.page_views.trend %>"><%= resource.page_views.group_by_week(:created_at, last: 2).count.values.last %> Aufrufe</h2>
+            <span class="subheader"><%= resource.page_views.group_by_week(:created_at, last: 2).count.values.first %> letzte Woche</span>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="device" role="tabpanel" aria-labelledby="device-tab">
+    <div class="statistik-body">
+        <%= pie_chart @user.page_views.group(:user_agent).count %>
+    </div>
+  </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_09_100208) do
+ActiveRecord::Schema.define(version: 2019_04_09_103912) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -94,8 +94,17 @@ ActiveRecord::Schema.define(version: 2019_04_09_100208) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "page_views" because of following StandardError
-#   Unknown type '' for column 'user_id'
+  create_table "page_views", force: :cascade do |t|
+    t.string "referrer"
+    t.string "params"
+    t.string "path"
+    t.integer "session_id"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["session_id"], name: "index_page_views_on_session_id"
+  end
 
   create_table "performers", force: :cascade do |t|
     t.string "name"
@@ -108,8 +117,12 @@ ActiveRecord::Schema.define(version: 2019_04_09_100208) do
     t.string "path"
   end
 
-# Could not dump table "sessions" because of following StandardError
-#   Unknown type 'reference' for column 'user_id'
+  create_table "sessions", force: :cascade do |t|
+    t.string "token"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id"
+  end
 
   create_table "social_links", force: :cascade do |t|
     t.integer "location_id"
