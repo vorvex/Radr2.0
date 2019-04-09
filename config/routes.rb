@@ -59,7 +59,7 @@ Rails.application.routes.draw do
   post 'webhook/charge' => 'payment#charge'
   post 'webhook/invoice_created' => 'payment#invoice_created'
   
-  
+  post 'pageview' => 'page_view#create'
   
   get 'neue-location' => 'dashboard#new_location'
   get 'neuer-performer' =>'dashboard#new_performer'

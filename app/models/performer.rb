@@ -59,4 +59,12 @@ class Performer < ApplicationRecord
     return path
   end
   
+  def page_views
+    PageView.where('path = ?', '/performer/' + self.id.to_s)
+  end
+  
+  def uniq_sessions
+    PageView.where('path = ?', '/performer/' + self.id.to_s).map { |x| x.session_id }.uniq.length
+  end
+  
 end

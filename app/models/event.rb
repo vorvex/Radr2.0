@@ -150,4 +150,12 @@ class Event < ApplicationRecord
     return path
   end
   
+  def page_views
+    PageView.where('path = ?', '/event/' + self.path)
+  end
+  
+  def uniq_sessions
+    PageView.where('path = ?', '/event/' + self.path).map { |x| x.session_id }.uniq.length
+  end
+  
 end

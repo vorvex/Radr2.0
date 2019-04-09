@@ -121,4 +121,12 @@ class Location < ApplicationRecord
     return json.to_json
   end
   
+  def page_views
+    PageView.where('path = ?', '/location/' + self.path)
+  end
+  
+  def uniq_sessions
+    PageView.where('path = ?', '/location/' + self.path).map { |x| x.session_id }.uniq.length
+  end
+  
 end

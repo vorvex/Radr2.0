@@ -138,6 +138,7 @@
   $(document).ready(function(){
    myDropzone = new Dropzone("#myDropzone", {
        url: "/location/4/add_images",
+       maxFiles: <%= @user.max_files %>,
        transformFile: function(file, done) {
         // Create Dropzone reference for use in confirm button click handler
         var myDropZone = this;

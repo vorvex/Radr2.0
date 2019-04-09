@@ -49,7 +49,7 @@
         <% @user.invoices.each do |invoice| %>
           <div class="invoice">
             <span><%= invoice.date_str %></span>
-            <a href="<%= invoice.pdf %>">PDF herunterladen</a>
+            <a target="_blank" href="<%= invoice.pdf %>">PDF herunterladen</a>
           </div>
         <% end %>
         <% if @user.invoices.length == 0 %>

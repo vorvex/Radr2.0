@@ -44,4 +44,49 @@
       return src;
   });
 </script>
+<form action="/page-view" method="post" id="pageview" hidden>
+  <input type="text" name="referrer" id="pv_referrer">
+  <input type="text" name="params" id="pv_params">
+  <input type="text" name="path" id="pv_path">
+  <input type="text" name="session_token" id="pv_session_token">
+  <input type="text" name="user_agent" id="pv_user_agent">
+  <input type="text" name="user_id" id="pv_user_id">
+</form>
+<script>
+  var url_string = "http://www.example.com/t.html?a=1&b=3&c=m2-m3-m4-m5"; //window.location.href
+  var url = new URL(url_string);
+  if (url.searchParams.get("f") != null) {
+    var f = url.searchParams.get("f");
+  } else {
+    var f = ""
+  }
+  $('#pv_referrer').val(document.referrer);
+  $('#pv_params').val(f);
+  $('#pv_path').val(document.location.pathname);
+  $('#pv_session_token').val(readCookie("session_token"));
+  $('#pv_user_agent').val(navigator.userAgent);
+  $('#pv_user_id').val(<%= @user.id %>);
+  
+  $(document).ready(function(){
+    $.ajax({
+        type: 'POST',
+        url: '/pageview',
+        data: $("#pageview").serialize(),
+        error: function(){
+        }	
+    });   
+  });
+  
+    
+  function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+  }
+</script>
 </html>

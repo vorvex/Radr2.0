@@ -36,18 +36,24 @@ class DashboardController < ApplicationController
   end
   
   def new_location
+    barrier_locations
+    
     @user = current_user
     @location = Location.new
     @resource = "Ihre Location"
   end
   
   def new_performer
+    barrier_performer
+    
     @user = current_user
     @performer = Performer.new
     @resource = "Ihr Performer"
   end
   
   def new_event
+    barrier_events
+    
     @user = current_user
     @event = Event.new
     @resource = "Ihre Veranstaltung"
@@ -139,6 +145,51 @@ private
           redirect_to select_abo_path
         end
       end
+    end
+  end
+  
+  def barrier_locations
+    case current_user.plan
+      when "free"
+        if current_user.locations.length > 0
+          redirect_to 
+        end
+      when "Gold"
+        if current_user.locations.length >= 10
+          redirect_to 
+        end
+      when "Platin"
+      
+    end
+  end
+  
+  def barrier_performer
+    case current_user.plan
+      when "free"
+        if current_user.performers.length > 0
+          redirect_to 
+        end
+      when "Gold"
+        if current_user.performers.length > 0
+          redirect_to 
+        end
+      when "Platin"
+      
+    end
+  end
+  
+  def barrier_events
+    case current_user.plan
+      when "free"
+        if current_user.events.length >= 3
+          redirect_to 
+        end
+      when "Gold"
+        if current_user.events.length >= 100
+          redirect_to 
+        end
+      when "Platin"
+      
     end
   end
   

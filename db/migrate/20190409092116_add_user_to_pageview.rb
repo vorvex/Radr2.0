@@ -1,0 +1,5 @@
+class AddUserToPageview < ActiveRecord::Migration[5.2]
+  def change
+    add_column :page_views, :user_id, :reference
+  end
+end

@@ -1,7 +1,9 @@
 class PublicViewController < ApplicationController
+  before_action :set_session
   
   def location     
-    @resource = Location.find_by_path(params[:path])    
+    @resource = Location.find_by_path(params[:path])   
+    @user = @resource.user
     @day = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
     
     @title = @resource.name
@@ -27,7 +29,7 @@ class PublicViewController < ApplicationController
 
   def event
     @resource = Event.find_by_path(params[:path])
-    
+    @user = @resource.user
     @title = @resource.name
     @image = url_for(@resource.images.first)
     @description = @resource.description
@@ -51,7 +53,7 @@ class PublicViewController < ApplicationController
 
   def performer
     @resource = Performer.find_by_path(params[:path])
-    
+    @user = @resource.user
     @title = @resource.name
     @image = url_for(@resource.profile_image)
     @description = @resource.description
@@ -75,7 +77,7 @@ class PublicViewController < ApplicationController
   
   def tickets
     @resource = Event.find_by_path(params[:path]).tickets
-    
+    @user = @resource.user
     @title = @resource.event.name
     @image = url_for(@resource.event.images.first)
     @description = "Ticketinformationen für " + @resource.event.name
@@ -83,5 +85,11 @@ class PublicViewController < ApplicationController
   
   private
   
+  def set_session
+    if cookies[:session_token].nil?
+      session = Session.create()
+      cookies[:session_token] = { value: session.token, expires: Time.now + 3600}
+    end
+  end
   
 end

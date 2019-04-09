@@ -48,6 +48,12 @@ class LocationController < ApplicationController
       @location = Location.find(params[:id])
     end
     
+    if current_user.max_files == @location.images.length
+      respond_to do |format|
+        format.js {render :status => 500}
+      end
+    end
+    
     image = params[:file]
     
      if !@location.thumbnail.attached? 

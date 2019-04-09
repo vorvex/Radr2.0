@@ -41,6 +41,12 @@ class EventController < ApplicationController
       @event = Event.find(params[:id])
     end
     
+    if current_user.max_files == @event.images.length
+      respond_to do |format|
+        format.js {render :status => 500}
+      end
+    end
+    
     image = params[:file]
     
      if !@event.images_thumbnail.attached? 
@@ -192,7 +198,7 @@ class EventController < ApplicationController
   
   def tickets
     @event = Event.find(params[:id])
-    @tickets = Event.tickets
+    @tickets = @event.tickets
   end
   
   def delete
