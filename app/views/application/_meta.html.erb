@@ -2,10 +2,10 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "<%= @resource.category %>",
+      "@type": "<%= @resource.category_google %>",
       "image": [
         <% @resource.images.each_with_index do |image, index| %>
-          "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < @resource.images.length %>,<% end %>
+          "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < @resource.images.length -1 %>,<% end %>
         <% end %>
        ],
       "@id": "<%= @resource.social_links.find_by_channel('URL').url unless @resource.social_links.find_by_channel('URL').nil? %>",
@@ -30,7 +30,7 @@
             "dayOfWeek": "<%= day.day_str %>",
             "opens": "<%= day.start_time %>",
             "closes": "<%= day.end_time %>"
-          }<% if index < @resource.opening_hours.length %>,<% end %>
+          }<% if index < @resource.opening_hours.length - 1 %>,<% end %>
         <% end %>
       ]
       }
@@ -59,7 +59,7 @@
         },
         "image": [
           <% event.images.each_with_index do |image, index| %>
-            "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < event.images.length %>,<% end %>
+            "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < event.images.length - 1 %>,<% end %>
           <% end %>
          ],
         "description": "<%= event.description %>",
@@ -71,14 +71,55 @@
             "price": "<%= ticket.price %>",
             "priceCurrency": "USD",
             "availability": "<% ticket.status_schema %>"
-          }<% if index < event.tickets.length %>,<% end %>
+          }<% if index < event.tickets.length - 1 %>,<% end %>
         <% end %> 
         ]
       }
     </script>
   <% end %>
 <% elsif @type == 'Performer' %>
-
+  <% @resource.events.each do |event| %>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "<%= event.name %>",
+        <% if !event.start_time.nil? %>
+        "startDate": "<%= event.start_time.iso8601 %>",
+        <% end %>
+        <% if !event.end_time.nil? %>
+        "endDate": "<%= event.end_time.iso8601 %>",
+        <% end %>
+        "location": {
+          "@type": "Place",
+          "name": "<%= event.location.name %>",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "<%= event.location.route %> <%= event.location.street_number %>",
+            "addressLocality": "<%= event.location.locality %>",
+            "postalCode": "<%= event.location.postal_code %>"
+          }
+        },
+        "image": [
+          <% event.images.each_with_index do |image, index| %>
+            "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < event.images.length - 1 %>,<% end %>
+          <% end %>
+         ],
+        "description": "<%= event.description %>",
+        "offers": [
+        <% event.tickets.each_with_index do |ticket, index| %>
+            {
+            "@type": "Offer",
+            "url": "<%= ticket.url %>",
+            "price": "<%= ticket.price %>",
+            "priceCurrency": "USD",
+            "availability": "<% ticket.status_schema %>"
+          }<% if index < event.tickets.length - 1 %>,<% end %>
+        <% end %> 
+        ]
+      }
+    </script>
+  <% end %>
 <% elsif @type == 'Event' %>
   <script type="application/ld+json">
       {
@@ -103,7 +144,7 @@
         },
         "image": [
           <% @resource.images.each_with_index do |image, index| %>
-            "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < @resource.images.length %>,<% end %>
+            "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < @resource.images.length - 1 %>,<% end %>
           <% end %>
          ],
         "description": "<%= @resource.description %>",
@@ -115,15 +156,15 @@
             "price": "<%= ticket.price %>",
             "priceCurrency": "USD",
             "availability": "<% ticket.status_schema %>"
-          }<% if index < @resource.tickets.length %>,<% end %>
+          }<% if index < @resource.tickets.length - 1 %>,<% end %>
         <% end %> 
         ]
       }
     </script>
 <% end %>
 
-<!-- Set the name of the default CSS style sheet -->
-<meta http-equiv="default-style" content="default stylesheet title" />
+<!-- Set the name of the default CSS style sheet 
+<meta http-equiv="default-style" content="default stylesheet title" />-->
 <!-- Specify a legacy document mode that Internet Explorer should use to display a webpage -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!-- The name of the Web application that the page represents -->
@@ -136,16 +177,12 @@
 <meta name="format-detection" content="telephone=no" />
 
 <!-- Provide a short description of the page. -->
-<meta name="description" content="This is an example of a meta description. This will often show up in search results.">
+<meta name="description" content="<%= @description %>">
 <!-- This meta tag tells Google not to show the sitelinks search box. -->
 <meta name="google" content="nositelinkssearchbox" />	
 <!-- Control the behavior of search engine crawling and indexing. 
- The robots meta tag applies to all search engines, while the "googlebot" meta tag is specific to Google. -->
-<meta name="robots" content="..., ..." />
-<meta name="http-equiv" content="X-Robots-Tag : noindex, follow" />
-<meta name="googlebot" content="..., ..." />	
+<!--<meta name="googlebot" content="..., ..." />-->	
 <!-- Used for verifying ownership of a site. -->
-<meta name="verify" content=""/>
 
 <!-- Open Graph Meta Tags -->
 <!-- Set the canonical URL for the page you are sharing. -->

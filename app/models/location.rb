@@ -22,6 +22,25 @@ class Location < ApplicationRecord
     return arr
   end
   
+  def category_google
+    case self.category
+      when 'Nachtclub'
+        return 'NightClub'
+      when'Bar'
+        return 'BarOrPub'
+      when'Restaurant'
+        return 'Restaurant'
+      when'Sport Arena'
+        return 'SportsActivityLocation'
+      when'Theater'
+        return 'EntertainmentBusiness'
+      when'Veranstaltungsort'
+        return 'EntertainmentBusiness'
+      when'Sonstiges'
+        return 'LocalBusiness'
+    end
+  end
+  
   def url 
     return '/location/' + self.path
   end
