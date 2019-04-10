@@ -5,7 +5,7 @@
       "@type": "<%= @resource.category_google %>",
       "image": [
         <% @resource.images.each_with_index do |image, index| %>
-          "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < @resource.images.length -1 %>,<% end %>
+          "https://radr2.herokuapp.com<%= url_for(image) %>"<% if index < @resource.images.length - 1 %>,<% end %>
         <% end %>
        ],
       "@id": "<%= @resource.social_links.find_by_channel('URL').url unless @resource.social_links.find_by_channel('URL').nil? %>",
