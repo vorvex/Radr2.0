@@ -6,9 +6,13 @@ class PublicViewController < ApplicationController
     @user = @resource.user
     @day = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
     
-    @title = @resource.name
+    @title = @resource.name 
+    if @title.length < 50
+      @title += " | "
+      @title += @resource.category
+    end
     @image = url_for(@resource.images.first)
-    @description = @resource.category + " in " + @resource.locality + " " + @resource.description
+    @description = @resource.category + " in " + @resource.locality + ". " + @resource.description
     @type = "Location"
     
     @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
@@ -32,6 +36,10 @@ class PublicViewController < ApplicationController
     @resource = Event.find_by_path(params[:path])
     @user = @resource.user
     @title = @resource.name
+    if @title.length < 50
+      @title += " | "
+      @title += @resource.location.name
+    end
     @image = url_for(@resource.images.first)
     @description = @resource.category + " am " + @resource.date_str + ". " + @resource.description
     @type = "Event"
