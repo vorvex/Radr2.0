@@ -8,7 +8,7 @@ class PublicViewController < ApplicationController
     
     @title = @resource.name
     @image = url_for(@resource.images.first)
-    @description = @resource.description
+    @description = @resource.category + " in " + @resource.locality + " " + @resource.description
     @type = "Location"
     
     @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
@@ -21,7 +21,8 @@ class PublicViewController < ApplicationController
       # get a tracks oembed data
       track_url = @soundcloud.url
       embed_info = client.get('/oembed', :url => track_url)
-
+      embed_info.gsub!('src', 'data-src')
+      
       # print the html for the player widget
       @soundcloud_iframe = embed_info['html']
     end
@@ -32,7 +33,7 @@ class PublicViewController < ApplicationController
     @user = @resource.user
     @title = @resource.name
     @image = url_for(@resource.images.first)
-    @description = @resource.description
+    @description = @resource.category + " am " + @resource.date_str + ". " + @resource.description
     @type = "Event"
     
     @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
@@ -45,7 +46,8 @@ class PublicViewController < ApplicationController
       # get a tracks oembed data
       track_url = @soundcloud.url
       embed_info = client.get('/oembed', :url => track_url)
-
+      embed_info.gsub!('src', 'data-src')
+      
       # print the html for the player widget
       @soundcloud_iframe = embed_info['html']
     end
@@ -69,7 +71,8 @@ class PublicViewController < ApplicationController
       # get a tracks oembed data
       track_url = @soundcloud.url
       embed_info = client.get('/oembed', :url => track_url)
-
+      embed_info.gsub!('src', 'data-src')
+      
       # print the html for the player widget
       @soundcloud_iframe = embed_info['html']
     end
