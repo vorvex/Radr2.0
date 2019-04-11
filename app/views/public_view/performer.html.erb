@@ -36,33 +36,3 @@
     <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
   <% end %>
 </div>
-<script>
-  $(window).scroll(function(){
-        var scroll = $(this).scrollTop();
-        if(scroll < 0) {
-          var scale = (scroll/400) * (-1) + 1;
-          $('.performer-image').css('transform', 'scale(' + scale + ')');
-          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
-        } else if(scroll > 0) {
-          var scale = (scroll/250) * (-1) + 1;
-          var fade = 1 - (scroll/200);
-          $('.performer-image').css('transform', 'scale(' + scale + ')');
-          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
-          $('.performer-image').css('opacity', fade);
-      }});
-</script>
-<script>
-  $('[data-type="inbound-link"]').on('click', function(event){
-    event.preventDefault();
-    var href = $(this).attr('href') + '?from=' + window.location.pathname;
-    window.location.href = href;
-  });
-</script>
-<script>
-    var thisurl = new URL(document.location.href);
-		var from = thisurl.searchParams.get("from");
-    if (from != null) {
-      $('#back').attr("href", from);
-      $('#back').css('display', 'inline-block');
-    }
-</script>

@@ -2,14 +2,3 @@
   <p><%= @resource.description %></p>
   <div id="readmore"></div>
 </a>
-<script>
-  $(window).ready(function(){
-    if($('#description > p').outerHeight() > 100){
-      $('#description').addClass('description-container');
-      $('.description-container').on('click', function(){
-        $(this).toggleClass('open');
-      });
-  }});
-  
-  
-</script>

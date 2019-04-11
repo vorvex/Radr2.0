@@ -52,7 +52,7 @@
     <%= link.links.html_safe %>
   <% end %>
   <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
-    <iframe width="100%" style="min-height: 200px;" src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <% end %>
   <% if !@soundcloud_iframe.nil? %>
     <h2 style="margin-top: 10px !important">Get in the Mood</h2>
@@ -64,35 +64,3 @@
     <a data-type="inbound-link" href="<%= @resource.url %>/tickets" class="footer-link">Ticketinfos</a>
   </div>
 <% end %>
-<script>
-  $(window).scroll(function(){
-        var scroll = $(this).scrollTop();
-        if(scroll < 0) {
-          var scale = (scroll/120) * (-1) + 1;
-          $('.cover-slick').css('transform', 'scale(' + scale + ')');
-        } else if(scroll > 0) {
-          var scale = (scroll / 20 * (-2));
-          $('.cover-slick').css('top', scale );
-      }});
-  $('.cover-slick').slick({
-      lazyLoad: 'ondemand',
-      speed: 300,
-      fade: true,
-      cssEase: 'linear'
-    });
-</script>
-<script>
-  $('[data-type="inbound-link"]').on('click', function(event){
-    event.preventDefault();
-    var href = $(this).attr('href') + '?from=' + window.location.pathname;
-    window.location.href = href;
-  });
-</script>
-<script>
-    var thisurl = new URL(document.location.href);
-		var from = thisurl.searchParams.get("from");
-    if (from != null) {
-      $('#back').attr("href", from);
-      $('#back').css('display', 'inline-block');
-    }
-</script>

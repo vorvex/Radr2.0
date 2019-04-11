@@ -20,7 +20,6 @@
     <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -44,49 +43,127 @@
       return src;
   });
 </script>
-<form action="/page-view" method="post" id="pageview" hidden>
-  <input type="text" name="referrer" id="pv_referrer">
-  <input type="text" name="params" id="pv_params">
-  <input type="text" name="path" id="pv_path">
-  <input type="text" name="session_token" id="pv_session_token">
-  <input type="text" name="user_agent" id="pv_user_agent">
-  <input type="text" name="user_id" id="pv_user_id">
-</form>
-<script>
-  var url_string = "http://www.example.com/t.html?a=1&b=3&c=m2-m3-m4-m5"; //window.location.href
-  var url = new URL(url_string);
-  if (url.searchParams.get("f") != null) {
-    var f = url.searchParams.get("f");
-  } else {
-    var f = ""
-  }
-  $('#pv_referrer').val(document.referrer);
-  $('#pv_params').val(f);
-  $('#pv_path').val(document.location.pathname);
-  $('#pv_session_token').val(readCookie("session_token"));
-  $('#pv_user_agent').val(navigator.userAgent);
-  $('#pv_user_id').val(<%= @user.id %>);
-  
+  <script>
   $(document).ready(function(){
-    $.ajax({
-        type: 'POST',
-        url: '/pageview',
-        data: $("#pageview").serialize(),
-        error: function(){
-        }	
-    });   
-  });
+    if($('#description > p').outerHeight() > 100){
+      $('#description').addClass('description-container');
+      $('.description-container').on('click', function(){
+        $(this).toggleClass('open');
+      });
+  }});
   
-    
-  function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-  }
+   $('#openinghours').on('click', function(){
+     $('.oh-body').slideToggle();
+     $('#openinghours > .oh-button').toggleClass('open');
+   });
+  
+  $('.slick-carousel').slick({
+      dots: false,
+      infinite: false,
+      slidesToScroll: 1,
+      slidesToShow: 1,
+      variableWidth: true,
+      speed: 300,
+      slidesToShow: 1
+    });
+  
+  $('.preview').mouseover(function(){
+        $(this).children().toggleClass('hover');
+  });
+  $('.preview').mouseout(function(){
+    $(this).children().toggleClass('hover');
+  });
 </script>
+  <script>
+  $(window).scroll(function(){
+        var scroll = $(this).scrollTop();
+        if(scroll < 0) {
+          var scale = (scroll/120) * (-1) + 1;
+          $('.cover-slick').css('transform', 'scale(' + scale + ')');
+        } else if(scroll > 0) {
+          var scale = (scroll / 20 * (-2));
+          $('.cover-slick').css('top', scale );
+      }});
+  $('.cover-slick').slick({
+      speed: 300,
+      fade: true,
+      cssEase: 'linear'
+    });
+</script>
+  <script>
+    $('[data-type="inbound-link"]').on('click', function(event){
+      event.preventDefault();
+      var href = $(this).attr('href') + '?from=' + window.location.pathname;
+      window.location.href = href;
+    });
+  </script>
+  <script>
+      var thisurl = new URL(document.location.href);
+      var from = thisurl.searchParams.get("from");
+      if (from !== null) {
+        $('#back').attr("href", from)
+        $('#back').css('display', 'inline-block');
+      }
+  </script>
+  <form action="/page-view" method="post" id="pageview" hidden>
+    <input type="text" name="referrer" id="pv_referrer">
+    <input type="text" name="params" id="pv_params">
+    <input type="text" name="path" id="pv_path">
+    <input type="text" name="session_token" id="pv_session_token">
+    <input type="text" name="user_agent" id="pv_user_agent">
+    <input type="text" name="user_id" id="pv_user_id">
+  </form>
+  <script>
+    var url_string = "http://www.example.com/t.html?a=1&b=3&c=m2-m3-m4-m5"; //window.location.href
+    var url = new URL(url_string);
+    if (url.searchParams.get("f") != null) {
+      var f = url.searchParams.get("f");
+    } else {
+      var f = ""
+    }
+    $('#pv_referrer').val(document.referrer);
+    $('#pv_params').val(f);
+    $('#pv_path').val(document.location.pathname);
+    $('#pv_session_token').val(readCookie("session_token"));
+    $('#pv_user_agent').val(navigator.userAgent);
+    $('#pv_user_id').val(<%= @user.id %>);
+
+    $(document).ready(function(){
+      $.ajax({
+          type: 'POST',
+          url: '/pageview',
+          data: $("#pageview").serialize(),
+          error: function(){
+          }	
+      });   
+    });
+
+
+    function readCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+    }
+  </script>
+  <script>
+  $(window).scroll(function(){
+        var scroll = $(this).scrollTop();
+        if(scroll < 0) {
+          var scale = (scroll/400) * (-1) + 1;
+          $('.performer-image').css('transform', 'scale(' + scale + ')');
+          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+        } else if(scroll > 0) {
+          var scale = (scroll/250) * (-1) + 1;
+          var fade = 1 - (scroll/200);
+          $('.performer-image').css('transform', 'scale(' + scale + ')');
+          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+          $('.performer-image').css('opacity', fade);
+      }});
+</script>
+
 </html>
