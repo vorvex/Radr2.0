@@ -7,8 +7,9 @@
     <%= render 'application/meta' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" href="/pvmobile.css">
+    <link rel="stylesheet" href="/pvmobile.scss">
     <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -143,7 +144,7 @@
     }
   </script>
   <script>
-    $(window).scroll(function(){
+  $(window).scroll(function(){
         var scroll = $(this).scrollTop();
         if(scroll < 0) {
           var scale = (scroll/400) * (-1) + 1;

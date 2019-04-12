@@ -26,7 +26,7 @@
   </div>
   <%= render "public_view/shared/description" %>
   <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
-    <iframe width="100%" style="min-height: 200px;" src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe title="youtube" width="100%" style="min-height: 200px;" src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <% end %>
   <% if !@soundcloud_iframe.nil? %>
     <h2 style="margin-bottom: 10px !important; text-align: center;">Get in the Mood</h2>
