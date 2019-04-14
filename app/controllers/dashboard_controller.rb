@@ -163,22 +163,22 @@ private
           redirect_to 
         end
       when "Platin"
-      
+        return
     end
   end
   
   def barrier_performer
     case current_user.plan
       when "free"
-        if current_user.performers.length > 0
+        if current_user.performers.length > 3
           redirect_to 
         end
       when "Gold"
-        if current_user.performers.length > 0
+        if current_user.performers.length > 10
           redirect_to 
         end
       when "Platin"
-      
+        return
     end
   end
   
