@@ -1,0 +1,18 @@
+<h3>Die Location wurde erfolgreich angelegt.</h3>
+<p style="text-align: center; ">Teilen Sie bitte den Link zu dem Veranstaltungsinhaber um die Location zu verifizieren.</p>
+<div class="share-buttons">
+  <a href="whatsapp://send?text=Verifiziere <%= @location.name %> auf Radr <%= ENV['ROOT_URL'] %>/verify-location/<%= @location.id %>" id="whatsapp" target="_blank">
+    <img src="/images/Whatsapp@2x.png" alt="Whatsapp">
+  </a>
+  <a href="mailto:?subject=Verifiziere <%= @location.name %> auf Radr&body=Verifizieren Sie Ihren Veranstaltungsort auf Radr <%= ENV['ROOT_URL'] %>/verify-location/<%= @location.id %>" id="mail">
+    <img src="/images/Mail@2x.png" alt="">
+  </a>
+  <a onclick="collectPhone()" id="sms" target="_blank">
+    <img src="/images/SMS@2x.png" alt="">
+  </a>
+</div>
+<div class="phone-container">
+  <input type="text" placeholder="Telefonnummer" id="phone" class="form-control">
+  <a style="margin: 6px;" onclick="sendSMS(<%= @location.id %>, '<%= @location.name %>')" class="btn btn-sm btn-light">Senden</a>
+</div>
+<a onclick="dontVerify()">Nicht verifizieren</a>

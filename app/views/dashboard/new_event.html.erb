@@ -16,17 +16,141 @@
         <h2>Name, Location & Datum</h2>
       </div>
       <div class="accordion-body">
-        <%= form_for(@event, :html => {role: "form", id: "form1", style: "overflow-x: hidden;"}, url: create_event1_path) do |f| %>
+        <%= form_for(@event, :html => {role: "form", id: "form1", style: "overflow-x: hidden; height: 100%;"}, url: create_event1_path) do |f| %>
           <div class="form-group">
             <label for="eventname">Name</label>
             <input type="text" class="form-control" name="eventname" id="eventname" aria-describedby="eventHelp" placeholder="Eventname" required>
-            <small id="eventHelp" class="form-text text-muted">Der Name der Ihrer Veranstaltung</small>
+            <small id="eventHelp" class="form-text text-muted">Der Name der Veranstaltung.</small>
           </div>
-          <div class="form-group">
-            <label for="location">Location</label>
-            <%= f.collection_select(:location_id, @user.locations.all, :id, :name, {}, {:class=>"form-control"}) %>
-            <small id="locationHelp" class="form-text text-muted">Wählen Sie einen Veranstaltungsort aus.</small>
-          </div>
+          <% if @type == 'location' %>
+            <div class="form-group">
+              <label for="location">Location</label>
+              <%= f.collection_select(:location_id, @user.locations.all, :id, :name, {}, {:class=>"form-control", :selected => @location}) %>
+              <small id="locationHelp" class="form-text text-muted">Wähle einen Veranstaltungsort aus.</small>
+            </div>
+          <% else %>
+            <div class="form-group">
+              <label for="location">Location</label>
+              <%= f.hidden_field :location_id, id: "location_id" %>
+              <div class="search-form-container active" id="searchContainer">
+                <input type="text" id="location-search" name="location_search" placeholder="Locationname" class="form-control">
+                <div class="search-results" id="location-search-preview"></div>
+              </div>
+              <div id="createLocation" class="create-container">
+                <div class="form-group">
+                  <input type="text" name="locationname" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="address-lookup" aria-describedby="addressHelp" placeholder="Adresse">
+                  <div style="display: none">
+                    Latitude:   <input name="lat" type="text" value="" id="lat">
+                    Longitude:  <input name="lng" type="text" value="" id ="lng">
+                    Address:    <input name="formatted_address" type="text" id="address" value="">
+                    Locality:   <input name="locality" type="text" id="locality" value="">
+                    Street:     <input name="route" type="text" id="street" value="">
+                    Streetnr:   <input name="street_number" type="text" id="street_number" value="">
+                    PLZ:        <input name="postal_code" type="text" id="postal_code" value="">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="category" name="category" aria-describedby="categoryHelp" placeholder="Typ" >
+                    <option value="" style="color: #cccccc;">Typ</option>
+                    <% Location.categories.each do |category| %>
+                    <option val="<%= category %>"><%= category %></option>
+                    <% end %>
+                  </select>
+                </div>
+                <button type="submit" class="form-button" id="createLocationButton">Erstellen</button>
+              </div>
+              <div class="share-container">
+              
+              </div>
+            </div>
+            <script>
+              // Location Search
+              $('#location-search').on('keyup', function(event){           
+                event.preventDefault();
+                $(this).removeClass('is-valid');
+                var input = $(this).val()
+                if(input.length > 0){
+                  
+                  $.ajax({
+                          type: 'GET',
+                          url: '/l/search_from_event',
+                          data: $(this).serialize(),
+                          error: function(){
+                            $('#location-search-preview').html('<a href="newLocation(' + input + ')" id="newLocationButton">Neu erstellen</a>');
+                          }	
+                  });
+                } else {
+                  $('#location-search-preview').removeClass('active');
+                }
+              });
+              
+             
+              
+              function newLocation() {
+                var searchContainer = $('#searchContainer');
+                var createContainer = $('.create-container');
+                searchContainer.toggleClass('active');
+                createContainer.toggleClass('active');
+                $('#locationname').val($('#location-search').val());
+              }
+              
+              function selectLocation(index, name) {
+                $('#location_id').val(index);
+                $('#location-search').val(name).addClass('is-valid');
+                $('.search-results').html('').removeClass('active');
+              }
+              
+              function dontVerify() {
+                var shareContainer = $('.share-container');
+                var searchContainer = $('#searchContainer');
+                
+                searchContainer.addClass('active');
+                shareContainer.removeClass('active');
+              }
+              
+              function sendSMS(id, name) {
+                var p = $('#phone').val(),
+                    c = "/?body=Verifiziere " + name + " auf Radr <%= ENV['ROOT_URL'] %>/verify-location/" + id;
+                location.href = 'sms://'+ p + c;
+              }
+              
+              function collectPhone() {
+                $('.phone-container').toggleClass('active');
+              }
+            </script>
+            <script>
+              $(document).ready(function(){
+                $('#address-lookup').geocomplete({ details: "form" }).bind("geocode:result", function(event, result){
+                  console.log(result);
+                  if($('#street_number').val() !== "") {
+                    $('#address-lookup').removeClass('is-invalid');
+                    $('#address-lookup').addClass('is-valid');
+                    console.log($('#street_number').val());
+                  } else {
+                    $('#address-lookup').removeClass('is-valid');
+                    $('#address-lookup').addClass('is-invalid');
+                    console.log($('#street_number').val());
+                  };
+                });
+              });
+            </script>
+            <script>
+              $('#createLocationButton').on('click', function(event){
+                event.preventDefault();
+                $.ajax({
+                        type: 'POST',
+                        url: '/l/create_from_event',
+                        data: $('#createLocation input, #createLocation select').serialize(),
+                        error: function(){
+                          alert('danger', 'Es ist ein Fehler aufgetretten! Bitte versuchen Sie es erneut')
+                        }	
+                });
+              })
+            </script>
+          <% end %>
           <label for="start_date">Startdatum</label>
           <div class="row" style="margin-bottom: 10px">
             <div class="col-8">
@@ -64,7 +188,7 @@
       </div>
       <div class="accordion-body" id="imageupload">
         <form action="/event/4/add_images" class="dropzone" id="myDropzone"></form>
-        <small>Laden Sie Ihre Bilder hier hoch. Sie können durch Klick auf das Feld ein oder mehrere Bilder gleichzeitig hochladen. 
+        <small>Lade Bilder hier hoch. Durch Klick auf das Feld können ein oder mehrere Bilder gleichzeitig hochgeladen werden. 
           Sollte der Ladebalken nicht verschwinden drücken Sie einfach weiter.</small>
       </div>
     </div>
@@ -258,7 +382,7 @@
         });
       }
 
-    };
+    });
     $('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  
   });
 </script>

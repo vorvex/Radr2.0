@@ -1,7 +1,9 @@
 <%= render 'dashboard/shared/header2', header: 'Link teilen', link: @resource.id, type: 'performer' %>
 <div class="container">
-  <div class="share-card" style="max-width: 400px; width: 80%;">
-    <img src="<%= url_for(@resource.images.first) %>" alt="">
+  <div class="share-card" style="max-width: 500px; width: 80%;">
+    <div id="picture-container" style="overflow: hidden;">
+      <img src="<%= url_for(@resource.images.first) %>" alt="">
+    </div>
       <div class="share-card-inner">
         <h3><%= @resource.name %></h3>
         <span><%= @resource.description[0..100] %></span>
@@ -66,4 +68,9 @@
       document.execCommand("copy");
       $temp.remove();
     };
+</script>
+<script>
+  $(document).ready(function(){
+    $('#picture-container').height($('#picture-container').width() / 1.7)
+  });
 </script>

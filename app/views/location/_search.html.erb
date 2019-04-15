@@ -1,0 +1,12 @@
+<div style="max-height: 160px; overflow: scroll;">
+<% @locations.each do |resource| %>
+  <a onclick="selectLocation(<%= resource.id %>, '<%= resource.name %>')" class="search-result">
+    <img src="<% if resource.thumbnail.attached? %><%= url_for(resource.thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="search-result-img">
+    <div>
+      <h2><%= resource.name %></h2>
+      <span class="subheader"><%= resource.category %>, <%= resource.locality %></span>
+    </div>
+  </a>
+<% end %>
+</div>
+<a onclick="newLocation()" id="newLocationButton">Neu erstellen</a>

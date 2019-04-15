@@ -234,6 +234,52 @@ class LocationController < ApplicationController
     
   end
   
+  def create_from_event
+    name = params[:locationname]
+    category = params[:category]
+    formatted_address = params[:formatted_address]
+    route = params[:route]
+    street_number = params[:street_number]
+    postal_code = params[:postal_code]
+    locality = params[:locality]
+    # place_id = params[:place_id]
+    lat = params[:lat]
+    lng = params[:lng]
+    
+    path = (locality + " " + name).downcase.gsub(" ", "-")
+    x = 0
+    while !Location.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    
+    @location = Location.create(user_id: current_user.id, name: name, category: category, formatted_address: formatted_address, 
+                                route: route, street_number: street_number, postal_code: postal_code, locality: locality, lat: lat, lng: lng, path: path)
+    
+    if @location.save
+      respond_to do |format|
+        format.js { render partial: 'location/success_from_event' }
+      end
+    else
+      respond_to do |format|
+        format.js { render partial: 'location/error_from_event', resource: "Location"  }
+      end
+    end
+    
+  end
+  
+  def search_from_event
+    @search = params[:location_search]
+    @locations = Location.where('lower(name) LIKE ? OR lower(locality) LIKE ?', "%#{@search}%", "%#{@search}%").limit(10)
+    respond_to do |format|
+      format.js { render partial: 'location/search' }
+    end
+  end
+  
+  
   def delete
     @profile = Location.find(params[:id])
     @profile.delete

@@ -54,9 +54,22 @@ class DashboardController < ApplicationController
   def new_event
     barrier_events
     
+    if params[:profile] != nil
+      if params[:type] == 'location'
+        @location = Location.find(params[:profile])
+        @type = 'location'
+      else
+        @performer = Performer.find(params[:profile])
+        @type = 'performer'
+      end
+    end
+    
     @user = current_user
     @event = Event.new
     @resource = "Ihre Veranstaltung"
+    
+    
+    
   end
   
   def edit_event

@@ -45,6 +45,10 @@ Rails.application.routes.draw do
   get 'l/:id/opening_hours' => 'location#opening_hours'
   patch 'l/:id/opening_hours' => 'location#update_opening_hours', as: :update_opening_hours
   
+  post 'l/create_from_event' => 'location#create_from_event', as: :create_location_from_event
+  get 'l/search_from_event' => 'location#search_from_event'
+
+  
   get 'einstellungen' => 'dashboard#settings'
   get 'einstellungen/profiles' => 'dashboard#profiles'
   get 'einstellungen/abo' => 'dashboard#abo'
