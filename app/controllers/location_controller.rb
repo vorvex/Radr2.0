@@ -275,8 +275,8 @@ class LocationController < ApplicationController
     search = params[:location_search].split(' ')
     first_search = search.shift
     all_locations = Array.new(0)
-    all_locations << Location.where('lower(name) LIKE ?', "%#{first_search}%")
-    all_locations << Location.where('lower(locality) LIKE ?', "%#{first_search}%")
+    all_locations << Location.where('lower(name) LIKE ?', "%#{first_search}%").limit(10)
+    all_locations << Location.where('lower(locality) LIKE ?', "%#{first_search}%").limit(10)
     all_locations.flatten!
     
     if search.length > 0  
