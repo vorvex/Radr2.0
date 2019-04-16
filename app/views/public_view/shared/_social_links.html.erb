@@ -1,0 +1,74 @@
+<% @resource.social_links.each do |social_links| %>
+  <% if social_links.channel == "Webseite" %>
+    <a class="oh-head" href="https://<%= social_links.url %>" target="_blank" rel="noreferrer">
+    <span class="oh-icon">          
+      <img src="/images/website.svg" alt="Webseite">
+    </span>
+    <div>
+      <h2><%= social_links.url %></h2>
+      <span class="subheader">Webseite</span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g  transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+  <% end %>
+  <% if social_links.channel == "Facebook" %>
+    <a class="oh-head" href="https://www.facebook.com/<%= social_links.url %>" target="_blank" rel="noreferrer">
+    <span class="oh-icon">          
+      <img src="/images/facebook.svg" alt="Facebook">
+    </span>
+    <div>
+      <h2>Facebook</h2>
+      <span class="subheader">Profil</span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g  transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+  <% end %>
+  <% if social_links.channel == "Instagram" %>
+    <a class="oh-head" href="https://www.instagram.com/<%= social_links.url %>" target="_blank" rel="noreferrer">
+    <span class="oh-icon">          
+      <img src="/images/instagram.svg" alt="Instagram">
+    </span>
+    <div>
+      <h2>Instagram</h2>
+      <span class="subheader"><%= social_links.url %></span>
+    </div>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g  transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+  </a>
+  <% end %>
+<% end %>

@@ -59,6 +59,8 @@
     <%= @soundcloud_iframe.html_safe %>
   <% end %>
 </div>
+<%= render "public_view/shared/social_links" %>
+<%= render "public_view/shared/by_radr" %>
 <% if @resource.tickets.any? %>
   <div class="footer">
     <a data-type="inbound-link" href="<%= @resource.url %>/tickets" class="footer-link">Ticketinfos</a>

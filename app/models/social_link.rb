@@ -15,8 +15,7 @@ class SocialLink < ApplicationRecord
       when "Facebook"
         return '<a href="https://www.facebook.com/' + self.url + '" class="social-button"><img src="/images/facebook.svg" alt="Facebook"></a>'
       when "SoundCloud"
-        return '<a href="' + self.url + '" class="social-button"><img src="/images/soundcloud.svg" alt="Soundcloud"></a>'
-      
+        return '<a href="' + self.url + '" class="social-button"><img src="/images/soundcloud.svg" alt="Soundcloud"></a>'      
       when "Webseite"
         return '<a href="' + self.url + '" class="social-button"><img src="/images/webseite.svg" alt="Webseite"></a>'
       

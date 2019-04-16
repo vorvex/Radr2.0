@@ -35,4 +35,5 @@
   <% if @resource.events.upcoming.any? %>
     <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
   <% end %>
+  <%= render "public_view/shared/by_radr" %>
 </div>
