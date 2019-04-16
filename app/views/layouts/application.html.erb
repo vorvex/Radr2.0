@@ -5,15 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
     <%= render 'application/favicon' %>
     <%= render 'application/meta' %>
+    <%= render 'application/tag_manager' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link rel="stylesheet" href="/pvmobile.css">
     <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css">
+    <link rel="preconnect" href="https://youtube.com">
+    <link rel="preconnect" href="https://google.com">
     <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   </head>
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSNLS2Z"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <%= yield %>
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -64,11 +71,13 @@
     });
   
   $('.preview').mouseover(function(){
+    if (!navigator.userAgent.includes('iPhone') || !navigator.userAgent.includes('Android')) {
         $(this).children().toggleClass('hover');
-  });
+  }});
   $('.preview').mouseout(function(){
-    $(this).children().toggleClass('hover');
-  });
+    if (!navigator.userAgent.includes('iPhone') || !navigator.userAgent.includes('Android')) {
+        $(this).children().toggleClass('hover');
+  }});
 </script>
   <script>
   $(window).scroll(function(){
@@ -157,5 +166,9 @@
           $('.performer-image').css('opacity', fade);
       }});
 </script>
-
+<script>
+    if(navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('Android')) {
+      $('.preview-inner').addClass('hover');
+    }
+</script>    
 </html>

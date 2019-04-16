@@ -16,6 +16,7 @@
     <link href="https://unpkg.com/cropperjs/dist/cropper.css" rel="stylesheet"/>
     <link href="https://unpkg.com/croppie/croppie.css" rel="stylesheet"/>
     <%= render 'application/favicon' %>
+    <%= render 'application/tag_manager' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -26,31 +27,35 @@
     <script src="/jquery.geocomplete.min.js"></script>
   </head>
   <body class="dashboard">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PSNLS2Z"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <script>
       alert('notice', '<%= notice %>');
       alert('danger', '<%= alert %>');
     </script>
     <%= yield %>
     <script>
-  $('[data-type="inbound-link"]').on('click', function(event){
-    event.preventDefault();
-    if $(this).attr('href').includes('?') {
-      var href = $(this).attr('href') + '&from=' + window.location.pathname;                             
-    } else {
-      var href = $(this).attr('href') + '?from=' + window.location.pathname;
-    } 
-    window.location.href = href;
-  });
-</script>
-<script>
-    var thisurl = new URL(document.location.href);
-		var from = thisurl.searchParams.get("from");
-    if (from !== null) {
-      $('#back').attr("href", from)
-      $('#back').css('display', 'block');
-    }
-</script>
-<script src="/datepicker/datepicker.js"></script>    
-<script src="/jquery.form.min.js"></script>
+      $('[data-type="inbound-link"]').on('click', function(event){
+        event.preventDefault();
+        if $(this).attr('href').includes('?') {
+          var href = $(this).attr('href') + '&from=' + window.location.pathname;                             
+        } else {
+          var href = $(this).attr('href') + '?from=' + window.location.pathname;
+        } 
+        window.location.href = href;
+      });
+    </script>
+    <script>
+        var thisurl = new URL(document.location.href);
+        var from = thisurl.searchParams.get("from");
+        if (from !== null) {
+          $('#back').attr("href", from)
+          $('#back').css('display', 'block');
+        }
+    </script>
+    <script src="/datepicker/datepicker.js"></script>    
+    <script src="/jquery.form.min.js"></script>
   </body>
 </html>

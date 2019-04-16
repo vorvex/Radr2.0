@@ -48,9 +48,6 @@
   <% if !@resource.performer_id.nil? %>
     <%= render "public_view/shared/performer" %>
   <% end %>
-  <% @resource.social_links.each do |link| %>
-    <%= link.links.html_safe %>
-  <% end %>
   <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
     <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <% end %>

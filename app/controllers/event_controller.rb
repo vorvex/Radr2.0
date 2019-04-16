@@ -21,9 +21,9 @@ class EventController < ApplicationController
     
     @event = Event.new(location: location, name: name, path: path, user_id: current_user.id)
     
-    @event.start_time = Time.strptime(startTime, "%d.%m.%Y %H:%M")
+    @event.start_time = Time.zone.strptime(startTime, "%d.%m.%Y %H:%M")
     if endTime != " "
-      @event.end_time = Time.strptime(endTime, "%d.%m.%Y %H:%M")
+      @event.end_time = Time.zone.strptime(endTime, "%d.%m.%Y %H:%M")
     end
     @event.save
     respond_to do |format|
@@ -126,22 +126,25 @@ class EventController < ApplicationController
   end
   
   def edit
+    Time.zone = "Berlin"
     @event = Event.find(params[:id])
     @social_links = @event.social_links
-    @start_date = @event.start_time.month.to_s.rjust(2, '0') + "." + @event.start_time.month.to_s.rjust(2, '0') + "." + @event.start_time.year.to_s
-    @end_date = @event.end_time.month.to_s.rjust(2, '0') + "." + @event.end_time.month.to_s.rjust(2, '0') + "." + @event.end_time.year.to_s
+    @start_date = @event.start_time.day.to_s.rjust(2, '0') + "." + @event.start_time.month.to_s.rjust(2, '0') + "." + @event.start_time.year.to_s
+    @end_date = @event.end_time.day.to_s.rjust(2, '0') + "." + @event.end_time.month.to_s.rjust(2, '0') + "." + @event.end_time.year.to_s
   end
   
   def update
+    Time.zone = "Berlin"
     @event = Event.find(params[:id])
     name = params[:event][:name]
     location = Location.find(params[:event][:location_id])
     startTime = params[:event][:start_date] + " " + params[:event][:start_time]
     endTime = params[:event][:end_date] + " " + params[:event][:end_time]
     
-    @event.start_time = Time.strptime(startTime, "%d.%m.%Y %H:%M")
+    
+    @event.start_time = Time.zone.strptime(startTime, "%d.%m.%Y %H:%M")
     if endTime != " "
-      @event.end_time = Time.strptime(endTime, "%d.%m.%Y %H:%M")
+      @event.end_time = Time.zone.strptime(endTime, "%d.%m.%Y %H:%M")
     end
     
     @event.update(name: name , description: params[:description], category: params[:event][:category], location_id: location.id )
