@@ -19,7 +19,7 @@
 //= require_tree .
 
 function alert(type, message) {
-  if (message.length != null){
+  if (message.length > 0){
   var popup = $('<div class="alert alert-dismissible fade show" role="alert"></div>');
   var close = $('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>')
   popup.append(message);

@@ -272,8 +272,20 @@ class LocationController < ApplicationController
   end
   
   def search_from_event
-    @search = params[:location_search]
-    @locations = Location.where('lower(name) LIKE ? OR lower(locality) LIKE ?', "%#{@search}%", "%#{@search}%").limit(10)
+    search = params[:location_search].split(' ')
+    first_search = search.shift
+    all_locations = Array.new(0)
+    all_locations << Location.where('lower(name) LIKE ?', "%#{first_search}%")
+    all_locations << Location.where('lower(locality) LIKE ?', "%#{first_search}%")
+    all_locations.flatten!
+    
+    if search.length > 0  
+      search.each do |str|
+        @locations = all_locations.select { |s| s[:locality].downcase.include?(str.downcase) || s[:name].downcase.include?(str.downcase) }
+      end
+    else
+      @locations = all_locations
+    end
     respond_to do |format|
       format.js { render partial: 'location/search' }
     end
