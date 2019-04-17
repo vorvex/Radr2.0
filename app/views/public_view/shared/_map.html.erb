@@ -1,5 +1,5 @@
-<div class="map-holder">
-  <iframe title="google-maps" width="100%" height="140px" frameborder="0" style="border:0" data-src="https://www.google.com/maps/embed/v1/view?zoom=16&center=<%= resource.lat %>%2C<%= resource.lng %>&key=AIzaSyBNAXfMrJDNWqcq8bW6OhWgZd6XUi-F1UI" ></iframe>
+<div id="map" style="height: 200px; width: 100%; ">
+  
 </div>
 <a class="oh-head" href="https://www.google.com/maps/place/<%= resource.formatted_address %>" target="_blank" rel="noreferrer">
   <span class="oh-icon">          
@@ -34,3 +34,15 @@
     </svg>
   </span>
 </a>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoidGhlLXJhZHIiLCJhIjoiY2p1bGtiMW5oMGZlNDN5bzhkdXp0azh4YyJ9.OXk_1Sl50D-KXAsg5qplEQ';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/the-radr/cjulkbf44080e1fqg1ug0dedu',
+    center: [<%= resource.lng %>, <%= resource.lat %>],
+    zoom: 14
+  });
+  var marker = new mapboxgl.Marker()
+  .setLngLat([<%= resource.lng %>, <%= resource.lat %>])
+  .addTo(map);
+</script>
