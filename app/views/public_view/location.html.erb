@@ -40,9 +40,7 @@
   <%= render "public_view/shared/opening_hours" %>
   <%= render "public_view/shared/description" %>
   <%= render "public_view/shared/map", resource: @resource %>
-  <% if @resource.events.upcoming.any? %>
-    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
-  <% end %>
+  <%= render "public_view/shared/social_links" %>
   <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
     <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <% end %>
@@ -50,6 +48,8 @@
     <h2 style="margin-top: 10px !important">Get in the Mood</h2>
     <%= @soundcloud_iframe.html_safe %>
   <% end %>
-  <%= render "public_view/shared/social_links" %>
+  <% if @resource.events.upcoming.any? %>
+    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+  <% end %>
   <%= render "public_view/shared/by_radr" %>
 </div>

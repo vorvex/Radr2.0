@@ -14,7 +14,6 @@
     <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
   </head>
   <body>
@@ -41,8 +40,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   <script type="text/javascript" src="/jquery.unveil.js"></script>
+  <script src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js'></script>
+  <form action="/page-view" method="post" id="pageview" hidden>
+    <input type="text" name="referrer" id="pv_referrer">
+    <input type="text" name="params" id="pv_params">
+    <input type="text" name="path" id="pv_path">
+    <input type="text" name="session_token" id="pv_session_token">
+    <input type="text" name="user_agent" id="pv_user_agent">
+    <input type="text" name="user_id" id="pv_user_id">
+  </form>
   <script>
-  $(document).ready(function() {
+      $(document).ready(function() {
     $(".coverimage").unveil();
   });
     
@@ -53,14 +61,8 @@
           return $(this).data('src');
       });
   });
-
-  iframes.attr('data-src', function() {
-      var src = $(this).attr('src');
-      $(this).removeAttr('src');
-      return src;
-  });
-</script>
-  <script>
+  
+  // Description  
   $(document).ready(function(){
     if($('#description > p').outerHeight() > 100){
       $('#description').addClass('description-container');
@@ -69,21 +71,25 @@
       });
   }});
   
+   //Opening Hours 
    $('#openinghours').on('click', function(){
      $('.oh-body').slideToggle();
      $('#openinghours > .oh-button').toggleClass('open');
    });
   
+    
+  // Carousel
   $('.slick-carousel').slick({
       dots: false,
       infinite: false,
       slidesToScroll: 1,
       slidesToShow: 1,
       variableWidth: true,
-      speed: 300,
-      slidesToShow: 1
+      speed: 300
     });
   
+    
+  //Events  
   $('.preview').mouseover(function(){
     if (!navigator.userAgent.includes('iPhone') || !navigator.userAgent.includes('Android')) {
         $(this).children().toggleClass('hover');
@@ -92,8 +98,9 @@
     if (!navigator.userAgent.includes('iPhone') || !navigator.userAgent.includes('Android')) {
         $(this).children().toggleClass('hover');
   }});
-</script>
-  <script>
+
+  // Scroll Animation
+    
   $(window).scroll(function(){
         var scroll = $(this).scrollTop();
         if(scroll < 0) {
@@ -103,36 +110,43 @@
           var scale = (scroll / 20 * (-2));
           $('.cover-slick').css('top', scale );
       }});
+    
+    $(window).scroll(function(){
+        var scroll = $(this).scrollTop();
+        if(scroll < 0) {
+          var scale = (scroll/400) * (-1) + 1;
+          $('.performer-image').css('transform', 'scale(' + scale + ')');
+          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+        } else if(scroll > 0) {
+          var scale = (scroll/300) * (-1) + 1;
+          var fade = 1 - (scroll/500);
+          $('.performer-image').css('transform', 'scale(' + scale + ')');
+          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+          $('.performer-image').css('opacity', fade);
+      }});
+    
   $('.cover-slick').slick({
       speed: 300,
       fade: true,
       cssEase: 'linear'
     });
-</script>
-  <script>
+
+    //Inbound Link
     $('[data-type="inbound-link"]').on('click', function(event){
       event.preventDefault();
       var href = $(this).attr('href') + '?from=' + window.location.pathname;
       window.location.href = href;
     });
-  </script>
-  <script>
+  
+      //Back Link
       var thisurl = new URL(document.location.href);
       var from = thisurl.searchParams.get("from");
       if (from !== null) {
         $('#back').attr("href", from)
         $('#back').css('display', 'inline-block');
       }
-  </script>
-  <form action="/page-view" method="post" id="pageview" hidden>
-    <input type="text" name="referrer" id="pv_referrer">
-    <input type="text" name="params" id="pv_params">
-    <input type="text" name="path" id="pv_path">
-    <input type="text" name="session_token" id="pv_session_token">
-    <input type="text" name="user_agent" id="pv_user_agent">
-    <input type="text" name="user_id" id="pv_user_id">
-  </form>
-  <script>
+
+    // PageView
     var url_string = window.location.href;
     var url = new URL(url_string);
     var f = url.searchParams.get("f");
@@ -153,7 +167,7 @@
       });   
     });
 
-
+    
     function readCookie(name) {
       var nameEQ = name + "=";
       var ca = document.cookie.split(';');
@@ -164,29 +178,12 @@
       }
       return null;
     }
-  </script>
-  <script>
-    $(window).scroll(function(){
-        var scroll = $(this).scrollTop();
-        if(scroll < 0) {
-          var scale = (scroll/400) * (-1) + 1;
-          $('.performer-image').css('transform', 'scale(' + scale + ')');
-          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
-        } else if(scroll > 0) {
-          var scale = (scroll/250) * (-1) + 1;
-          var fade = 1 - (scroll/200);
-          $('.performer-image').css('transform', 'scale(' + scale + ')');
-          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
-          $('.performer-image').css('opacity', fade);
-      }});
-</script>
-  <script>
+
     if(navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('Android')) {
       $('.preview-inner').addClass('hover');
     }
-</script>    
-  <script>
     
+    //Sharing
     $('document').ready(function(){
       $('#facebookshare').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.origin + window.location.pathname + "?from=share");
       $('#messengershare').attr('href', 'fb-messenger://share/?link=' + window.location.origin + window.location.pathname + "?from=share");
@@ -249,7 +246,6 @@
       document.execCommand("copy");
       $temp.remove();
       alert('In die Zwischenablage kopiert.')
-    };
-
+    }
   </script>
 </html>
