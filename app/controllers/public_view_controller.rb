@@ -17,21 +17,6 @@ class PublicViewController < ApplicationController
     @description = @resource.category + " in " + @resource.locality + ". " + @resource.description
     @type = "Location"
     
-    @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
-    
-    if !@soundcloud.nil?
-      require 'soundcloud'
-      # create a client object with your app credentials
-      client = Soundcloud.new(:client_id => 'L4uORyiM1NIPHMzZNvMUHBdeFbhHkW9b')
-
-      # get a tracks oembed data
-      track_url = @soundcloud.url
-      embed_info = client.get('/oembed', :url => track_url)
-      embed_info.gsub!('src', 'title="soundcloud" data-src')
-      
-      # print the html for the player widget
-      @soundcloud_iframe = embed_info['html']
-    end
   end
 
   def event
@@ -46,21 +31,7 @@ class PublicViewController < ApplicationController
     @description = @resource.category + " am " + @resource.time_str + ". " + @resource.description
     @type = "Event"
     
-    @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
     
-    if !@soundcloud.nil?
-      require 'soundcloud'
-      # create a client object with your app credentials
-      client = Soundcloud.new(:client_id => 'L4uORyiM1NIPHMzZNvMUHBdeFbhHkW9b')
-
-      # get a tracks oembed data
-      track_url = @soundcloud.url
-      embed_info = client.get('/oembed', :url => track_url)
-      embed_info.gsub!('src', 'title="soundcloud" data-src')
-      
-      # print the html for the player widget
-      @soundcloud_iframe = embed_info['html']
-    end
   end
 
   def performer
@@ -71,21 +42,6 @@ class PublicViewController < ApplicationController
     @description = @resource.description
     @type = "Performer"
     
-    @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
-    
-    if !@soundcloud.nil?
-      require 'soundcloud'
-      # create a client object with your app credentials
-      client = Soundcloud.new(:client_id => 'L4uORyiM1NIPHMzZNvMUHBdeFbhHkW9b')
-
-      # get a tracks oembed data
-      track_url = @soundcloud.url
-      embed_info = client.get('/oembed', :url => track_url)
-      embed_info.gsub!('src', 'title="soundcloud" data-src')
-      
-      # print the html for the player widget
-      @soundcloud_iframe = embed_info['html']
-    end
   end
   
   def tickets
@@ -117,5 +73,23 @@ class PublicViewController < ApplicationController
         layout 'application'
     end
   end 
+  
+  def soundcloud
+        @soundcloud = @resource.social_links.find_by_channel("SoundCloud")
+    
+    if !@soundcloud.nil?
+      require 'soundcloud'
+      # create a client object with your app credentials
+      client = Soundcloud.new(:client_id => 'FweeGBOOEOYJWLJN3oEyToGLKhmSz0I7')
+
+      # get a tracks oembed data
+      track_url = @soundcloud.url
+      embed_info = client.get('/oembed', :url => track_url)
+      embed_info.gsub!('src', 'title="soundcloud" data-src')
+      
+      # print the html for the player widget
+      @soundcloud_iframe = embed_info['html']
+    end
+  end
   
 end

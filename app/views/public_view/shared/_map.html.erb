@@ -40,7 +40,8 @@
     container: 'map',
     style: 'mapbox://styles/the-radr/cjulkbf44080e1fqg1ug0dedu',
     center: [<%= resource.lng %>, <%= resource.lat %>],
-    zoom: 14
+    zoom: 14,
+    interactive: false
   });
   var marker = new mapboxgl.Marker()
   .setLngLat([<%= resource.lng %>, <%= resource.lat %>])

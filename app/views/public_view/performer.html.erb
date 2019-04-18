@@ -9,6 +9,9 @@
     </g>
   </svg>
 </a>
+<a onclick="shareThisPage()" style="position: fixed; top: 20px; right: 20px; z-index: 1;"> 
+  <img src="/images/share.svg" alt="Share" height="24px">
+</a>
 <div class="performer-image-container">
   <img src="<% if @resource.profile_image.attached? %><%= url_for(@resource.profile_image) %><% else %>/images/blurred-image.jpg<% end %>" alt="Profilbild" class="performer-image">
 </div>
