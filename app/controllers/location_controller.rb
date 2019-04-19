@@ -14,7 +14,7 @@ class LocationController < ApplicationController
     lat = params[:lat]
     lng = params[:lng]
     
-    path = (locality + " " + name).downcase.gsub(" ", "-")
+    path = (locality + " " + name).downcase.gsub(" ", "-").gsub('ö', 'oe').gsub('ä', 'ae').gsub('ü', 'ue').gsub('ß', 'ss')
     x = 0
     while !Location.find_by_path(path).nil?
       if x > 0
@@ -246,7 +246,7 @@ class LocationController < ApplicationController
     lat = params[:lat]
     lng = params[:lng]
     
-    path = (locality + " " + name).downcase.gsub(" ", "-")
+    path = (locality + " " + name).downcase.gsub(" ", "-").gsub('ö', 'oe').gsub('ä', 'ae').gsub('ü', 'ue').gsub('ß', 'ss')
     x = 0
     while !Location.find_by_path(path).nil?
       if x > 0
@@ -256,7 +256,7 @@ class LocationController < ApplicationController
       path +=  x.to_s
     end
     
-    @location = Location.create(user_id: current_user.id, name: name, category: category, formatted_address: formatted_address, 
+    @location = Location.create(name: name, category: category, formatted_address: formatted_address, 
                                 route: route, street_number: street_number, postal_code: postal_code, locality: locality, lat: lat, lng: lng, path: path)
     
     if @location.save

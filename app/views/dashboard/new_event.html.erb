@@ -17,6 +17,8 @@
       </div>
       <div class="accordion-body">
         <%= form_for(@event, :html => {role: "form", id: "form1", style: "overflow-x: hidden; height: 100%;"}, url: create_event1_path) do |f| %>
+          <%= f.hidden_field :type, value: @type %>
+          <%= f.hidden_field :profile, value: @profile %>
           <div class="form-group">
             <label for="eventname">Name</label>
             <input type="text" class="form-control" name="eventname" id="eventname" aria-describedby="eventHelp" placeholder="Eventname" required>
@@ -38,7 +40,7 @@
               </div>
               <div id="createLocation" class="create-container">
                 <div class="form-group">
-                  <input type="text" name="locationname" class="form-control" placeholder="Name">
+                  <input type="text" name="locationname" id="locationname" class="form-control" placeholder="Name">
                 </div>
                 <div class="form-group">
                   <input type="text" class="form-control" id="address-lookup" aria-describedby="addressHelp" placeholder="Adresse">
@@ -63,11 +65,13 @@
                 <button type="submit" class="form-button" id="createLocationButton">Erstellen</button>
                 
               </div>
-              <div class="share-container">
-              
+              <div class="share-container" id="shareLocation">
+              <h3>Die Location wurde erfolgreich angelegt.</h3>
+              <p style="text-align: center; ">Teilen Sie bitte den Link zu dem Veranstaltungsinhaber um die Location zu verifizieren.</p>
+                
               </div>
             </div>
-            <script>
+            <script>        
               // Location Search
               $('#location-search').on('keyup', function(event){           
                 event.preventDefault();
@@ -112,15 +116,7 @@
                 shareContainer.removeClass('active');
               }
               
-              function sendSMS(id, name) {
-                var p = $('#phone').val(),
-                    c = "/?body=Verifiziere " + name + " auf Radr <%= ENV['ROOT_URL'] %>/verify-location/" + id;
-                location.href = 'sms://'+ p + c;
-              }
-              
-              function collectPhone() {
-                $('.phone-container').toggleClass('active');
-              }
+              //Share Function
             </script>
             <script>
               $(document).ready(function(){
@@ -208,27 +204,116 @@
         <h2>Beschreibung & Performer</h2>
       </div>
       <div class="accordion-body">
-        <form action="/performer/search" id="performer_search">
-          <div class="form-group">
-            <label for="Performer">Performer</label>
-            <input type="text" class="form-control" name="q" id="performerSearch" placeholder="Performer">
-            <div id="performerDropdown"></div>
-          </div>
-        </form>
-        <%= form_for(Performer.new, :html => {role: "form", id: "invitePerformerForm", style: "display: none;"}, url: invite_performer_url) do |f| %>
-          <h5>Performer einladen</h5>
-          <div class="form-group input-group-sm">
-            <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
-          </div>
-          <div class="form-group input-group-sm">
-            <%= f.select(:category, Performer.categories, {}, {class: "form-control"}) %>
-          </div>
-          <div class="form-group input-group-sm">
-            <%= f.email_field :email, placeholder: 'beispiel@email.de', class: "form-control" %>
-          </div>
-          <button type="submit" class="btn btn-primary">Performer einladen</button>
-        <% end %>
         <%= form_for(Event.first, :html => {role: "form", id: "form3"}, url: create_event3_url(Event.first)) do |f| %>
+            <div class="form-group" id="performer-form-group">
+              <label for="performer">Performer</label>
+              <div class="search-form-container active" id="searchPerformerContainer">
+                <input type="text" id="performer-search" name="performer_search" placeholder="Performername" class="form-control">
+                <div class="search-results" id="performer-search-preview"></div>
+              </div>
+              <div id="createPerformer" class="create-container">
+                <div class="form-group">
+                  <input type="text" name="performername" id="performername" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="performercategory" name="performercategory" aria-describedby="categoryHelp" placeholder="Typ" >
+                    <option value="" style="color: #cccccc;">Typ</option>
+                    <% Performer.categories.each do |category| %>
+                    <option val="<%= category %>"><%= category %></option>
+                    <% end %>
+                  </select>
+                </div>
+                <button type="submit" class="form-button" id="createPerformerButton">Erstellen</button>                
+              </div>
+              <div class="share-container" id="sharePerformer">
+                <h3>Die Location wurde erfolgreich angelegt.</h3>
+                <p style="text-align: center; ">Teilen Sie bitte den Link zu dem Veranstaltungsinhaber um die Location zu verifizieren.</p>                
+              </div>
+              <% if @type == "performer" %>
+                <div class="search-result" style="justify-content: space-between; margin-top: 10px;">
+                  <img src="<% if @performer.profile_image_thumbnail.attached? %><%= url_for(@performer.profile_image_thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="search-result-img">
+                  <div style="flex-grow: 10;">
+                    <h2><%= @performer.name %></h2>
+                    <span class="subheader"><%= @performer.category %></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <script>        
+              // Performer Search
+              $('#performer-search').on('keyup', function(event){           
+                event.preventDefault();
+                $(this).removeClass('is-valid');
+                var input = $(this).val()
+                if(input.length > 0){
+                  
+                  $.ajax({
+                          type: 'GET',
+                          url: '/p/search_from_event',
+                          data: $(this).serialize() + '&event=' + event_id,
+                          error: function(){
+                            $('#performer-search-preview').html('<a href="newPerformer(' + input + ')" id="newPerformerButton">Neu erstellen</a>');
+                          }	
+                  });
+                } else {
+                  $('#performer-search-preview').removeClass('active');
+                }
+              });
+              
+             function deletePerformer(performerRequestId){
+               $.ajax({
+                  type: 'DELETE',
+                  url: '/delete-performer-request',
+                  data: 'performer_request_id=' + performerRequestId,
+                  error: function(){
+                    alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+                  },
+                 success: function(){
+                   $('#performer_request_' + performerRequestId).remove();
+                 }
+               });
+             }
+              
+              function newPerformer() {
+                var searchContainer = $('#searchPerformerContainer');
+                var createContainer = $('#createPerformer');
+                searchContainer.toggleClass('active');
+                createContainer.toggleClass('active');
+                $('#performername').val($('#performer-search').val());
+              }
+              
+              function selectPerformer(performerId, eventId) {
+                $.ajax({
+                          type: 'POST',
+                          url: '/performer-request',
+                          data: 'performer_id=' + performerId + '&event_id=' + eventId,
+                          error: function(){
+                            alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+                          }	
+                  });
+                $('#performer-search-preview').html('').removeClass('active');
+              }
+              
+              function dontVerifyPerformer() {
+                var shareContainer = $('.share-container');
+                var searchContainer = $('#searchContainer');
+                
+                searchContainer.addClass('active');
+                shareContainer.removeClass('active');
+              }
+
+              $('#createPerformerButton').on('click', function(event){
+                event.preventDefault();
+                $.ajax({
+                        type: 'POST',
+                        url: '/p/create_from_event',
+                        data: $('#createPerformer input, #createPerformer select').serialize() + '&event=' + event_id,
+                        error: function(){
+                          alert('danger', 'Es ist ein Fehler aufgetretten! Bitte versuchen Sie es erneut')
+                        }	
+                });
+              })
+            </script>        
           <div class="form-group">
             <label for="description">Beschreibung</label>
             <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>
@@ -239,7 +324,6 @@
             <%= f.select(:category, Event.categories, {}, {class: "form-control"}) %>
             <small id="categoryHelp" class="form-text text-muted">Wählen Sie die nächstbeste Kategorie aus.</small>
           </div>
-          <input type="text" class="form-control" name="performer_id" id="performer" hidden>
         <% end %>
         
     </div>

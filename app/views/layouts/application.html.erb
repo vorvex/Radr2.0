@@ -185,10 +185,10 @@
     
     //Sharing
     $('document').ready(function(){
-      $('#facebookshare').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.origin + window.location.pathname + "?from=share");
-      $('#messengershare').attr('href', 'fb-messenger://share/?link=' + window.location.origin + window.location.pathname + "?from=share");
-      $('#twittershare').attr('href', 'https://twitter.com/share?text=Sieh dir <% if @type == 'Event' %>dieses<% elsif @type == 'Location' %>diese<% else %>diesen<% end %><%= @type %> an ' + window.location.origin + window.location.pathname + "?from=share");
-      $('#whatsappshare').attr('href', 'whatsapp://send/?text=Sieh dir dieses <% if @type == 'Event' %>dieses<% elsif @type == 'Location' %>diese<% else %>diesen<% end %><%= @type %> an ' + window.location.origin + window.location.pathname + "?from=share");
+      $('#facebookshare').attr('href', 'https://www.facebook.com/sharer/sharer.php?u=' + window.location.origin + window.location.pathname + "?f=share");
+      $('#messengershare').attr('href', 'fb-messenger://share/?link=' + window.location.origin + window.location.pathname + "?f=share");
+      $('#twittershare').attr('href', 'https://twitter.com/share?text=Sieh dir <% if @type == 'Event' %>dieses<% elsif @type == 'Location' %>diese<% else %>diesen<% end %><%= @type %> an ' + window.location.origin + window.location.pathname + "?f=share");
+      $('#whatsappshare').attr('href', 'whatsapp://send/?text=Sieh dir dieses <% if @type == 'Event' %>dieses<% elsif @type == 'Location' %>diese<% else %>diesen<% end %><%= @type %> an ' + window.location.origin + window.location.pathname + "?f=share");
     });
     
     $('.share-default-container a').on('click', function(){

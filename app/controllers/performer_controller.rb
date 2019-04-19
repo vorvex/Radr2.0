@@ -5,7 +5,7 @@ class PerformerController < ApplicationController
   def create_performer1 # Name, Category, Start & Endtime
     name = params[:performername]
     
-    path = name.downcase.gsub(" ", "-")
+    path = name.downcase.gsub(" ", "-").gsub('ö', 'oe').gsub('ä', 'ae').gsub('ü', 'ue').gsub('ß', 'ss')
     x = 0
     while !Performer.find_by_path(path).nil?
       if x > 0
@@ -80,7 +80,7 @@ class PerformerController < ApplicationController
   
   def events
     @performer = Performer.find(params[:id])
-    @events = @performer.events
+    @events = @performer.own_events
   end
   
   def share
@@ -145,6 +145,64 @@ class PerformerController < ApplicationController
     redirect_to path
     
   end
+  
+  def create_from_event
+    name = params[:performername]
+    event = params[:event]
+    
+    path = name.downcase.gsub(" ", "-").gsub('ö', 'oe').gsub('ä', 'ae').gsub('ü', 'ue').gsub('ß', 'ss')
+    x = 0
+    while !Performer.find_by_path(path).nil?
+      if x > 0
+        path.chop!
+      end
+      x += 1
+      path +=  x.to_s
+    end
+    
+    @performer = Performer.new(name: params[:performername], category: params[:performercategory], path: path)
+
+    if @performer.save     
+      if @performer_request = PerformerRequest.create(performer_id: @performer.id, event_id: event)
+        respond_to do |format|
+          format.js { render partial: 'performer/success_from_event' }
+        end
+      end
+    end
+  end
+  
+  def performer_request
+    @event = params[:event_id].to_i
+    performer = params[:performer_id].to_i
+    
+    @performer = Performer.find(performer)
+    
+    @performer_request = PerformerRequest.new(performer_id: performer, event_id: @event)
+    if @performer_request.save
+      respond_to do |format|
+         format.js { render partial: 'performer/request_success' }
+       end
+    end
+  end
+  
+  def search_from_event
+    @event = params[:event]
+    search = params[:performer_search]
+    @performers = Performer.where('LOWER(name) LIKE ?', "%#{search.downcase}%").limit(10)
+
+    respond_to do |format|
+      format.js { render partial: 'performer/search' }
+    end
+  end
+  
+  def delete_performer_request
+    @event = params[:event_id].to_i
+    performer_request_id = params[:performer_request_id].to_i
+    
+    PerformerRequest.find(performer_request_id).delete
+    
+  end
+  
   
    def delete
     @profile = Performer.find(params[:id])

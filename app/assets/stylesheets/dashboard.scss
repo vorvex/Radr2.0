@@ -732,10 +732,13 @@ label {
     color: white;
     border-radius: 30px;
     background: #DD2476;
-    margin: 20px;
+    margin: 10px;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;   
+}
+
+.share-button:hover {
+  color: white !important;
 }
 
 
@@ -1275,7 +1278,7 @@ label {
   background: #fff;
 }
 
-.search-results #newLocationButton {
+.search-results #newLocationButton, .search-results #newPerformerButton {
   display: block;
   padding-top: 10px;
   width: 100%;
@@ -1290,6 +1293,10 @@ label {
 }
 
 .search-results #newLocationButton:hover, .search-results #newLocationButton:focus {
+  background-color: #E0E0E0;
+}
+
+.search-results #newPerformerButton:hover, .search-results #newPerformerButton:focus {
   background-color: #E0E0E0;
 }
 

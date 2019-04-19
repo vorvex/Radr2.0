@@ -48,6 +48,10 @@ Rails.application.routes.draw do
   post 'l/create_from_event' => 'location#create_from_event', as: :create_location_from_event
   get 'l/search_from_event' => 'location#search_from_event'
 
+  post 'p/create_from_event' => 'performer#create_from_event', as: :create_performer_from_event
+  get 'p/search_from_event' => 'performer#search_from_event'
+  post 'performer-request' => 'performer#performer_request'
+  delete 'delete-performer-request' => 'performer#delete_performer_request', as: :delete_performer_request
   
   get 'einstellungen' => 'dashboard#settings'
   get 'einstellungen/profiles' => 'dashboard#profiles'

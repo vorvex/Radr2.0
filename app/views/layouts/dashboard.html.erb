@@ -32,8 +32,10 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <script>
-      alert('notice', '<%= notice %>');
-      alert('danger', '<%= alert %>');
+      $(document).ready(function(){
+        alert('notice', '<%= notice %>');
+        alert('danger', '<%= alert %>');
+      });
     </script>
     <%= yield %>
     <script>

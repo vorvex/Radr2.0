@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_09_103912) do
+ActiveRecord::Schema.define(version: 2019_04_19_121356) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 2019_04_09_103912) do
 
   create_table "events", force: :cascade do |t|
     t.integer "location_id"
-    t.integer "performer_id"
     t.string "name"
     t.string "category"
     t.string "description"
@@ -67,7 +66,7 @@ ActiveRecord::Schema.define(version: 2019_04_09_103912) do
   end
 
   create_table "locations", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.string "name"
     t.string "category"
     t.string "formatted_address"
@@ -104,6 +103,14 @@ ActiveRecord::Schema.define(version: 2019_04_09_103912) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["session_id"], name: "index_page_views_on_session_id"
+  end
+
+  create_table "performer_requests", force: :cascade do |t|
+    t.integer "performer_id", null: false
+    t.integer "event_id", null: false
+    t.boolean "accepted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "performers", force: :cascade do |t|

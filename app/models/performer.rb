@@ -1,13 +1,18 @@
 class Performer < ApplicationRecord
   has_one :user
   has_many :social_links, :dependent => :delete_all
-
+  has_many :performer_requests
+  has_many :events, -> { where performer_requests: { accepted: true } } ,
+           :through => :performer_requests, 
+           :class_name => "Event", 
+           :source => :event
+  
   has_one_attached :profile_image
   has_one_attached :profile_image_thumbnail
   
-  def events
+  def own_events
     user = User.find(self.user_id)    
-    Event.where('user_id = ?', user.id).where('performer_id = ?', self.id)
+    self.events.where('user_id = ?', user.id)
   end
   
   def upcoming_events

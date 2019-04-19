@@ -1,11 +1,13 @@
-<% if !@resource.performer.user.nil? %>
-<h2 style="margin-bottom: 10px !important">Attending Artist</h2>
-<a data-type="inbound-link" class="oh-head" href="<%= @resource.performer.url %>" >
-  <img src="<%= url_for(@resource.performer.profile_image_thumbnail) unless !@resource.performer.profile_image_thumbnail.attached? %>" alt="" class="oh-head-img">
+<% if !@resource.performers.any? %>
+<h2 style="margin-bottom: 10px !important">Attending Artists</h2>
+<% @resource.performers.each do |performer| %>
+<a data-type="inbound-link" class="oh-head" href="<% if !performer.user.nil? %><%= performer.url %><% end %>" >
+  <img src="<%= url_for(performer.profile_image_thumbnail) unless !performer.profile_image_thumbnail.attached? %>" alt="" class="oh-head-img">
   <div>
-    <h2><%= @resource.performer.name %></h2>
-    <span class="subheader"><%= @resource.performer.category %></span>
+    <h2><%= performer.name %></h2>
+    <span class="subheader"><%= performer.category %><% if performer.user.nil? %>, Nicht bestätigt<% end %></span>
   </div>
+  <% if !performer.user.nil? %>
   <span class="oh-button">    
     <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -19,5 +21,6 @@
         </g>
     </svg>
   </span>
+  <% end %>
 </a>
 <% end %>

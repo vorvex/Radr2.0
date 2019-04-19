@@ -8,7 +8,7 @@ class EventController < ApplicationController
     location = Location.find(params[:event][:location_id])
     startTime = params[:event][:start_date] + " " + params[:event][:start_time]
     endTime = params[:event][:end_date] + " " + params[:event][:end_time]
-    
+ 
     path = (location.locality + " " + name).downcase.gsub(" ", "-")
     x = 0
     while !Event.find_by_path(path).nil?
@@ -26,6 +26,14 @@ class EventController < ApplicationController
       @event.end_time = Time.zone.strptime(endTime, "%d.%m.%Y %H:%M")
     end
     @event.save
+    
+    if params[:event][:profile] != nil
+      if params[:event][:type] == 'performer'
+        @performer = Performer.find(params[:event][:profile])
+        PerformerRequest.create(performer_id: @performer.id, event_id: @event.id, accepted: true)
+      end
+    end
+    
     respond_to do |format|
       format.js { render partial: 'event/success1' }
     end

@@ -1,7 +1,7 @@
-var shareContainer = $('.share-container');
-var createContainer = $('.create-container');
+var shareContainer = $('#shareLocation');
+var createContainer = $('#createLocation');
 
-shareContainer.html("<%= j(render 'location/success_from_event.html') %>");
+shareContainer.append("<%= j(render 'location/success_from_event.html') %>");
 shareContainer.toggleClass('active');
 createContainer.toggleClass('active');
 selectLocation(<%= @location.id %>, "<%= @location.name %>");

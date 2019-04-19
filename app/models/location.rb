@@ -1,8 +1,8 @@
 class Location < ApplicationRecord
-  belongs_to :user
   has_many :events
   has_many :opening_hours, :dependent => :delete_all
   has_many :social_links
+  has_one :user
   
   has_one_attached :thumbnail
   

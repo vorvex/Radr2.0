@@ -57,9 +57,11 @@ class DashboardController < ApplicationController
     if params[:profile] != nil
       if params[:type] == 'location'
         @location = Location.find(params[:profile])
+        @profile = @location.id
         @type = 'location'
       else
         @performer = Performer.find(params[:profile])
+        @profile = @performer.id
         @type = 'performer'
       end
     end

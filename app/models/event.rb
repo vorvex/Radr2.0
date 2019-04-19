@@ -1,6 +1,11 @@
 class Event < ApplicationRecord
   has_many :tickets, :dependent => :delete_all
-  has_one :performer
+  has_many :performer_requests
+  has_many :performers, -> { where performer_requests: { accepted: true } } ,
+           :through => :performer_requests, 
+           :class_name => "Performer", 
+           :source => :performer
+  
   belongs_to :location
   belongs_to :user
   has_many :social_links, :dependent => :delete_all
