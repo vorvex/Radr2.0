@@ -599,6 +599,44 @@ label {
     background: transparent;
 }
 
+/* Select Event Plan */
+
+.event-plan-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+} 
+
+.event-plan-container span {
+  font-size: 14px;
+  line-height: 20px;
+  color: black;
+}
+
+.event-plan-container p {
+  font-size: 14px;
+  line-height: 20px;
+  color: #828282;
+}
+
+.event-plan-container .select-button {
+  margin-top: 10px;
+  width: 26px;
+  height: 26px;
+  margin-left: 10px;
+  border-radius: 15px;
+  border: solid 2px #3399FF;
+}
+
+.event-plan-container.active .select-button {
+  background-color: #3399FF;
+  background-image: url('/images/plan_selected.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
 /* Performer Search */
 
 #performerDropdown {
@@ -1400,4 +1438,121 @@ label {
 
 .phone-container.active {
   display: flex;
+}
+
+/* Fertigstellen */
+
+.done-container-top {
+  //display: flex;
+  //margin-top: 20px;
+  //align-items: center;
+  //flex-direction: column;
+  //margin-bottom: 50px; 
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  align-items: center;
+  flex-direction: column;
+  top: 0;
+  height: 60vh;
+  justify-content: center;
+}
+
+.done-container-top.active {
+}
+
+.done-container-top img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 20px !important;
+}
+
+.done-container-top h2 {
+  font-size: 20px !important;
+  line-height: 24px !important;
+  text-align: center;
+  margin-bottom: 20px !important;
+  margin: 0 10px 20px 10px !important;
+}
+
+.done-share {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  width: 190px;
+}
+
+.done-share a {
+  width: 50px;
+  height: 50px;
+}
+
+.done-share img {
+  width: 50px;
+  height: 50px;
+}
+
+.fertigstellen-iframe {
+  position: absolute;
+  top: 60vh;
+  width: 100vw;
+  height: 40vh;
+  overflow: hidden;
+  z-index: 1000;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.fertigstellen-iframe img{
+    left: 48%;
+    left: calc((100vw - 32px) / 2);
+    position: absolute;
+    top: 20px;
+}
+
+.fertigstellen-iframe.active img{
+    transform: rotate(180deg);
+}
+
+.fertigstellen-iframe iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.fertigstellen-iframe.active {
+  position: fixed;
+  top: 0px;
+  overflow: scroll;
+  border-radius: 0px;
+  height: 100vh;
+}
+
+.fertigstellen-iframe.iphone {
+  height: 40vh;
+}
+
+.fertigstellen {
+  overscroll-behavior-y: none !important;
+}
+
+.share-default{display:none;position:fixed;width:100vw;height:100vh;background:rgba(0,0,0,.5);top:0;left:0;z-index:1000;overflow:hidden}
+
+.share-default.active{display:block}
+
+.share-default .share-default-container{position:absolute;width:100%;padding:20px;border-top-left-radius:4px;border-top-right-radius:4px;background:#fff;bottom:-270px;left:0;transition:all ease .5s}
+
+.share-default .share-default-container.active{bottom:0;left:0}
+
+.sharebutton{display:block;width:100%;margin-bottom:10px;color:#000;font-size:14px;line-height:24px}
+
+.sharebutton div{display:inline-block;width:30px;margin-right:20px;justify-content:center}
+
+.sharebutton img{height:24px}.closeshare{display:block;width:100%;font-size:14px;line-height:24px;text-align:center}
+
+.share-default-head h3{text-align:center;font-size:18px;line-height:18px;padding-bottom:10px}
+
+.disabled {
+  display: none !important;
 }

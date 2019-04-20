@@ -74,6 +74,8 @@ Rails.application.routes.draw do
   get 'neuer-performer' =>'dashboard#new_performer'
   get 'neues-event' => 'dashboard#new_event'
   
+  get 'fertigstellen/:type/:id' => 'dashboard#fertigstellen'
+  
   get 'event-bearbeiten/:id' => 'dashboard#edit_event'
   get 'performer-bearbeiten/:id' => 'dashboard#edit_performer'
 

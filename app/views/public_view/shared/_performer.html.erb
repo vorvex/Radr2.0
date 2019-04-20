@@ -1,26 +1,27 @@
-<% if !@resource.performers.any? %>
-<h2 style="margin-bottom: 10px !important">Attending Artists</h2>
-<% @resource.performers.each do |performer| %>
-<a data-type="inbound-link" class="oh-head" href="<% if !performer.user.nil? %><%= performer.url %><% end %>" >
-  <img src="<%= url_for(performer.profile_image_thumbnail) unless !performer.profile_image_thumbnail.attached? %>" alt="" class="oh-head-img">
-  <div>
-    <h2><%= performer.name %></h2>
-    <span class="subheader"><%= performer.category %><% if performer.user.nil? %>, Nicht bestätigt<% end %></span>
-  </div>
-  <% if !performer.user.nil? %>
-  <span class="oh-button">    
-    <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
-                <g transform="translate(10.000000, 593.000000)">
-                    <g transform="translate(340.000000, 15.000000)">
-                        <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
-                    </g>
-                </g>
-            </g>
-        </g>
-    </svg>
-  </span>
+<% if @resource.performers.any? %>
+  <h2 style="margin-bottom: 10px !important">Attending Artists</h2>
+  <% @resource.performers.each do |performer| %>
+  <a data-type="inbound-link" class="oh-head" href="<% if !performer.user.nil? %><%= performer.url %><% end %>" >
+    <img src="<%= url_for(performer.profile_image_thumbnail) unless !performer.profile_image_thumbnail.attached? %>" alt="" class="oh-head-img">
+    <div>
+      <h2><%= performer.name %></h2>
+      <span class="subheader"><%= performer.category %><% if performer.user.nil? %>, Nicht bestätigt<% end %></span>
+    </div>
+    <% if !performer.user.nil? %>
+    <span class="oh-button">    
+      <svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g  transform="translate(-350.000000, -608.000000)" fill="#000000" fill-rule="nonzero">
+                  <g transform="translate(10.000000, 593.000000)">
+                      <g transform="translate(340.000000, 15.000000)">
+                          <polygon points="0 0.7275 0.77625 0 7.2 6 0.77625 12 0 11.27625 5.64375 6"></polygon>
+                      </g>
+                  </g>
+              </g>
+          </g>
+      </svg>
+    </span>
+    <% end %>
+  </a>
   <% end %>
-</a>
 <% end %>

@@ -340,10 +340,78 @@
             </g>
           </svg>
         </span>
-        <h2>Tickets</h2>
+        <h2>Premium</h2>
       </div>
       <div class="accordion-body">
-        <div id="ticketContainer">
+        <div>
+          <p>Wählen Sie nun zwischen den bereitstehenden Optionen.</p>
+          <div class="event-plan-container active" onclick="selectPlan(1)" id="plan1">
+            <div>
+              <span>Basic Version - 0€</span>
+              <p>
+                1000 Ansichten (danach 5€/1000 Aufrufe)<br/>
+                QR-Code für Plakate<br/>
+                Keine Ticketlinks
+              </p>
+            </div>
+            <div class="select-button">
+              
+            </div>
+          </div>
+          <div class="event-plan-container" onclick="selectPlan(2)" id="plan2">
+            <div>
+              <span>Gold Version - 10€</span>
+              <p>
+                5000 Ansichten (danach 2,50€/1000 Aufrufe)<br/>
+                QR-Code für Plakate<br/>
+                Ticketlinks
+              </p>
+            </div>
+            <div class="select-button">
+              
+            </div>
+          </div>
+          <div class="event-plan-container" onclick="selectPlan(3)" id="plan3">
+            <div>
+              <span>Platin Version - 20€</span>
+              <p>
+                10000 Ansichten (danach 1€/1000 Aufrufe)<br/>
+                QR-Code für Plakate<br/>
+                Ticketlinks
+              </p>
+            </div>
+            <div class="select-button">
+              
+            </div>
+          </div>
+        </div>
+        <script>
+          var planSelected = 1;
+          
+          function selectPlan(index) {
+            planSelected = index;
+            $('.event-plan-container').removeClass('active');
+            $('#plan' + index).addClass('active');
+          }
+        </script>
+      </div>
+    </div>
+    <div id="accordion5" class="accordion-inner disabled">
+      <div class="accordion-header">
+        <span class="point">          
+          <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
+              <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
+                  <tspan x="6.766" y="15">4</tspan>
+              </text>
+            </g>
+          </svg>
+        </span>
+        <h2>Tickets & Social Media Links</h2>
+      </div>
+      <div class="accordion-body">
+        <div id="ticketContainer" style="display: none">
           <%= form_for(Ticket.new, :html => {role: "form", id: "newticket"}, url: create_ticket_path) do |f| %>
             <h5 style="margin-bottom: 10px !important;">Neues Ticket</h5>
             <input type="text" name="event_id" id="eventid" value="1" hidden>
@@ -498,9 +566,26 @@
 // Step 4    
   $('#button4').on('click', function(event){
     event.preventDefault();
-    $('.container').html("<%= j(render 'shared/done') %>");
-    $('#button4').remove();
-    $('#button5').css('display', 'block');                            
+    if(planSelected == 1) {
+      window.location.replace('fertigstellen/e/' + event_id);
+    } else if(planSelected == 2) {
+      $.ajax({
+        type: 'POST',
+        url: '/e/select-plan/' + event_id,
+        data: 'plan=Gold'
+      }).done(function() {
+        $("#accordion4").removeClass('active').addClass('done');
+        $("#accordion5").removeClass('disabled').addClass('active');
+        $('#button4').remove();
+        $('#button5').css('display', 'block');
+      });
+    } else if(planSelected == 3) {
+      $.ajax({
+        type: 'POST',
+        url: '/e/select-plan/' + event_id,
+        data: 'plan=Platin'
+      });
+    }                                
  });
   
   $(document).ready(function() { 

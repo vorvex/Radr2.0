@@ -43,9 +43,7 @@
   <%= render "public_view/shared/location" %>
   <%= render "public_view/shared/description" %>
   <%= render "public_view/shared/map", resource: @resource.location %>
-  <% if !@resource.performer_id.nil? %>
-    <%= render "public_view/shared/performer" %>
-  <% end %>
+  <%= render "public_view/shared/performer" %>
   <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
     <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <% end %>
@@ -53,9 +51,9 @@
     <h2 style="margin-top: 10px !important">Get in the Mood</h2>
     <%= @soundcloud_iframe.html_safe %>
   <% end %>
+  <%= render "public_view/shared/social_links" %>
+  <%= render "public_view/shared/by_radr" %>
 </div>
-<%= render "public_view/shared/social_links" %>
-<%= render "public_view/shared/by_radr" %>
 <% if @resource.tickets.any? %>
   <div class="footer">
     <a data-type="inbound-link" href="<%= @resource.url %>/tickets" class="footer-link">Ticketinfos</a>

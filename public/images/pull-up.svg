@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="21.200000000000728" width="32">
+  <defs>
+    <path id="path-1" opacity="1" fill-rule="evenodd" d="M16.84764542936288,2.4590380833184535 C16.385833003561537,2 15.614166996438465,2 15.151167392164622,2.4590380833184535 L4.467748318163831,13.051135347756615 C4,13.516073663508466 4,14.270123368496883 4.467748318163831,14.733881637762051 C4.935496636327661,15.198819953513903 5.695290858725762,15.198819953513903 6.163039176889592,14.733881637762051 L16.000000000000004,4.98315751832661 L25.83577364463791,14.735061684248729 C26.30470914127424,15.20000000000058 27.063316185199838,15.20000000000058 27.532251681836172,14.735061684248729 C28,14.270123368496877 28,13.516073663508463 27.532251681836172,13.052315394243292 "/>
+    <filter id="filter-2" filterUnits="userSpaceOnUse" x="-50%" y="-50%" width="200%" height="200%">
+      <feOffset in="SourceAlpha" result="shadow-1-feOffset-shadow" dx="0" dy="2"/>
+      <feGaussianBlur in="shadow-1-feOffset-shadow" result="shadow-1-feGaussianBlur-shadow" stdDeviation="2"/>
+      <feColorMatrix in="shadow-1-feGaussianBlur-shadow" result="shadow-1-feColorMatrix-shadow" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0"/>
+    </filter>
+  </defs>
+  <g opacity="1">
+    <use xlink:href="#path-1" fill="black" filter="url(#filter-2)" stroke="black" stroke-opacity="0" stroke-width="0"/>
+    <use xlink:href="#path-1" fill="rgb(255,255,255)" fill-opacity="1"/>
+  </g>
+</svg>

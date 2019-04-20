@@ -137,6 +137,21 @@ class DashboardController < ApplicationController
     @user = current_user
   end
   
+  def fertigstellen
+    
+    case params[:type]
+      when 'p'
+        @resource = Performer.find(params[:id])
+        @header = 'Performer'
+      when 'e'
+        @resource = Event.find(params[:id])
+        @header = 'Event'
+      when 'l'
+        @resource = Location.find(params[:id])
+        @header = 'Location'
+    end
+  end
+  
 private
   
   def has_profile?
