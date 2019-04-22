@@ -1805,3 +1805,73 @@ $slick-dot-size: 12px !default;
       }
   }
 }
+
+/* Default Share */
+
+.share-default {
+	display: none;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, .5);
+	top: 0;
+	left: 0;
+	z-index: 100;
+	overflow: hidden
+}
+
+.share-default.active {
+	display: block
+}
+
+.share-default .share-default-container {
+	position: absolute;
+	width: 100%;
+	padding: 20px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	background: #fff;
+	bottom: -270px;
+	left: 0;
+	transition: all ease .5s
+}
+
+.share-default .share-default-container.active {
+	bottom: 0;
+	left: 0
+}
+
+.sharebutton {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+	color: #000;
+	font-size: 14px;
+	line-height: 24px
+}
+
+.sharebutton div {
+	display: inline-block;
+	width: 30px;
+	margin-right: 20px;
+	justify-content: center
+}
+
+.sharebutton img {
+	height: 24px
+}
+
+.closeshare {
+	display: block;
+	width: 100%;
+	font-size: 14px;
+	line-height: 24px;
+	text-align: center
+}
+
+.share-default-head h3 {
+	text-align: center;
+	font-size: 18px;
+	line-height: 18px;
+	padding-bottom: 10px
+}

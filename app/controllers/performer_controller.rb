@@ -95,7 +95,7 @@ class PerformerController < ApplicationController
   def requests
     @performer = Performer.find(params[:id])
     @requests = @performer.performer_requests
-    @new_requests = @requests.where('created_at == updated_at')
+    @new_requests = @requests.where('created_at = updated_at')
     @accepted_requests = @requests.where(accepted: true)
   end
   

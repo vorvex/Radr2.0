@@ -30,9 +30,33 @@
     <% end %>
   </div>
   <h4 class="request-header">Aktuelle Teilnahmen</h4>
-  <div class="event-slider" id="teilnahmen">
-    
-  </div>
+  <div class="event-slider" id="teilnahmen" style="height: 223px; width: 100%; position: relative;">
+    <% @accepted_requests.each do |request| %>
+      <div href="<%= request.event.url %>" class="preview-request" id="request<%= request.id %>">
+        <div class="preview-request-inner">
+          <div>
+            <h4><%= request.event.name %></h4>
+            <p><%= request.event.time_str %><br/><%= request.event.location_name %>, <%= request.event.city %></p>
+          </div>
+          
+        </div>
+        <img class="preview-request-img" src="<%= url_for(request.event.images_thumbnail) unless !request.event.images_thumbnail.attached? %>" alt="<%= request.event.name %>">
+        <div class="request-buttons">
+          <a href="<%= request.event.url %>" target="_blank">
+            <img src="/images/requests/view.png" alt="Annehmen" height="16px">
+            <span>Ansehen</span>
+          </a>
+          <a onclick="shareThis('<%= request.event.name %>', '<%= request.event.description %>', '<%= request.event.url.html_safe %>')">
+            <img src="/images/requests/share.png" alt="Ablehnen" height="20px">
+            <span>Teilen</span>
+          </a>
+          <a onclick="rejectRequest(<%= request.id %>)">
+            <img src="/images/requests/reject.png" alt="Ansehen" height="18px">
+            <span>Absagen</span>
+          </a>
+        </div>
+      </div>
+    <% end %>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script>
