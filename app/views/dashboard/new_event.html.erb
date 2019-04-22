@@ -176,7 +176,7 @@
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
               <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
-                  <tspan x="6.766" y="15">2</tspan>
+                  <tspan x="5.9" y="15">2</tspan>
               </text>
             </g>
           </svg>
@@ -196,7 +196,7 @@
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
               <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
-                  <tspan x="6.766" y="15">3</tspan>
+                  <tspan x="6" y="15">3</tspan>
               </text>
             </g>
           </svg>
@@ -335,7 +335,7 @@
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
               <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
-                  <tspan x="6.766" y="15">4</tspan>
+                  <tspan x="5.42" y="15">4</tspan>
               </text>
             </g>
           </svg>
@@ -403,7 +403,7 @@
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
               <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
-                  <tspan x="6.766" y="15">4</tspan>
+                  <tspan x="6" y="15">5</tspan>
               </text>
             </g>
           </svg>
@@ -411,7 +411,7 @@
         <h2>Tickets & Social Media Links</h2>
       </div>
       <div class="accordion-body">
-        <div id="ticketContainer" style="display: none">
+        <div id="ticketContainer">
           <%= form_for(Ticket.new, :html => {role: "form", id: "newticket"}, url: create_ticket_path) do |f| %>
             <h5 style="margin-bottom: 10px !important;">Neues Ticket</h5>
             <input type="text" name="event_id" id="eventid" value="1" hidden>
@@ -445,7 +445,7 @@
   <a href='' class="footer-link" id="button2" style="display: none;">Weiter</a>
   <a href='' class="footer-link" id="button3" style="display: none;">Weiter</a>
   <a href='' class="footer-link" id="button4" style="display: none;">Weiter</a>
-  <a href='/' class="footer-link" id="button5" style="display: none;">Fertigstellen</a>
+  <a href='' class="footer-link" id="button5" style="display: none;">Fertigstellen</a>
 </div>
 <script src="/jquery.timepicker.js"></script>
 <script src="/modernizr.touch.js"></script>
@@ -571,23 +571,33 @@
     } else if(planSelected == 2) {
       $.ajax({
         type: 'POST',
-        url: '/e/select-plan/' + event_id,
+        url: '/event/select-plan/' + event_id,
         data: 'plan=Gold'
       }).done(function() {
         $("#accordion4").removeClass('active').addClass('done');
         $("#accordion5").removeClass('disabled').addClass('active');
         $('#button4').remove();
         $('#button5').css('display', 'block');
+        $('#eventid').val(event_id);
       });
     } else if(planSelected == 3) {
       $.ajax({
         type: 'POST',
-        url: '/e/select-plan/' + event_id,
+        url: '/event/select-plan/' + event_id,
         data: 'plan=Platin'
+      }).done(function() {
+        $("#accordion4").removeClass('active').addClass('done');
+        $("#accordion5").removeClass('disabled').addClass('active');
+        $('#button4').remove();
+        $('#button5').css('display', 'block');
+        $('#eventid').val(event_id);
       });
     }                                
  });
-  
+// Step 5  
+  $('#button5').on('click', function(event){
+    window.location.replace('fertigstellen/e/' + event_id);
+ });  
   $(document).ready(function() { 
             // bind 'myForm' and provide a simple callback function 
             $('#form1').ajaxForm();
@@ -596,6 +606,7 @@
             $('#invitePerformerForm').ajaxForm();
             $('#newticket').ajaxForm();
         });
+
 </script>
 <script>
 $('#performer_search').on('keyup', function(event){

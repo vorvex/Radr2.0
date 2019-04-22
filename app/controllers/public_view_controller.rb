@@ -46,10 +46,10 @@ class PublicViewController < ApplicationController
   
   def tickets
     @resource = Event.find_by_path(params[:path]).tickets
-    @user = @resource.user
-    @title = @resource.event.name
-    @image = url_for(@resource.event.images.first)
-    @description = "Ticketinformationen für " + @resource.event.name
+    @user = Event.find_by_path(params[:path]).user
+    @title =Event.find_by_path(params[:path]).name
+    @image = url_for(Event.find_by_path(params[:path]).images.first)
+    @description = "Ticketinformationen für " + Event.find_by_path(params[:path]).name
   end
   
   private

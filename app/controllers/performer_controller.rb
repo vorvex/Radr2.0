@@ -92,6 +92,13 @@ class PerformerController < ApplicationController
     @social_links = @performer.social_links
   end
   
+  def requests
+    @performer = Performer.find(params[:id])
+    @requests = @performer.performer_requests
+    @new_requests = @requests.where('created_at == updated_at')
+    @accepted_requests = @requests.where(accepted: true)
+  end
+  
   def edit_social_links
     @performer = Performer.find(params[:id])
     @facebook = @performer.social_links.find_by_channel('Facebook')
@@ -192,6 +199,14 @@ class PerformerController < ApplicationController
 
     respond_to do |format|
       format.js { render partial: 'performer/search' }
+    end
+  end
+  
+  def update_performer_request
+    if params[:accepted] == "true"
+      PerformerRequest.find(params[:id]).update(accepted: true)    
+    else 
+      PerformerRequest.find(params[:id]).update(accepted: false) 
     end
   end
   

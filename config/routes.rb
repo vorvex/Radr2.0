@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   get 'p/:id/social_links' => 'performer#social_links'
   get 'e/:id/social_links' => 'event#social_links'
   
+  get 'p/:id/requests' => 'performer#requests'
+  
   get 'e/:id/tickets' => 'event#tickets'
   
   patch 'l/:id/social_links' => 'location#edit_social_links', as: :edit_location_social_links
@@ -51,7 +53,9 @@ Rails.application.routes.draw do
   post 'p/create_from_event' => 'performer#create_from_event', as: :create_performer_from_event
   get 'p/search_from_event' => 'performer#search_from_event'
   post 'performer-request' => 'performer#performer_request'
+  patch 'performer-request/:id' => 'performer#update_performer_request'
   delete 'delete-performer-request' => 'performer#delete_performer_request', as: :delete_performer_request
+  
   
   get 'einstellungen' => 'dashboard#settings'
   get 'einstellungen/profiles' => 'dashboard#profiles'
@@ -81,6 +85,7 @@ Rails.application.routes.draw do
 
   post 'event/create' => 'event#create_event1', as: :create_event1
   post 'event/:id/add_images' =>  'event#add_images'
+  post 'event/select-plan/:id' => 'event#select_plan'
   patch 'event/create3/:id' =>  'event#create_event3', as: :create_event3
   
   post 'create-ticket' =>  'ticket#create', as: :create_ticket

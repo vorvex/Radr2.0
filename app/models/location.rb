@@ -17,6 +17,10 @@ class Location < ApplicationRecord
     return arr
   end
   
+  def user
+    User.find(self.user_id)
+  end
+  
   def self.categories 
     arr = ['', 'Nachtclub', 'Bar', 'Restaurant', 'Sport Arena', 'Theater', 'Veranstaltungsort', 'Sonstiges']
     return arr

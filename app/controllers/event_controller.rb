@@ -207,6 +207,11 @@ class EventController < ApplicationController
 
   end
   
+  def select_plan
+    @event = Event.find(params[:id])
+    @event.update(plan: params[:plan])
+  end
+  
   def tickets
     @event = Event.find(params[:id])
     @tickets = @event.tickets
