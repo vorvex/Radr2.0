@@ -18,6 +18,14 @@ class Event < ApplicationRecord
     return arr
   end
   
+  def category_str
+    if self.category.nil?
+      return "Veranstaltung"
+    else
+      return self.category
+    end
+  end
+  
   def self.upcoming
     where('start_time > ?', Time.now).order('start_time ASC')
   end

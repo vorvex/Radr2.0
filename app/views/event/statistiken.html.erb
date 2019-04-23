@@ -1,6 +1,6 @@
 <%= render 'dashboard/shared/header3', header: @event.name[0..100] %>
 <div class="container">
-  <%= area_chart @event.page_views.group_by_day(:created_at, format: "%a").count, discrete: true, legend: false, height: "200px" %>
+  <%= area_chart @event.page_views.group_by_day(:created_at, format: "%a", last: 14).count, discrete: true, legend: false, height: "200px" %>
       <div class="statistik-body">
         <div class="oh-head">
           <div>
@@ -9,7 +9,7 @@
           </div>
           <div class="last">
             <h2 class="<%= @event.page_views.trend %>"><%= @event.page_views.count %> Aufrufe</h2>
-            <span class="subheader">+<%= @event.page_views.group_by_week(:created_at, last: 2).count.values.last %> diese Woche</span>
+            <span class="subheader"><%= @event.page_views.group_by_week(:created_at, last: 2).count.values.last %> diese Woche</span>
           </div>
         </div>
         
@@ -20,7 +20,7 @@
           </div>
           <div class="last">
             <h2>XYZ Aufrufe</h2>
-            <span class="subheader">+XYZ diese Woche</span>
+            <span class="subheader">XYZ diese Woche</span>
           </div>
         </div>
         
@@ -31,7 +31,7 @@
           </div>
           <div class="last">
             <h2>XYZ Aufrufe</h2>
-            <span class="subheader">+XYZ diese Woche</span>
+            <span class="subheader">XYZ diese Woche</span>
           </div>
         </div>
         

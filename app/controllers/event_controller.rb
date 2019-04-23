@@ -236,16 +236,16 @@ class EventController < ApplicationController
   
   def statistiken
     @event = Event.find(params[:id])
-    plan = @event.plan
-    if plan == 'free'
-      limit = 1000
-      cpm = 500
-    elsif plan == 'gold'
+    plan = @event.plan    
+    if plan == 'Gold'
       limit = 5000
       cpm = 250
-    elsif plan == 'platin'
+    elsif plan == 'Platin'
       limit = 10000
       cpm = 100
+    else
+      limit = 1000
+      cpm = 500
     end
     
     
