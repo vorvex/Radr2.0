@@ -39,10 +39,14 @@ Rails.application.routes.draw do
   get 'p/:id/requests' => 'performer#requests'
   
   get 'e/:id/tickets' => 'event#tickets'
+  get 'e/:id/performer' => 'event#edit_performer'
+  get 'e/:id/statistiken' => 'event#statistiken'
+  patch 'e/:id/toggle-online' => 'event#toggle_online'
+  
   
   patch 'l/:id/social_links' => 'location#edit_social_links', as: :edit_location_social_links
   patch 'p/:id/social_links' => 'performer#edit_social_links', as: :edit_performer_social_links
-  patch 'e/:id/social_links' => 'event#edit_social_links', as: :edit_event_social_links
+  patch 'e/:id/social_links' => 'event#update_social_links', as: :update_event_social_links
   
   get 'l/:id/opening_hours' => 'location#opening_hours'
   patch 'l/:id/opening_hours' => 'location#update_opening_hours', as: :update_opening_hours

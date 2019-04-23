@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_20_194748) do
+ActiveRecord::Schema.define(version: 2019_04_23_121203) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2019_04_20_194748) do
     t.string "path"
     t.integer "user_id"
     t.string "plan", default: "free"
+    t.boolean "online", default: false
   end
 
   create_table "invoices", force: :cascade do |t|

@@ -1,0 +1,117 @@
+<%= render 'dashboard/shared/header3', header: 'Social Media Links' %>
+<div class="container">
+  <div class="form-group" id="performer-form-group">
+              <label for="performer">Performer</label>
+              <div class="search-form-container active" id="searchPerformerContainer">
+                <input type="text" id="performer-search" name="performer_search" placeholder="Performername" class="form-control">
+                <div class="search-results" id="performer-search-preview"></div>
+              </div>
+              <div id="createPerformer" class="create-container">
+                <div class="form-group">
+                  <input type="text" name="performername" id="performername" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="performercategory" name="performercategory" aria-describedby="categoryHelp" placeholder="Typ" >
+                    <option value="" style="color: #cccccc;">Typ</option>
+                    <% Performer.categories.each do |category| %>
+                    <option val="<%= category %>"><%= category %></option>
+                    <% end %>
+                  </select>
+                </div>
+                <button type="submit" class="form-button" id="createPerformerButton">Erstellen</button>                
+              </div>
+              <div class="share-container" id="sharePerformer">
+                <h3>Die Location wurde erfolgreich angelegt.</h3>
+                <p style="text-align: center; ">Teilen Sie bitte den Link zu dem Veranstaltungsinhaber um die Location zu verifizieren.</p>                
+              </div>
+              <% @performer_requests.each do |request| %>
+                <div class="search-result" style="justify-content: space-between; margin-top: 10px;" id="performer_request_<%= request.id %>">
+                  <img src="<% if request.performer.profile_image_thumbnail.attached? %><%= url_for(request.performer.profile_image_thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="search-result-img">
+                  <div style="flex-grow: 10;">
+                    <h2><%= request.performer.name %></h2>
+                      <% if request.accepted %><span class="subheader" style="color: #2AC940">Angenommen</span><% elsif request.created_at == request.updated_at %><span class="subheader">Ausstehend</span><% else %><span class="subheader" style="color: #EE0B43">Abgelehnt</span><% end %>
+                  </div>
+                  <a onclick="deletePerformer(<%= request.id %>)">X</a>
+                </div>
+              <% end %>
+            </div>
+            <script>        
+              var event_id = <%= @event.id %>;
+              // Performer Search
+              $('#performer-search').on('keyup', function(event){           
+                event.preventDefault();
+                $(this).removeClass('is-valid');
+                var input = $(this).val()
+                if(input.length > 0){
+                  
+                  $.ajax({
+                          type: 'GET',
+                          url: '/p/search_from_event',
+                          data: $(this).serialize() + '&event=' + event_id,
+                          error: function(){
+                            $('#performer-search-preview').html('<a href="newPerformer(' + input + ')" id="newPerformerButton">Neu erstellen</a>');
+                          }	
+                  });
+                } else {
+                  $('#performer-search-preview').removeClass('active');
+                }
+              });
+              
+             function deletePerformer(performerRequestId){
+               var sure = confirm("Sind Sie sicher?");
+                if(sure == true){
+                 $.ajax({
+                    type: 'DELETE',
+                    url: '/delete-performer-request',
+                    data: 'performer_request_id=' + performerRequestId,
+                    error: function(){
+                      alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+                    },
+                   success: function(){
+                     $('#performer_request_' + performerRequestId).remove();
+                   }
+                 });
+               }
+             }
+              
+              function newPerformer() {
+                var searchContainer = $('#searchPerformerContainer');
+                var createContainer = $('#createPerformer');
+                searchContainer.toggleClass('active');
+                createContainer.toggleClass('active');
+                $('#performername').val($('#performer-search').val());
+              }
+              
+              function selectPerformer(performerId, eventId) {
+                $.ajax({
+                          type: 'POST',
+                          url: '/performer-request',
+                          data: 'performer_id=' + performerId + '&event_id=' + eventId,
+                          error: function(){
+                            alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+                          }	
+                  });
+                $('#performer-search-preview').html('').removeClass('active');
+              }
+              
+              function dontVerifyPerformer() {
+                var shareContainer = $('.share-container');
+                var searchContainer = $('#searchContainer');
+                
+                searchContainer.addClass('active');
+                shareContainer.removeClass('active');
+              }
+
+              $('#createPerformerButton').on('click', function(event){
+                event.preventDefault();
+                $.ajax({
+                        type: 'POST',
+                        url: '/p/create_from_event',
+                        data: $('#createPerformer input, #createPerformer select').serialize() + '&event=' + event_id,
+                        error: function(){
+                          alert('danger', 'Es ist ein Fehler aufgetretten! Bitte versuchen Sie es erneut')
+                        }	
+                });
+              })
+            </script>
+</div>

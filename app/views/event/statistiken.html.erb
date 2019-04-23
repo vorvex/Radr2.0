@@ -1,0 +1,72 @@
+<%= render 'dashboard/shared/header3', header: @event.name[0..100] %>
+<div class="container">
+  <%= area_chart @event.page_views.group_by_day(:created_at, format: "%a").count, discrete: true, legend: false, height: "200px" %>
+      <div class="statistik-body">
+        <div class="oh-head">
+          <div>
+            <h2>Profilaufrufe</h2>
+            <span class="subheader">Gesamt</span>
+          </div>
+          <div class="last">
+            <h2 class="<%= @event.page_views.trend %>"><%= @event.page_views.count %> Aufrufe</h2>
+            <span class="subheader">+<%= @event.page_views.group_by_week(:created_at, last: 2).count.values.last %> diese Woche</span>
+          </div>
+        </div>
+        
+        <div class="oh-head">
+          <div>
+            <h2>Ticketlink Aufrufe</h2>
+            <span class="subheader">Gesamt</span>
+          </div>
+          <div class="last">
+            <h2>XYZ Aufrufe</h2>
+            <span class="subheader">+XYZ diese Woche</span>
+          </div>
+        </div>
+        
+        <div class="oh-head">
+          <div>
+            <h2>Teilen Button</h2>
+            <span class="subheader">Gesamt</span>
+          </div>
+          <div class="last">
+            <h2>XYZ Aufrufe</h2>
+            <span class="subheader">+XYZ diese Woche</span>
+          </div>
+        </div>
+        
+        <div class="oh-head">
+          <div>
+            <h2>Entstandene Kosten</h2>
+            <span class="subheader">Gesamt</span>
+          </div>
+          <div class="last">
+            <h2><%= @kosten %>€</h2>
+            <span class="subheader">Prognose: <%= @prognose %>€</span>
+          </div>
+        </div>
+        
+        <div class="oh-head">
+          <div>
+            <h2>Online</h2>
+          </div>
+          <div class="last">
+            <button onclick="toggleOnline()" class="toggle_check<% if @event.online %> active<% end %>"></button>
+          </div>
+        </div>
+      </div>
+</div>
+<script>
+  function toggleOnline() {
+    $.ajax({
+            type: 'PATCH',
+            url: '/e/<%= @event.id %>/toggle-online',
+            error: function(){
+              alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+            }	
+    }).done(function(){
+      $('.toggle_check').toggleClass('active');
+    });
+    
+  }
+</script>

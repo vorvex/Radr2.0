@@ -155,7 +155,18 @@ class EventController < ApplicationController
       @event.end_time = Time.zone.strptime(endTime, "%d.%m.%Y %H:%M")
     end
     
-    @event.update(name: name , description: params[:description], category: params[:event][:category], location_id: location.id )
+    @event.update(name: name , description: params[:description], category: params[:event][:category], location_id: location.id )    
+    @event.save
+
+  end
+  
+  def social_links
+    @event = Event.find(params[:id])
+    @social_links = @event.social_links
+  end
+  
+  def update_social_links
+    @event = Event.find(params[:id])
     
     @facebook = @event.social_links.find_by_channel('Facebook')
     @instagram = @event.social_links.find_by_channel('Instagram')
@@ -203,8 +214,14 @@ class EventController < ApplicationController
       @webseite.delete
     end
     
-    @event.save
-
+    respond_to do |format|
+      format.js { render :js => "alert('success', 'Social Media Links wurden erforlgreich aktualisiert.');" }
+     end
+  end
+  
+  def edit_performer
+    @event = Event.find(params[:id])
+    @performer_requests = @event.performer_requests
   end
   
   def select_plan
@@ -217,12 +234,54 @@ class EventController < ApplicationController
     @tickets = @event.tickets
   end
   
+  def statistiken
+    @event = Event.find(params[:id])
+    plan = @event.plan
+    if plan == 'free'
+      limit = 1000
+      cpm = 500
+    elsif plan == 'gold'
+      limit = 5000
+      cpm = 250
+    elsif plan == 'platin'
+      limit = 10000
+      cpm = 100
+    end
+    
+    
+    time_since = (Time.now - @event.created_at) / 3600
+    time_till =  (@event.end_time - Time.now) / 3600
+    views = @event.page_views.count
+    views_predicted = (views / time_since) * time_till + views    
+    costs = (views - limit) / 1000 * ( cpm / 100 )
+    costs_predicted = (views_predicted - limit) / 1000 * ( cpm / 100 )
+    if costs < 0 
+      @kosten = 0 
+    else 
+      @kosten = costs.round(2)
+    end
+    
+    if costs_predicted < 0 
+      @prognose = 0 
+    elsif costs_predicted < costs
+      @prognose = costs
+    else
+      @prognose = costs_predicted.round(2)
+    end
+
+  end
+  
+  def toggle_online
+    @event = Event.find(params[:id])
+    @event.update(online: !@event.online)
+  end
+  
   def delete
     @event = Event.find(params[:id])    
     @event.delete
-    
-    redirect_to "/"
   end
+  
+  
   
   private
   

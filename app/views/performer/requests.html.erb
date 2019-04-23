@@ -1,7 +1,11 @@
 <%= render 'dashboard/shared/header2', header: 'Event anfragen', link: @performer.id, type: 'performer' %>
 <div class="container" style="overflow: hidden;">
   <h4 class="request-header">Anfragen</h4>
-  <div class="event-slider" style="height: 223px; width: 100%; position: relative;">
+  <div class="<% if @new_requests.any? %>event-slider<% end %>" style="height: 223px; width: 100%; position: relative;">
+    <% if !@new_requests.any? %>
+      <div class="event-slider-empty-state">
+      </div>
+    <% end %>
     <% @new_requests.each do |request| %>
       <div href="<%= request.event.url %>" class="preview-request" id="request<%= request.id %>">
         <div class="preview-request-inner">
@@ -30,7 +34,11 @@
     <% end %>
   </div>
   <h4 class="request-header">Aktuelle Teilnahmen</h4>
-  <div class="event-slider" id="teilnahmen" style="height: 223px; width: 100%; position: relative;">
+  <div class="<% if @accepted_requests.any? %>event-slider<% end %>" id="teilnahmen" style="height: 223px; width: 100%; position: relative;">
+    <% if !@accepted_requests.any? %>
+      <div class="event-slider-empty-state">
+      </div>
+    <% end %>
     <% @accepted_requests.each do |request| %>
       <div href="<%= request.event.url %>" class="preview-request" id="request<%= request.id %>">
         <div class="preview-request-inner">

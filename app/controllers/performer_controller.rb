@@ -80,7 +80,7 @@ class PerformerController < ApplicationController
   
   def events
     @performer = Performer.find(params[:id])
-    @events = @performer.own_events
+    @own_events = @performer.own_events
   end
   
   def share
@@ -95,7 +95,7 @@ class PerformerController < ApplicationController
   def requests
     @performer = Performer.find(params[:id])
     @requests = @performer.performer_requests
-    @new_requests = @requests.where('created_at = updated_at')
+    @new_requests = @requests.where('created_at = updated_at').where(accepted: false)
     @accepted_requests = @requests.where(accepted: true)
   end
   
