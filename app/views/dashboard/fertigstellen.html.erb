@@ -78,7 +78,7 @@
   $(document).scroll(function(){
     var scroll = $(this).scrollTop();        
     if(scroll > 50 && navigator.userAgent.includes('iPhone' || 'Android') && button) {      
-      window.location.replace('<%= ENV['ROOT_URL'] %><%= @resource.url %>');
+      window.location.replace('https://<%= ENV['ROOT_URL'] %><%= @resource.url %>');
       button = false;
     }
   });      
@@ -88,7 +88,7 @@
 
   function toggleIframe() {
     if(navigator.userAgent.includes('iPhone' || 'Android')) {
-      window.open('<%= ENV['ROOT_URL'] %><%= @resource.url %>', '_blank');
+      window.open('https://<%= ENV['ROOT_URL'] %><%= @resource.url %>', '_blank');
     } else {
       $('.fertigstellen-iframe').toggleClass('active');
       $('#iframe').contents().scrollTop(0);

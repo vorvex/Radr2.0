@@ -28,7 +28,7 @@ class PublicViewController < ApplicationController
       @title += @resource.location.name
     end
     @image = url_for(@resource.images.first)
-    @description = @resource.category_str + " am " + @resource.time_str + ". " + @resource.description
+    @description = @resource.category_str + " am " + @resource.time_str + ". " + @resource.description_str
     @type = "Event"
     
     

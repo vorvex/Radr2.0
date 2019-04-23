@@ -110,7 +110,7 @@ class EventController < ApplicationController
   def create_event3 # Beschreibung & Öffnungszeiten
     @event = Event.find(params[:id])    
 
-    @event.update(description: params[:description], category: params[:event][:category], performer_id: params[:performer_id])   
+    @event.update(description: params[:description], category: params[:event][:category])   
     
     @event.save
     

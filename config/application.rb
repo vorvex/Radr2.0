@@ -16,6 +16,8 @@ module Radr
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     
+    config.active_job.queue_adapter = Rails.env.production? ? :sidekiq : :async
+    
     config.to_prepare do
       Devise::SessionsController.layout "dashboard"
       Devise::RegistrationsController.layout "dashboard"
