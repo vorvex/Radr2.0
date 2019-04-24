@@ -11,8 +11,9 @@
     </div>
     <div class="form-group">
       <label for="location">Location</label>
-      <%= f.collection_select(:location_id, current_user.locations.all, :id, :name, {}, {:class=>"form-control"}) %>
-      <small id="locationHelp" class="form-text text-muted">Wählen Sie einen Veranstaltungsort aus.</small>
+      <input type="text" class="form-control is-valid" value="<%= @event.location.name %>" style="background-color: white" disabled>
+      <small id="locationHelp" class="form-text text-muted">Der Veranstaltungsort kann nicht nachträglich geändert werden erstellen Sie eine neue Veranstaltung
+      oder kontaktieren Sie uns unter <a href="http://m.me/theradr" target="_blank" style="font-size: 100%;">m.me/theradr</a> oder per Mail an <a href="mailto:kontakt@the-radr.com" target="_blank" style="font-size: 100%;">kontakt@the-radr.com</a></small>
     </div>
     <label for="start_date">Startdatum</label>
     <div class="row" style="margin-bottom: 10px">
