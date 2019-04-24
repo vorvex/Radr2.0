@@ -172,7 +172,7 @@ class LocationController < ApplicationController
   
   def events
     @location = Location.find(params[:id])
-    @events = @location.events
+    @own_events = @location.own_events
   end
   
   def social_links

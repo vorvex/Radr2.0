@@ -1,23 +1,98 @@
 <%= render 'dashboard/shared/header2', header: 'Events', link: @location.id, type: 'location' %>
-<div class="container">
-  <% @events.each do |event| %>
-  <div class="card">
-    <a href="/e/<%= event.id %>/edit_images" class="card-img-top edit-image">
-      <img src="<% if event.images_thumbnail.attached?  %><%= url_for(event.images_thumbnail) %><% else %>/images/blurred-image.jpg<% end %>" alt="<%= event.name %>">
-    </a>
-    <div class="card-body">
-      <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;"><%= event.name %></h5>
-      <h6 class="card-subtitle mb-2 text-muted"><%= event.time_str %></h6>   
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" style="padding: 12px 10px"><a href="/e/<%= event.id %>/edit" class="card-link">Bearbeiten</a></li>
-      <li class="list-group-item" style="padding: 12px 10px"><a href="/e/<%= event.id %>/tickets" class="card-link">Ticketoptionen</a></li>
-      <li class="list-group-item" style="padding: 12px 10px"><a href="/e/<%= event.id %>/share" class="card-link">Link teilen</a></li>
-    </ul>
+
+<div class="container" style="overflow: hidden;">
+  <h4 class="request-header">Bevorstehende Veranstaltungen</h4>
+  <div class="<% if @own_events.any? %>event-slider<% end %>" id="teilnahmen" style="height: 223px; width: 100%; position: relative;">
+    <% if !@own_events.any? %>
+      <div class="event-slider-empty-state">
+      </div>
+    <% end %>
+    <% @own_events.each do |event| %>
+      <div href="<%= event.url %>" class="preview-request" id="event<%= event.id %>">
+        <div class="preview-request-inner">
+          <a onclick="deleteThis('event', <%= event.id %>)" class="delete-button">
+            <img src="/images/requests/delete.png" alt="Löschen">
+          </a>
+          <div>
+            <h4><%= event.name %></h4>
+            <p><%= event.time_str %><br/><%= event.location_name %>, <%= event.city %></p>
+          </div>          
+        </div>
+        <img class="preview-request-img" src="<%= url_for(event.images_thumbnail) unless !event.images_thumbnail.attached? %>" alt="<%= event.name %>">
+        <div class="request-buttons">
+          <a href="/e/<%= event.id %>/statistiken">
+            <img src="/images/requests/statistics.png" alt="Analytics" height="20px">
+            <span>Statistiken</span>
+          </a>
+          <a onclick="editEvent(<%= event.id %>)">
+            <img src="/images/requests/edit.png" alt="Bearbeiten" height="20px">
+            <span>Bearbeiten</span>
+          </a>
+          <a onclick="shareThis('<%= event.name %>', '<%= event.description %>', '<%= event.url %>')">
+            <img src="/images/requests/share.png" alt="Ansehen" height="19px">
+            <span>Teilen</span>
+          </a>
+        </div>
+      </div>
+    <% end %>
   </div>
-  <% end %>
-</div>
-<a href="/neues-event" id="image-upload">  
-  <?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-  <svg height="32px" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path fill="white" d="M417.4,224H288V94.6c0-16.9-14.3-30.6-32-30.6c-17.7,0-32,13.7-32,30.6V224H94.6C77.7,224,64,238.3,64,256  c0,17.7,13.7,32,30.6,32H224v129.4c0,16.9,14.3,30.6,32,30.6c17.7,0,32-13.7,32-30.6V288h129.4c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z"/></svg>
-</a>
+  <div class="edit-event-default">
+      <div class="edit-event-default-container">
+        <div class="edit-event-default-head">
+          <h3>Event bearbeiten</h3>
+        </div>
+        <a href="" id="editevent-informationen" class="edit-event-button">Generelle Informationen</a>
+        <a href="" id="editevent-bilder" class="edit-event-button">Bilder</a>
+        <a href="" id="editevent-socialmedia" class="edit-event-button">Social Media Links</a>
+        <a href="" id="editevent-performer" class="edit-event-button">Performer</a>
+        <a href="" id="editevent-plan" class="edit-event-button">Premium & Tickets</a>
+        <a href="" id="editevent-delete" class="edit-event-button">Event löschen</a>
+        <a onclick="closeEdit()" class="closeedit">Abbrechen</a>
+      </div>
+    </div>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+   $('.event-slider').slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 1,
+      variableWidth: true
+    });
+  
+  function editEvent(index) {
+    $('#editevent-informationen').attr('href', '/e/' + index + '/edit');
+    $('#editevent-bilder').attr('href', '/e/' + index + '/edit_images');
+    $('#editevent-socialmedia').attr('href', '/e/' + index + '/social_links');
+    $('#editevent-performer').attr('href', '/e/' + index + '/performer');
+    $('#editevent-plan').attr('href', '/e/' + index + '/premium');
+    $('#editevent-delete').attr('onclick', 'deleteThis(' + index + ')');
+    $('.edit-event-default').addClass('active');
+    setTimeout(function(){
+      $('.edit-event-default-container').addClass('active');
+    }, 50);
+  }
+  
+  function closeEdit() {
+    $('.edit-event-default-container').removeClass('active');
+    setTimeout(function(){
+      $('.edit-event-default').removeClass('active');
+    }, 500);
+  }
+  
+  function deleteThis(type, index) {
+    var sure = confirm("Sind Sie sicher?");
+    if(sure == true){
+      $.ajax({
+        type: 'DELETE',
+        url: '/' + type + '/delete/' + index,
+        error: function(){
+          alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+        },	
+      }).done(function(){
+        $('#' + type + index).remove();
+        alert('success', type.charAt(0).toUpperCase() + type.slice(1) + ' wurde erfolgreich gelöscht');
+      });
+   }
+  }
+</script>

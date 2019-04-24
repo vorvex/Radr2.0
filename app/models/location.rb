@@ -17,6 +17,11 @@ class Location < ApplicationRecord
     return arr
   end
   
+  def own_events
+    user = User.find(self.user_id)    
+    self.events.where('user_id = ?', user.id)
+  end
+  
   def user
     User.find(self.user_id)
   end
