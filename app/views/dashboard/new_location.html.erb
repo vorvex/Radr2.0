@@ -61,7 +61,7 @@
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
               <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
-                  <tspan x="6.766" y="15">2</tspan>
+                  <tspan x="5.9" y="15">2</tspan>
               </text>
             </g>
           </svg>
@@ -80,7 +80,7 @@
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
               <circle fill="currentColor" cx="10" cy="10" r="10"></circle>
               <text font-family="hero-new" font-size="14" font-weight="400" fill="#FFFFFF">
-                  <tspan x="6.766" y="15">3</tspan>
+                  <tspan x="6" y="15">3</tspan>
               </text>
             </g>
           </svg>
@@ -105,8 +105,7 @@
 <div class="footer">
   <a href='' class="footer-link" id="button1">Weiter</a> 
   <a href='' class="footer-link" id="button2" style="display: none;">Weiter</a>
-  <a href='' class="footer-link" id="button3" style="display: none;">Weiter</a>
-  <a href='/' class="footer-link" id="button4" style="display: none;">Fertigstellen</a>
+  <a href='' class="footer-link" id="button3" style="display: none;">Fertigstellen</a>
 </div>
 
 <script>
@@ -229,12 +228,12 @@
 
  });
   
+  var location_id = 0;
+  
   $('#button3').on('click', function(event){
     event.preventDefault();
     $('#form3').submit();
-    $('.container').html("<%= j(render 'shared/done') %>");
-    $('#button3').remove();
-    $('#button4').css('display', 'block'); 
+    window.location.replace("/fertigstellen/l/" + location_id)
  });
   
   $(document).ready(function() { 

@@ -5,12 +5,15 @@ var accordion3 = $('#accordion3');
 var form3 = $('#form3');
 var button1 = $('#button1');
 var button2 = $('#button2');
+var button4 = $('#button4');
 
 accordion1.removeClass('active').addClass('done');
 accordion2.addClass('active');
 
 button1.remove();
 button2.css('display', 'block');
+
+location_id = <%= @location.id %>;
 
 form3.attr('action', '/location/create3/' + <%= @location.id %>);
 

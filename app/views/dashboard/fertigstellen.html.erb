@@ -52,7 +52,7 @@
             }
             if(e.originalEvent.wheelDelta / 120 > 0) {
               x++;
-              if(x >= sensibility / 2 && $(this).scrollTop() == 0 && y){
+              if(x >= sensibility && $(this).scrollTop() == 0 && y){
                 $('.fertigstellen-iframe').removeClass('active');
                 $('#iframe').contents().scrollTop(0);
                 wheelUp = 0;
