@@ -1,0 +1,156 @@
+<%= render 'dashboard/shared/header3', header: 'Premium Einstellungen' %>
+
+<div class="container">
+  <div class="abo-container">
+    <div class="top">
+      <h2>Premium</h2>
+      <% if @event.plan == "free" %>
+        <a onclick="openPlanOptions()">bearbeiten</a>
+      <% else %>
+        <a href="mailto:kontakt@the-radr.com">Support kontaktieren</a>
+      <% end %>
+    </div>
+    <div id="abonnement">
+      <img src="/images/<%= @event.plan %>.png" alt="Free"> <span><% if @event.plan == "free" %>Kostenlos<% else %><%= @event.plan %><% end %></span>
+    </div>
+  </div>
+  
+  <div id="planContainer" style="display: none; padding: 10px; border: solid 1px lightgrey; border-radius: 10px; margin-bottom: 10px;">
+    <div class="event-plan-container<% if @event.plan == 'free' %> active<% end %>" onclick="selectPlan(1)" id="plan1">
+      <div>
+        <span>Basic Version - 0€</span>
+        <p>
+          1000 Ansichten (danach 5€/1000 Aufrufe)<br/>
+          QR-Code für Plakate<br/>
+          Keine Ticketlinks
+        </p>
+      </div>
+      <div class="select-button">
+
+      </div>
+    </div>
+    <div class="event-plan-container<% if @event.plan == 'Gold' %> active<% end %>" onclick="selectPlan(2)" id="plan2">
+      <div>
+        <span>Gold Version - 10€</span>
+        <p>
+          5000 Ansichten (danach 2,50€/1000 Aufrufe)<br/>
+          QR-Code für Plakate<br/>
+          Ticketlinks
+        </p>
+      </div>
+      <div class="select-button">
+
+      </div>
+    </div>
+    <div class="event-plan-container<% if @event.plan == 'Platin' %> active<% end %>" onclick="selectPlan(3)" id="plan3">
+      <div>
+        <span>Platin Version - 20€</span>
+        <p>
+          10000 Ansichten (danach 1€/1000 Aufrufe)<br/>
+          QR-Code für Plakate<br/>
+          Ticketlinks
+        </p>
+      </div>
+      <div class="select-button">
+
+      </div>
+    </div>
+    <a onclick="$('#planContainer').slideUp();" style="display: block; text-align: center">Fertig</a>
+  </div>
+  
+  <div class="oh-head" style="margin-bottom: 20px;">
+      <div>
+        <h2>Kostenlose Aufrufe übrig</h2>
+        <span class="subheader">Gesamt</span>
+      </div>
+      <div class="last">
+        <h2 style="padding-right: 0px" id="views_left"><%= @page_views_left %> Aufrufe</h2>
+        <span class="subheader">Prognose: <%= @page_views_exspected %> Aufrufe</span>
+      </div>
+    </div>
+  
+
+  <div id="ticketContainer">
+    <%= form_for(Ticket.new, :html => {role: "form", id: "newticket"}, url: create_ticket_path) do |f| %>
+        <h5 style="margin-bottom: 10px !important;">Neues Ticket</h5>
+        <input type="text" name="event_id" id="eventid" value="<%= @event.id %>" hidden>
+        <input type="text" name="container" value="ticketContainer" hidden>
+          <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+            <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>
+          </div>
+          <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+            <%= f.select(:status, Ticket.stati, {}, {class: "form-control"}) %>
+          </div>
+          <div class="input-group input-group-sm" style="margin-bottom: 5px; display: flex; flex-wrap: nowrap;">
+            <%= f.number_field(:price, in: 0.00..10000.00, placeholder:'30,00', class:"form-control")%>
+            <div class="input-group-append">
+              <span class="input-group-text" style="font-size: 12px;" id="basic-addon2">€</span>
+            </div>
+          </div>
+          <div class="input-group input-group-sm" style="margin-bottom: 5px;">
+            <%= f.url_field :url, placeholder: 'Ticket Link', class: "form-control" %>
+          </div>
+          <div class="input-group">
+            <%= f.submit "Ticket erstellen", class: "btn btn-primary" %>
+          </div>
+      <% end %>
+      <% @tickets.each do |ticket| %>
+
+        <div class="ticket-container" data-id="<%= ticket.id %>">
+          <strong><%= ticket.name %></strong><br/>
+          Status: <%= ticket.status %><br/>
+          Preis: <%= ticket.price_str %><br/>
+          Link: <%= ticket.url %>
+          <%= button_to "x", destroy_ticket_path(:id => ticket.id), :method => :delete, data: { confirm: 'Sind Sie sich sicher?' }, :remote => true, class: "delete-ticket" %>
+        </div>
+      <% end %>
+  </div>
+</div>
+<script>
+  $(document).ready(function() { 
+      // bind 'myForm' and provide a simple callback function 
+      $('#newticket').ajaxForm();
+  });
+  
+  function openPlanOptions(){
+    $('#planContainer').slideDown();
+  }
+  var event_id = <%= @event.id %>,
+      views = <%= @event.page_views.count %>;
+  <% if @event.plan == 'free' %>var planSelected = 1;<% end %>
+  <% if @event.plan == 'Gold' %>var planSelected = 1;<% end %>
+  <% if @event.plan == 'Platin' %>var planSelected = 1;<% end %>
+          
+  function selectPlan(index) {
+    planSelected = index;
+    $('.event-plan-container').removeClass('active');
+    $('#plan' + index).addClass('active');
+    if(index == 1){
+      $.ajax({
+          type: 'POST',
+          url: '/event/select-plan/' + event_id,
+          data: 'plan=free'
+      }).done(function(){
+        $('#views_left').html(1000 - views + ' Aufrufe')
+      });
+      
+    } else if (index == 2) {
+      $.ajax({
+          type: 'POST',
+          url: '/event/select-plan/' + event_id,
+          data: 'plan=Gold'
+      }).done(function(){
+        $('#views_left').html(5000 - views + ' Aufrufe')
+      });
+    } else {
+      $.ajax({
+          type: 'POST',
+          url: '/event/select-plan/' + event_id,
+          data: 'plan=Platin'
+      }).done(function(){
+        $('#views_left').html(10000 - views + ' Aufrufe')
+      });
+    }
+  }
+  
+</script>

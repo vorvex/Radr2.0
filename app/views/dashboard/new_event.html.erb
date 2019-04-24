@@ -414,7 +414,7 @@
         <div id="ticketContainer">
           <%= form_for(Ticket.new, :html => {role: "form", id: "newticket"}, url: create_ticket_path) do |f| %>
             <h5 style="margin-bottom: 10px !important;">Neues Ticket</h5>
-            <input type="text" name="event_id" id="eventid" value="1" hidden>
+            <input type="text" name="event_id" id="eventid" value="" hidden>
             <input type="text" name="container" value="ticketContainer" hidden>
               <div class="input-group input-group-sm" style="margin-bottom: 5px;">
                 <%= f.text_field :name, placeholder: 'Name', class: "form-control" %>

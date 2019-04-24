@@ -219,6 +219,31 @@ class EventController < ApplicationController
      end
   end
   
+  def edit_premium 
+    @event = Event.find(params[:id])
+    @tickets = @event.tickets
+    
+    plan = @event.plan    
+    if plan == 'Gold'
+      limit = 5000
+      cpm = 250
+    elsif plan == 'Platin'
+      limit = 10000
+      cpm = 100
+    else
+      limit = 1000
+      cpm = 5
+    end
+    
+    time_since = (Time.now - @event.created_at) / 3600
+    time_till =  (@event.end_time - Time.now) / 3600
+    views = @event.page_views.count
+    views_predicted = (views / time_since) * time_till + views    
+    
+    @page_views_left = limit - @event.page_views.count
+    @page_views_exspected = views_predicted.round()
+  end
+  
   def edit_performer
     @event = Event.find(params[:id])
     @performer_requests = @event.performer_requests

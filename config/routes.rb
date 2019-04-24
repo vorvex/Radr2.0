@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   
   get 'e/:id/tickets' => 'event#tickets'
   get 'e/:id/performer' => 'event#edit_performer'
+  get 'e/:id/premium' => 'event#edit_premium'
   get 'e/:id/statistiken' => 'event#statistiken'
   patch 'e/:id/toggle-online' => 'event#toggle_online'
   
