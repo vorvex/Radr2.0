@@ -55,7 +55,7 @@
     <script>
       $('[data-type="inbound-link"]').on('click', function(event){
         event.preventDefault();
-        if $(this).attr('href').includes('?') {
+        if ($(this).attr('href').includes('?')) {
           var href = $(this).attr('href') + '&from=' + window.location.pathname;                             
         } else {
           var href = $(this).attr('href') + '?from=' + window.location.pathname;
