@@ -1,0 +1,11 @@
+<div class="image-gallery-container" style="display: block;">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+  <img src="<%= url_for(@resource.images.last) %>" id="expandedImg" alt="Expanded Gallery" style="width: 100%;">
+</div>
+<div class="image-gallery-row">
+  <% @resource.images.order(created_at: :desc).limit(4).each do |img| %>
+    <div class="image-gallery-column">
+      <%= image_tag img.variant(resize: "111x65"), data: {src: url_for(img)}, style: "width:100%", onclick: "maximizeImage(this);", alt: img.filename %> 
+    </div>
+ <% end %>
+</div>

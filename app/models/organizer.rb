@@ -29,4 +29,15 @@ class Organizer < ApplicationRecord
     return '/organizer/' + self.path
   end
   
+  def self.sizes
+    {
+      gallery: { resize: "370x220" },
+      thumbnail:     { resize: "85x50" }
+    }
+  end
+
+  def sized(size)
+    self.images.variant(Organizer.sizes[size]).processed
+  end
+  
 end
