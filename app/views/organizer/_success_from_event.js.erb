@@ -1,0 +1,6 @@
+var shareContainer = $('#shareOrganizer');
+var createContainer = $('#createOrganizer');
+shareContainer.append("<%= j(render 'organizer/success_from_event.html') %>");
+shareContainer.toggleClass('active');
+createContainer.toggleClass('active');
+$('#organizer-form-group').append("<%= j(render 'organizer/request_success.html') %>");

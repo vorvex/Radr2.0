@@ -6,6 +6,7 @@ class User < ApplicationRecord
   
   has_many :locations, :dependent => :delete_all
   has_many :performers, :dependent => :delete_all
+  has_many :organizers, :dependent => :delete_all
   has_many :events, :dependent => :delete_all
   has_many :invoices, :dependent => :delete_all
   has_many :sessions, :dependent => :delete_all

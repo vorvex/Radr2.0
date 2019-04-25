@@ -1,6 +1,6 @@
-<%= render 'dashboard/shared/header3', header: 'Neuer Performer'%>
+<%= render 'dashboard/shared/header3', header: 'Neuer Veranstalter'%>
 <div class="container">
-  <h1 class="form-h1">Neuer Performer</h1>
+  <h1 class="form-h1">Neuer Veranstalter</h1>
   <div class="form-accordion event-accordion">
     <div id="accordion1" class="accordion-inner active">
       <div class="accordion-header">
@@ -17,14 +17,14 @@
         <h2>Name, Kategorie & Beschreibung</h2>
       </div>
       <div class="accordion-body">
-        <%= form_for(@performer, :html => {role: "form", id: "form1", style: "overflow-x: hidden;"}, url: create_performer1_path) do |f| %>
+        <%= form_for(@organizer, :html => {role: "form", id: "form1", style: "overflow-x: hidden;"}, url: create_organizer1_path) do |f| %>
           <div class="form-group">
-            <label for="performername">Name</label>
-            <input type="text" class="form-control" name="performername" id="performername" aria-describedby="performerHelp" placeholder="Künstlername" required>
+            <label for="organizername">Name</label>
+            <input type="text" class="form-control" name="organizername" id="organizername" aria-describedby="organizerHelp" placeholder="Veranstalter" required>
           </div>
           <div class="form-group">
             <label for="location">Kategorie</label>
-            <%= f.select(:category, Performer.categories, {}, {class: "form-control"}) %>
+            <%= f.select(:category, Organizer.categories, {}, {class: "form-control"}) %>
             <small id="locationHelp" class="form-text text-muted">Wählen Sie eine Kategorie aus.</small>
           </div>
           <div class="form-group">
@@ -71,7 +71,7 @@
         <div id="linkContainer">
           <%= form_for(SocialLink.new, :html => {role: "form", id: "newlink"}, url: create_link_path) do |f| %>
             <h5 style="margin-bottom: 10px !important;">Social Link</h5>
-            <input type="text" name="performer_id" id="performerid" value="1" hidden>
+            <input type="text" name="organizer_id" id="organizerid" value="1" hidden>
             <input type="text" name="container" value="linkContainer" hidden>
               <div class="input-group input-group-sm" style="margin-bottom: 5px;">
                 <%= f.text_field :url, placeholder: 'URL', class: "form-control" %>
@@ -97,11 +97,11 @@
 <script src="https://unpkg.com/dropzone"></script>
 <script src="https://unpkg.com/cropperjs"></script>
 <script>
-  var performer_id = 0;
+  var organizer_id = 0;
   Dropzone.autoDiscover = false;
   $(document).ready(function(){
    myDropzone = new Dropzone("#myDropzone", {
-       url: "/performer/1/add_image",
+       url: "/organizer/1/add_image",
        maxFiles: 1,
        transformFile: function(file, done) {
         // Create Dropzone reference for use in confirm button click handler
@@ -157,11 +157,11 @@
         editor.appendChild(image);
 
       // Create Cropper.js
-      var cropper = new Cropper(image, { aspectRatio: 1 });
+      var cropper = new Cropper(image, { aspectRatio: 1.7 });
     },
         init: function() {
         this.on("processing", function(file) {
-          this.options.url = 'performer/' + performer_id + '/add_image';
+          this.options.url = 'organizer/' + organizer_id + '/add_image';
         });
       }
 
@@ -187,7 +187,7 @@
   $('#button3').on('click', function(event){
     event.preventDefault();
     $('#button3').remove();
-    window.location.replace("/fertigstellen/p/" + performer_id);
+    window.location.replace("/fertigstellen/o/" + organizer_id);
  });
   
   $(document).ready(function() { 

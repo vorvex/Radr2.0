@@ -18,6 +18,22 @@ class PublicViewController < ApplicationController
     @type = "Location"
     
   end
+  
+  def organizer     
+    @request = request.user_agent
+    @resource = Organizer.find_by_path(params[:path])   
+    @user = @resource.user
+    
+    @title = @resource.name 
+    if @title.length < 50
+      @title += " | "
+      @title += @resource.category
+    end
+    @image = url_for(@resource.images.first)
+    @description = @resource.description
+    @type = "Organizer"
+    
+  end
 
   def event
     @resource = Event.find_by_path(params[:path])

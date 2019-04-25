@@ -32,8 +32,12 @@
           <% @user.performers.each do |performer| %>
             <li><%= button_to performer.name, show_performer_path(:id => performer.id), :method => :get, :remote => true %></li>
           <% end %>
+          <% @user.organizers.each do |organizer| %>
+            <li><%= button_to organizer.name, show_organizer_path(:id => organizer.id), :method => :get, :remote => true %></li>
+          <% end %>
           <li><a data-type="inbound-link" href="/neue-location">Location erstellen</a></li>
           <li><a data-type="inbound-link" href="/neuer-performer">Performer erstellen</a></li>
+          <li><a data-type="inbound-link" href="/neuer-organizer">Veranstalter erstellen</a></li>
         </ul>
       </div>
     </div>
@@ -48,7 +52,7 @@
         
         <ul>
           <li><a data-type="inbound-link" href="/">Dashboard</a></li>
-          <li><a data-type="inbound-link" href="/neues-event">Event erstellen</a></li>
+          <li><a data-type="inbound-link" href="/neue-location">Location erstellen</a></li>
           <li><a data-type="inbound-link" href="/statistiken">Statistiken</a></li>
           <li><a data-type="inbound-link" href="/einstellungen">Einstellungen</a></li>
           <li><%= link_to "Abmelden", destroy_user_session_path, :method => :delete %></li>

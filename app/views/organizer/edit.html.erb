@@ -1,0 +1,7 @@
+<%= form_for(@organizer, :html => {role: "form", :multipart => true}, url: edit_organizer_path) do |f| %>
+  <div class="form-group">
+            <label for="attachment" class="custom-file-label" >Image</label>
+            <input id="attachment" class="custom-file-input" name="attachment" type="file" />
+          </div>
+  <%= f.submit %>
+<% end %>

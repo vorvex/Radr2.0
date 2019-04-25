@@ -1,11 +1,11 @@
-<%= render 'dashboard/shared/header2', header: 'Bilder bearbeiten', link: @performer.id, type: 'performer' %>
+<%= render 'dashboard/shared/header2', header: 'Bilder bearbeiten', link: @organizer.id, type: 'organizer' %>
 <div class="editdropzone"> 
   <div class="dropzone" id="myDropzone"></div>
 </div>
-<% if @performer.profile_image.attached? %>
-  <div class="edit-image-container" style="width: 100vw;" data-id="<%= @performer.profile_image.id %>">
-    <img src="<%= url_for(@performer.profile_image) %>" alt="" width="100%">
-    <%= button_to "Löschen", delete_image_url(:id => @performer.profile_image.id), method: :delete, data: { confirm: 'Sind sie sich sicher?'}, :remote => true %>
+<% if @organizer.profile_image.attached? %>
+  <div class="edit-image-container" style="width: 100vw;" data-id="<%= @organizer.profile_image.id %>">
+    <img src="<%= url_for(@organizer.profile_image) %>" alt="" width="100%">
+    <%= button_to "Löschen", delete_image_url(:id => @organizer.profile_image.id), method: :delete, data: { confirm: 'Sind sie sich sicher?'}, :remote => true %>
   </div>
 <% end %>
 <div id="image-upload">  
@@ -27,7 +27,7 @@
 <script src="https://unpkg.com/cropperjs"></script>
 <script>
   $("#myDropzone").dropzone({ 
-    url: '/performer/<%= @performer.id %>/add_image',
+    url: '/organizer/<%= @organizer.id %>/add_profile_image',
     maxFiles: 1,
     transformFile: function(file, done) {
     // Create Dropzone reference for use in confirm button click handler
@@ -83,7 +83,7 @@
     editor.appendChild(image);
 
     // Create Cropper.js
-    var cropper = new Cropper(image, { aspectRatio: 1 });
+    var cropper = new Cropper(image, { aspectRatio: 1.7 });
   }});
 
 $('.dz-default').html('Dateien nach hier ziehen oder klicken zum hochladen');  

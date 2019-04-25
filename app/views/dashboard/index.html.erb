@@ -2,8 +2,10 @@
 <div id="container">
   <% if @type == "location" %>
     <%= render 'dashboard/shared/show_location' %>
-  <% else %>
+  <% elsif @type == 'performer' %>
     <%= render 'dashboard/shared/show_performer' %>
+  <% else %>
+    <%= render 'dashboard/shared/show_organizer' %>
   <% end %>
 </div>
 <script src="https://unpkg.com/dropzone"></script>

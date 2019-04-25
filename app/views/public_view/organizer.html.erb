@@ -1,0 +1,52 @@
+<a id="back" style="display: none;"> 
+  <svg width="22px" height="32px" viewBox="0 0 22 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <defs>
+          <filter x="-80.0%" y="-50.0%" width="260.0%" height="200.0%" filterUnits="objectBoundingBox" id="filter-1">
+              <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+              <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+              <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+              <feMerge>
+                  <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                  <feMergeNode in="SourceGraphic"></feMergeNode>
+              </feMerge>
+          </filter>
+      </defs>
+      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g transform="translate(-17.000000, -18.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                  <g filter="url(#filter-1)" transform="translate(27.500000, 32.000000) scale(-1, 1) translate(-27.500000, -32.000000) translate(20.000000, 20.000000)">
+                      <polygon  points="0 1.455 1.5525 0 14.4 12 1.5525 24 0 22.5525 11.2875 12"></polygon>
+                  </g>
+          </g>
+      </g>
+  </svg>
+</a>
+<div class="coverimage-container">
+  <div class="cover-slick">
+    <img data-src="<%= url_for(@resource.profile_image) %>" alt="Organizer Image" class="coverimage">
+  </div>
+</div>
+<div class="card-body">
+  <div class="card-head">
+    <div>
+      <h1><%= @resource.name %></h1>
+      <span class="subheader"><%= @resource.category %></span>
+    </div>
+    <a onclick="shareThisPage()" class="social-button" style="box-shadow: none; flex-grow: 100; justify-content: flex-end; margin-right: 10px;" >
+      <img src="/images/share.svg" alt="Share">
+    </a>
+  </div>
+  <%= render "public_view/shared/description" %>
+  <% if @resource.events.upcoming.any? %>
+    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+  <% end %>
+  <%= render "public_view/shared/social_links" %>
+  <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
+    <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <% end %>
+  <% if !@soundcloud_iframe.nil? %>
+    <h2 style="margin-top: 10px !important">Get in the Mood</h2>
+    <%= @soundcloud_iframe.html_safe %>
+  <% end %>
+  
+  <%= render "public_view/shared/by_radr" %>
+</div>

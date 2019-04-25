@@ -1,0 +1,8 @@
+<div class="search-result" style="justify-content: space-between; margin-top: 10px;" id="performer_request_<%= @performer_request.id %>">
+  <img src="<% if @performer.profile_image_thumbnail.attached? %><%= url_for(@performer.profile_image_thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="search-result-img">
+  <div style="flex-grow: 10;">
+    <h2><%= @performer.name %></h2>
+    <span class="subheader">Ausstehend</span>
+  </div>
+  <a onclick="deletePerformer(<%= @performer_request.id %>)">X</a>
+</div>

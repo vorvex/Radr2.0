@@ -1,0 +1,105 @@
+<%= render 'dashboard/shared/header2', header: 'Event anfragen', link: @organizer.id, type: 'organizer' %>
+<div class="container" style="overflow: hidden;">
+  <h4 class="request-header">Anfragen</h4>
+  <div class="<% if @new_requests.any? %>event-slider<% end %>" style="height: 223px; width: 100%; position: relative;">
+    <% if !@new_requests.any? %>
+      <div class="event-slider-empty-state">
+      </div>
+    <% end %>
+    <% @new_requests.each do |request| %>
+      <div href="<%= request.event.url %>" class="preview-request" id="request<%= request.id %>">
+        <div class="preview-request-inner">
+          <div>
+            <h4><%= request.event.name %></h4>
+            <p><%= request.event.time_str %><br/><%= request.event.location_name %>, <%= request.event.city %></p>
+          </div>
+          
+        </div>
+        <img class="preview-request-img" src="<%= url_for(request.event.images_thumbnail) unless !request.event.images_thumbnail.attached? %>" alt="<%= request.event.name %>">
+        <div class="request-buttons">
+          <a onclick="acceptRequest(<%= request.id %>)">
+            <img src="/images/requests/accept.png" alt="Annehmen" height="16px">
+            <span>Annehmen</span>
+          </a>
+          <a onclick="rejectRequest(<%= request.id %>)">
+            <img src="/images/requests/reject.png" alt="Ablehnen" height="18px">
+            <span>Ablehnen</span>
+          </a>
+          <a href="<%= request.event.url %>" target="_blank">
+            <img src="/images/requests/view.png" alt="Ansehen" height="18px">
+            <span>Ansehen</span>
+          </a>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <h4 class="request-header">Aktuelle Teilnahmen</h4>
+  <div class="<% if @accepted_requests.any? %>event-slider<% end %>" id="teilnahmen" style="height: 223px; width: 100%; position: relative;">
+    <% if !@accepted_requests.any? %>
+      <div class="event-slider-empty-state">
+      </div>
+    <% end %>
+    <% @accepted_requests.each do |request| %>
+      <div href="<%= request.event.url %>" class="preview-request" id="request<%= request.id %>">
+        <div class="preview-request-inner">
+          <div>
+            <h4><%= request.event.name %></h4>
+            <p><%= request.event.time_str %><br/><%= request.event.location_name %>, <%= request.event.city %></p>
+          </div>
+          
+        </div>
+        <img class="preview-request-img" src="<%= url_for(request.event.images_thumbnail) unless !request.event.images_thumbnail.attached? %>" alt="<%= request.event.name %>">
+        <div class="request-buttons">
+          <a href="<%= request.event.url %>" target="_blank">
+            <img src="/images/requests/view.png" alt="Annehmen" height="16px">
+            <span>Ansehen</span>
+          </a>
+          <a onclick="shareThis('<%= request.event.name %>', '<%= request.event.description %>', '<%= request.event.url.html_safe %>')">
+            <img src="/images/requests/share.png" alt="Ablehnen" height="20px">
+            <span>Teilen</span>
+          </a>
+          <a onclick="rejectRequest(<%= request.id %>)">
+            <img src="/images/requests/reject.png" alt="Ansehen" height="18px">
+            <span>Absagen</span>
+          </a>
+        </div>
+      </div>
+    <% end %>
+</div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+   $('.event-slider').slick({
+      dots: false,
+      infinite: false,
+      speed: 300,
+      slidesToShow: 1,
+      variableWidth: true
+    });
+  
+  function acceptRequest(index) {
+    $.ajax({
+      type: 'PATCH',
+      url: '/performer-request/' + index,
+      data: 'accepted=true',
+      error: function(){
+        alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+      }	
+    }).done(function(){
+      var event = $('#request' + index);
+      $('#teilnahmen').append(event);
+    });
+  }
+  
+  function rejectRequest(index) {
+    $.ajax({
+      type: 'PATCH',
+      url: '/performer-request/' + index,
+      data: 'accepted=false',
+      error: function(){
+        alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+      },	
+    }).done(function(){
+      $('#request' + index).remove();
+    });
+  }
+</script>

@@ -5,6 +5,11 @@ class Event < ApplicationRecord
            :through => :performer_requests, 
            :class_name => "Performer", 
            :source => :performer
+  has_many :organizer_requests
+  has_many :organizers, -> { where organizer_requests: { accepted: true } } ,
+           :through => :organizer_requests, 
+           :class_name => "Organizer", 
+           :source => :organizer
   
   belongs_to :location
   belongs_to :user

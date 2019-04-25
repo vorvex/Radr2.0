@@ -20,17 +20,23 @@ class DashboardController < ApplicationController
       if params[:type] == 'location'
         @profile = Location.find(params[:profile])
         @type = 'location'
-      else
+      elsif params[:type] == 'performer'
         @profile = Performer.find(params[:profile])
         @type = 'performer'
+      else
+        @profile = Organizer.find(params[:profile])
+        @type = 'organizer'
       end
     else 
       if @user.locations.any? 
         @profile = @user.locations.first
         @type = 'location'
-      else 
+      elsif @user.performers.any?
         @profile = @user.performers.first
         @type = 'performer'
+      else
+        @profile = @user.organizers.first
+        @type = 'organizer'
       end
     end
   end
@@ -51,6 +57,12 @@ class DashboardController < ApplicationController
     @resource = "Ihr Performer"
   end
   
+  def new_organizer  
+    @user = current_user
+    @organizer = Organizer.new
+    @resource = "Ihr Organizer"
+  end
+  
   def new_event
     barrier_events
     
@@ -59,18 +71,20 @@ class DashboardController < ApplicationController
         @location = Location.find(params[:profile])
         @profile = @location.id
         @type = 'location'
-      else
+      elsif params[:type] == 'performer'
         @performer = Performer.find(params[:profile])
         @profile = @performer.id
         @type = 'performer'
+      else
+        @organizer = Organizer.find(params[:profile])
+        @profile = @organizer.id
+        @type = 'organizer'
       end
     end
     
     @user = current_user
     @event = Event.new
     @resource = "Ihre Veranstaltung"
-    
-    
     
   end
   
@@ -95,6 +109,14 @@ class DashboardController < ApplicationController
     
     respond_to do |format|
       format.js { render partial: 'dashboard/shared/show_performer' }
+    end
+  end
+  
+  def show_organizer
+    @profile = Organizer.find(params[:id])
+    
+    respond_to do |format|
+      format.js { render partial: 'dashboard/shared/show_organizer' }
     end
   end
   
@@ -149,6 +171,9 @@ class DashboardController < ApplicationController
       when 'l'
         @resource = Location.find(params[:id])
         @header = 'Location'
+      when 'o'
+        @resource = Organizer.find(params[:id])
+        @header = 'Veranstalter'
     end
   end
   
@@ -168,7 +193,7 @@ private
   end
   
   def onboarding_done?
-    if !current_user.locations.any? && !current_user.performers.any?      
+    if !current_user.locations.any? && !current_user.performers.any? && !current_user.organizers.any?
       redirect_to first_login_path
       return
     else

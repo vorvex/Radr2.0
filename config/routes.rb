@@ -12,31 +12,40 @@ Rails.application.routes.draw do
   
   get 'l/show/:id' => 'dashboard#show_location', as: :show_location
   get 'p/show/:id' => 'dashboard#show_performer', as: :show_performer
+  get 'o/show/:id' => 'dashboard#show_organizer', as: :show_organizer
   
   get 'l/:id/edit_images' => 'location#edit_images'
   get 'p/:id/edit_images' => 'performer#edit_images'
   get 'e/:id/edit_images' => 'event#edit_images'
+  get 'o/:id/edit_images' => 'organizer#edit_images'
+  get 'o/:id/edit_profile_image' => 'organizer#edit_profile_image'
   
   get 'l/:id/events' => 'location#events'
   get 'p/:id/events' => 'performer#events'
+  get 'o/:id/events' => 'organizer#events'
   
   get 'l/:id/edit_informations' => 'location#edit_informations'
   get 'p/:id/edit_informations' => 'performer#edit_informations'
+  get 'o/:id/edit_informations' => 'organizer#edit_informations'
   get 'e/:id/edit' => 'event#edit'
 
   patch 'l/:id/edit_informations' => 'location#update_informations', as: :edit_location_informations
   patch 'p/:id/edit_informations' => 'performer#update_informations', as: :edit_performer_informations
+  patch 'o/:id/edit_informations' => 'organizer#update_informations', as: :edit_organizer_informations
   patch 'e/:id/edit' => 'event#update', as: :update_event
   
   get 'l/:id/share' => 'location#share'
   get 'p/:id/share' => 'performer#share'
+  get 'o/:id/share' => 'organizer#share'
   get 'e/:id/share' => 'event#share'
   
   get 'l/:id/social_links' => 'location#social_links'
   get 'p/:id/social_links' => 'performer#social_links'
+  get 'o/:id/social_links' => 'organizer#social_links'
   get 'e/:id/social_links' => 'event#social_links'
   
   get 'p/:id/requests' => 'performer#requests'
+  get 'o/:id/requests' => 'organizer#requests'
   
   get 'e/:id/tickets' => 'event#tickets'
   get 'e/:id/performer' => 'event#edit_performer'
@@ -47,6 +56,7 @@ Rails.application.routes.draw do
   
   patch 'l/:id/social_links' => 'location#edit_social_links', as: :edit_location_social_links
   patch 'p/:id/social_links' => 'performer#edit_social_links', as: :edit_performer_social_links
+  patch 'o/:id/social_links' => 'organizer#edit_social_links', as: :edit_organizer_social_links
   patch 'e/:id/social_links' => 'event#update_social_links', as: :update_event_social_links
   
   get 'l/:id/opening_hours' => 'location#opening_hours'
@@ -60,6 +70,12 @@ Rails.application.routes.draw do
   post 'performer-request' => 'performer#performer_request'
   patch 'performer-request/:id' => 'performer#update_performer_request'
   delete 'delete-performer-request' => 'performer#delete_performer_request', as: :delete_performer_request
+  
+  post 'o/create_from_event' => 'organizer#create_from_event', as: :create_organizer_from_event
+  get 'o/search_from_event' => 'organizer#search_from_event'
+  post 'organizer-request' => 'organizer#organizer_request'
+  patch 'organizer-request/:id' => 'organizer#update_organizer_request'
+  delete 'delete-organizer-request' => 'organizer#delete_organizer_request', as: :delete_organizer_request
   
   
   get 'einstellungen' => 'dashboard#settings'
@@ -82,6 +98,7 @@ Rails.application.routes.draw do
   get 'neue-location' => 'dashboard#new_location'
   get 'neuer-performer' =>'dashboard#new_performer'
   get 'neues-event' => 'dashboard#new_event'
+  get 'neuer-organizer' => 'dashboard#new_organizer'
   
   get 'fertigstellen/:type/:id' => 'dashboard#fertigstellen'
   
@@ -104,6 +121,10 @@ Rails.application.routes.draw do
   post 'performer/create' => 'performer#create_performer1', as: :create_performer1
   post 'performer/:id/add_image' =>  'performer#add_image'
   
+  post 'organizer/create' => 'organizer#create_organizer1', as: :create_organizer1
+  post 'organizer/:id/add_image' =>  'organizer#add_image'
+  post 'organizer/:id/add_profile_image' =>  'organizer#add_profile_image'
+  
   post 'opening_hour/create' => 'opening_hour#create'
   post 'social_link/create' => 'social_link#create'
   post 'ticket/create' => 'ticket#create'
@@ -111,6 +132,10 @@ Rails.application.routes.draw do
   get 'performer/search' => 'event#search_performer'
   post 'performer/invite' => 'event#invite_performer', as: :invite_performer
   post 'performer/create' => 'performer#create'
+  
+  get 'organizer/search' => 'event#search_organizer'
+  post 'organizer/invite' => 'event#invite_organizer', as: :invite_organizer
+  post 'organizer/create' => 'organizer#create'
   
   patch 'event/edit/:id' => 'event#edit', as: :edit_event
   patch 'location/edit/:id' => 'location#edit'
@@ -126,6 +151,7 @@ Rails.application.routes.draw do
   delete 'social_link/delete/:id' => 'social_link#destroy', as: :destroy_link
   delete 'ticket/delete/:id' => 'ticket#destroy', as: :destroy_ticket
   delete 'performer/delete/:id' => 'performer#delete', as: :delete_performer
+  delete 'organizer/delete/:id' => 'organizer#delete', as: :delete_organizer
   
   devise_for :users
   
@@ -135,6 +161,7 @@ Rails.application.routes.draw do
   
   get 'location/:path' => 'public_view#location'
   get 'performer/:path' => 'public_view#performer'
+  get 'organizer/:path' => 'public_view#organizer'
   get 'event/:path' => 'public_view#event'
   get 'event/:path/tickets' => 'public_view#tickets'
   

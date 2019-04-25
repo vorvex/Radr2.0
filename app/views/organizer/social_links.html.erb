@@ -1,0 +1,75 @@
+<%= render 'dashboard/shared/header2', header: 'Social Links', link: @organizer.id, type: 'organizer' %>
+<div class="container">
+  <%= form_for(@organizer, :html => {role: "form", id: "form1"}, url: edit_organizer_social_links_url(@organizer.id)) do |f| %>
+  <!-- Facebook Page -->
+    <div class="form-group mb-3">
+      <label for="facebook">Facebook Page</label>
+      <div class="input-group" style="flex-wrap: nowrap; display: flex;">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1"><img src="/images/facebook.svg" alt="Facebook" width="20px"></span>
+        </div>
+        <input type="text" placeholder="Link" aria-label="facebook" aria-describedby="basic-addon1" name="facebook" id="facebook" class="form-control
+        <% if !@social_links.find_by_channel('Facebook').nil? %>is-valid " value="<%= @social_links.find_by_channel('Facebook').url %><% end %>">
+      </div>
+      <small id="basic-addon1" class="form-text text-muted">Die passende Facebook Gruppe.</small>
+    </div>
+
+  <!-- Instagram -->
+
+    <div class="form-group mb-3">
+      <label for="instagram">Instagram Akkount</label>
+      <div class="input-group" style="flex-wrap: nowrap; display: flex;">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon2"><img src="/images/instagram.svg" alt="Instagram" width="20px"></span>
+      </div>
+      <input type="text" placeholder="Username" aria-label="instagram" id="instagram" aria-describedby="basic-addon2" name="instagram" class="form-control
+      <% if !@social_links.find_by_channel('Instagram').nil? %>is-valid" value="<%= @social_links.find_by_channel('Instagram').url %><% end %>">
+    </div>
+    </div>
+
+  <!-- YouTube Video -->
+    <div class="form-group mb-3">
+      <label for="youtube">YouTube Video</label>
+      <div class="input-group" style="flex-wrap: nowrap; display: flex;">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon3"><img src="/images/youtube.svg" alt="YouTube" width="20px"></span>
+        </div>
+        <input type="text" placeholder="Videolink" aria-label="youtube" id="youtube" aria-describedby="basic-addon3" name="youtube" class="form-control
+        <% if !@social_links.find_by_channel('YouTube').nil? %>is-valid" value="<%= @social_links.find_by_channel('YouTube').url %><% end %> ">    
+      </div>
+    </div>
+
+  <!-- SoundCloud -->
+    <div class="form-group mb-3">
+      <label for="soundcloud">SoundCloud Link</label>
+      <div class="input-group" style="flex-wrap: nowrap; display: flex;">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon4"><img src="/images/soundcloud.svg" alt="Soundcloud" width="20px"></span>
+        </div>
+        <input type="text" placeholder="http://www.soundcloud.com/username" aria-label="soundcloud" id="soundcloud" aria-describedby="basic-addon4" name="soundcloud" class="form-control
+        <% if !@social_links.find_by_channel('SoundCloud').nil? %>is-valid" value="<%= @social_links.find_by_channel('SoundCloud').url %><% end %>">
+      </div>
+    </div>
+
+  <!-- Webseite -->
+    <div class="form-group mb-3">
+      <label for="webseite">Webseite</label>
+      <div class="input-group" style="flex-wrap: nowrap; display: flex;">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon4"><img src="/images/website.svg" alt="Website" width="20px"></span>
+        </div>
+        <input type="text" placeholder="www.beispiel.de" aria-label="webseite" id="webseite" aria-describedby="basic-addon4" name="webseite" class="form-control
+        <% if !@social_links.find_by_channel('Webseite').nil? %>is-valid" value="<%= @social_links.find_by_channel('Webseite').url %><% end %>">
+      </div>
+    </div>
+  
+  <% end %>
+</div>
+<div class="footer">
+  <a href='' class="footer-link" id="button1">Aktualisieren</a> 
+</div>
+<script>
+  $('#button1').on('click', function(){
+    $('#form1').submit();
+  });
+</script>

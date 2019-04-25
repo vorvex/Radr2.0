@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_121203) do
+ActiveRecord::Schema.define(version: 2019_04_25_130108) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -95,6 +95,26 @@ ActiveRecord::Schema.define(version: 2019_04_23_121203) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "organizer_requests", force: :cascade do |t|
+    t.integer "organizer_id"
+    t.integer "event_id"
+    t.boolean "accepted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "organizers", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "category"
+    t.integer "user_id"
+    t.string "plan"
+    t.boolean "online"
+    t.string "path"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "page_views", force: :cascade do |t|
     t.string "referrer"
     t.string "params"
@@ -141,6 +161,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_121203) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "event_id"
+    t.integer "organizer_id"
   end
 
   create_table "tickets", force: :cascade do |t|
