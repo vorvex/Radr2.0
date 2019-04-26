@@ -12,6 +12,7 @@
     <div class="form-group">
       <label for="location">Location</label>
       <input type="text" class="form-control is-valid" value="<%= @event.location.name %>" style="background-color: white" disabled>
+      <%= f.hidden_field :location_id %>
       <small id="locationHelp" class="form-text text-muted">Der Veranstaltungsort kann nicht nachträglich geändert werden erstellen Sie eine neue Veranstaltung
       oder kontaktieren Sie uns unter <a href="http://m.me/theradr" target="_blank" style="font-size: 100%;">m.me/theradr</a> oder per Mail an <a href="mailto:kontakt@the-radr.com" target="_blank" style="font-size: 100%;">kontakt@the-radr.com</a></small>
     </div>

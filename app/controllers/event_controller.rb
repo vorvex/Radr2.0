@@ -57,31 +57,17 @@ class EventController < ApplicationController
     
     image = params[:file]
     
-     if !@event.images_thumbnail.attached? 
-       
-      thumbnail = File.basename(image.original_filename, File.extname(image.original_filename)) + '-thumbnail' + File.extname(image.original_filename)
-
-      source_thumbnail = Tinify.from_file(image.tempfile)
-      resized_thumbnail = source_thumbnail.resize(
-        method: "cover",
-        width: 280,
-        height: 160
-      )
-       resized_thumbnail.to_file('/tmp/' + thumbnail)
-       @event.images_thumbnail.attach(io: File.open('/tmp/' + thumbnail), filename: thumbnail)
-       
-     end
       
-        source = Tinify.from_file(image.tempfile)
-        resized = source.resize(
-          method: "cover",
-          width: 750,
-          height: 440
-        )
+    source = Tinify.from_file(image.tempfile)
+    resized = source.resize(
+      method: "cover",
+      width: 750,
+      height: 440
+    )
 
-        resized.to_file('/tmp/' + image.original_filename)
+    resized.to_file('/tmp/' + image.original_filename)
 
-        @event.images.attach(io: File.open('/tmp/' + image.original_filename), filename: image.original_filename)
+    @event.images.attach(io: File.open('/tmp/' + image.original_filename), filename: image.original_filename)
     
   end
   

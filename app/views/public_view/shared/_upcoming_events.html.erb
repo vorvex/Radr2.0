@@ -6,11 +6,11 @@
       <a href="<%= event.url %>" data-type="inbound-link" class="preview">
         <div class="preview-inner">
           <div>
-            <h4><%= event.name %></h4><span><%= event.category %></span>
+            <h4><%= event.name %></h4>
           </div>
           <p><%= event.time_str %><br/><%= event.location_name %>, <%= event.city %></p>
         </div>
-        <img class="lazy" src="<%= url_for(event.images_thumbnail) unless !event.images_thumbnail.attached? %>" alt="<%= event.name %>">
+        <img class="lazy" src="<%= url_for(event.images.first.variant(resize: "225x135")) unless !event.images.attached? %>" alt="<%= event.name %>">
       </a>
       <% end %>
     <% end %>

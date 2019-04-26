@@ -14,8 +14,7 @@ class Event < ApplicationRecord
   belongs_to :location
   belongs_to :user
   has_many :social_links, :dependent => :delete_all
-  
-  has_one_attached :images_thumbnail
+
   has_many_attached :images
   
   def self.categories 
