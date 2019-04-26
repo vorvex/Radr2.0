@@ -20,6 +20,7 @@ gem 'soundcloud', '~> 0.3.4'
 
 gem 'image_processing', '~> 1.2'
 gem "mini_magick"
+gem 'dalli'
 # gem 'sidekiq'
 
 # Use Puma as the app server
