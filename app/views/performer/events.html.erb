@@ -18,7 +18,7 @@
             <p><%= event.time_str %><br/><%= event.location_name %>, <%= event.city %></p>
           </div>          
         </div>
-        <img class="preview-request-img" src="<%= url_for(event.images_thumbnail) unless !event.images_thumbnail.attached? %>" alt="<%= event.name %>">
+        <img class="preview-request-img" src="<%= url_for(event.images.first) unless !event.images.first.attached? %>" alt="<%= event.name %>">
         <div class="request-buttons">
           <a href="/e/<%= event.id %>/statistiken">
             <img src="/images/requests/statistics.png" alt="Analytics" height="20px">
