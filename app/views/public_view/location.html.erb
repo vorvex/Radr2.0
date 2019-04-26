@@ -39,7 +39,11 @@
   </div>  
   <%= render "public_view/shared/opening_hours" %>
   <%= render "public_view/shared/description" %>
-  <%= render "public_view/shared/map", resource: @resource %>
+  <script>
+    document.addEventListener("DOMContentLoaded", function(event) {
+      $('#image_gallery').append("<%= j(render 'public_view/shared/map', resource: @resource) %>");
+    });
+  </script>
   <%= render "public_view/shared/social_links" %>
   <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
     <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
