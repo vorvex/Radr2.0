@@ -22,7 +22,10 @@
 </a>
 <div class="coverimage-container">
   <div class="cover-slick">
-    <img data-src="<%= url_for(@resource.profile_image) %>" alt="Organizer Image" class="coverimage">
+    <div class="blur-img-container">
+          <img src="<%= url_for(image.variant(resize: "59.5x35")) %>" class="small-img">
+          <img data-lazy="<%= url_for(image) %>" alt="" class="big-img" onload="$(this).parent().addClass('loaded');">
+      </div>
   </div>
 </div>
 <div class="card-body">

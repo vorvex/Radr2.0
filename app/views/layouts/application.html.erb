@@ -8,7 +8,7 @@
     <%= render 'application/tag_manager' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" href="/main-v05.css">
+    <link rel="stylesheet" href="/main-v07.css">
     <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -159,10 +159,10 @@
         speed: 300
       });
      
-     $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('src'));
+     $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('lazy'));
      
      $('.slick-arrow').on('click', function(){
-       $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('src'));
+       $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('lazy'));
      });
     } 
       

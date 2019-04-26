@@ -25,7 +25,10 @@
 <div class="coverimage-container">
   <div class="cover-slick">
     <% @resource.images.each do |image| %>
-      <img data-lazy="<%= url_for(image) %>" alt="Event Image" class="coverimage">
+      <div class="blur-img-container">
+          <img src="<%= url_for(image.variant(resize: "59.5x35")) %>" alt="<%= image.filename %> Placeholder" class="small-img">
+          <img data-lazy="<%= url_for(image) %>" alt="<%= image.filename %>" class="big-img" onload="$(this).parent().addClass('loaded');">
+      </div>
     <% end %>
   </div>
 </div>
