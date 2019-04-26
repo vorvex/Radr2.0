@@ -8,9 +8,7 @@
     <%= render 'application/tag_manager' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" href="/public_view.css">
-    <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css">
-    <link rel="preconnect" href="https://youtube.com">
+    <link rel="stylesheet" href="/main-v05.css">
     <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -37,8 +35,6 @@
   </body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-  <script type="text/javascript" src="/jquery.unveil.js"></script>
   <form action="/page-view" method="post" id="pageview" hidden>
     <input type="text" name="referrer" id="pv_referrer">
     <input type="text" name="params" id="pv_params">
@@ -48,18 +44,7 @@
     <input type="text" name="user_id" id="pv_user_id">
   </form>
   <script>
-      $(document).ready(function() {
-    $(".coverimage").unveil();
-  });
-    
-  var iframes = $('iframe');
-
-  $(document).ready(function() {
-      iframes.attr('src', function() {
-          return $(this).data('src');
-      });
-  });
-  
+ 
   // Description  
   $(document).ready(function(){
     if($('#description > p').outerHeight() > 100){
@@ -77,14 +62,6 @@
   
     
   // Carousel
-  $('.slick-carousel').slick({
-      dots: false,
-      infinite: false,
-      slidesToScroll: 1,
-      slidesToShow: 1,
-      variableWidth: true,
-      speed: 300
-    });
   
     
   //Events  
@@ -98,7 +75,7 @@
   }});
 
   // Scroll Animation
-    
+  $(document).ready(function(){  
   $(window).scroll(function(){
         var scroll = $(this).scrollTop();
         if(scroll < 0) {
@@ -122,13 +99,7 @@
           $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
           $('.performer-image').css('opacity', fade);
       }});
-    
-  $('.cover-slick').slick({
-      speed: 300,
-      fade: true,
-      cssEase: 'linear'
-    });
-
+  });
     //Inbound Link
     $('[data-type="inbound-link"]').on('click', function(event){
       event.preventDefault();
@@ -143,29 +114,7 @@
         $('#back').attr("href", from)
         $('#back').css('display', 'inline-block');
       }
-
-    // PageView
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var f = url.searchParams.get("f");
-    $('#pv_referrer').val(document.referrer);
-    $('#pv_params').val(f);
-    $('#pv_path').val(document.location.pathname);
-    $('#pv_session_token').val(readCookie("session_token"));
-    $('#pv_user_agent').val(navigator.userAgent);
-    $('#pv_user_id').val(<%= @user.id %>);
-
-    $(document).ready(function(){
-      $.ajax({
-          type: 'POST',
-          url: '/pageview',
-          data: $("#pageview").serialize(),
-          error: function(){
-          }	
-      });   
-    });
-
-    
+  
     function readCookie(name) {
       var nameEQ = name + "=";
       var ca = document.cookie.split(';');
@@ -193,6 +142,35 @@
       closeShareDefault();
     });
    
+   function loadSlick() {
+      $('.cover-slick').slick({
+        lazyLoad: 'ondemand',
+        speed: 300,
+        fade: true,
+        cssEase: 'linear'
+      });
+     
+       $('.slick-carousel').slick({
+        dots: false,
+        infinite: false,
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        variableWidth: true,
+        speed: 300
+      });
+     
+     $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('src'));
+     
+     $('.slick-arrow').on('click', function(){
+       $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('src'));
+     });
+    } 
+      
+    function loadUnveil() {
+      $("img").unveil();
+      $("iframe").unveil();
+    }
+      
     function shareThisPage() {
       if(!navigator.share) {
         shareDefault();
@@ -245,5 +223,32 @@
       $temp.remove();
       alert('In die Zwischenablage kopiert.')
     }
+  </script>
+  <script id="mapboxjs" src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js' async defer onload="loadMap()"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" async defer onload="loadSlick()" ></script>
+  <script type="text/javascript" src="/jquery.unveil.js" async onload="loadUnveil()" ></script>
+  <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css" onload="$('body').addClass('font-loaded');">
+
+  <script>
+  // PageView
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var f = url.searchParams.get("f");
+    $('#pv_referrer').val(document.referrer);
+    $('#pv_params').val(f);
+    $('#pv_path').val(document.location.pathname);
+    $('#pv_session_token').val(readCookie("session_token"));
+    $('#pv_user_agent').val(navigator.userAgent);
+    $('#pv_user_id').val(<%= @user.id %>);
+
+    $(document).ready(function(){
+      $.ajax({
+          type: 'POST',
+          url: '/pageview',
+          data: $("#pageview").serialize(),
+          error: function(){
+          }	
+      });   
+    });
   </script>
 </html>

@@ -1,0 +1,38 @@
+<div class="blur-img-container">
+    <img src="<%= url_for(img.variant(resize: "59.5x35")) %>" class="small-img">
+    <img data-image="<%= url_for(img) %>" alt="" class="big-img">
+</div>
+<style>
+  .blur-img-container {
+    width: 100vw;
+    height: 58.824vw;
+    position: relative;
+  }
+  
+  .small-img {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 1;
+    filter: blur(10px);
+    transition: opacity ease 300ms;
+  }
+  
+  .big-img {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+  
+  .loaded .small-img {
+    opacity: 0
+  }
+  
+</style>
+<script>
+  $('.big-img').loaded(function(){
+    $('this').parent.addClass('loaded');
+  });
+</script>

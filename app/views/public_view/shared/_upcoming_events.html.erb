@@ -10,7 +10,7 @@
           </div>
           <p><%= event.time_str %><br/><%= event.location_name %>, <%= event.city %></p>
         </div>
-        <img class="lazy" src="<%= url_for(event.images.first.variant(resize: "225x135")) unless !event.images.attached? %>" alt="<%= event.name %>">
+        <img class="lazy" data-src="<%= url_for(event.images.first.variant(resize: "225x135")) unless !event.images.attached? %>" data-src-retina="<%= url_for(event.images.first) unless !event.images.attached? %>" alt="<%= event.name %>">
       </a>
       <% end %>
     <% end %>
