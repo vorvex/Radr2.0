@@ -10,7 +10,10 @@
           </div>
           <p><%= event.time_str %><br/><%= event.location_name %>, <%= event.city %></p>
         </div>
-        <img class="lazy" data-src="<%= url_for(event.images.first.variant(resize: "225x135")) unless !event.images.attached? %>" data-src-retina="<%= url_for(event.images.first) unless !event.images.attached? %>" alt="<%= event.name %>">
+        <figure class="blur-img-event">
+          <img src="<%= url_for(event.images.first.variant(resize: "59.5x35")) %>" alt="<%= event.images.first.filename %> Placeholder" class="small-img">
+          <img data-src="<%= url_for(event.images.first.variant(resize: "225x132")) %>" data-src-retina="<%= url_for(event.images.first.variant(resize: "450x265")) %>" alt="<%= event.images.first.filename %>" class="big-img" onload="$(this).parent().addClass('loaded');">
+        </figure>
       </a>
       <% end %>
     <% end %>
