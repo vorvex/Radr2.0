@@ -24,7 +24,7 @@
   <div class="cover-slick">
     <div class="blur-img-container">
           <img src="<%= url_for(image.variant(resize: "59.5x35")) %>" class="small-img">
-          <img data-lazy="<%= url_for(image) %>" alt="" class="big-img" onload="$(this).parent().addClass('loaded');">
+          <img data-image="<%= url_for(image) %>" alt="" class="big-img" onload="$(this).parent().addClass('loaded');">
       </div>
   </div>
 </div>

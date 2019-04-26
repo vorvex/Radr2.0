@@ -25,7 +25,7 @@
     <% @resource.images.each do |image| %>
       <div class="blur-img-container">
           <img src="<%= url_for(image.variant(resize: "59.5x35")) %>" alt="<%= image.filename %> Placeholder" class="small-img">
-          <img data-lazy="<%= url_for(image) %>" alt="<%= image.filename %>" class="big-img" onload="$(this).parent().addClass('loaded');">
+          <img data-image="<%= url_for(image) %>" alt="<%= image.filename %>" class="big-img" onload="$(this).parent().addClass('loaded');">
       </div>
     <% end %>
   </div>
