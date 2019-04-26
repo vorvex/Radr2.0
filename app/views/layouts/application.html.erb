@@ -60,10 +60,6 @@
      $('#openinghours > .oh-button').toggleClass('open');
    });
   
-    
-  // Carousel
-  
-    
   //Events  
   $('.preview').mouseover(function(){
     if (!navigator.userAgent.includes('iPhone') || !navigator.userAgent.includes('Android')) {
@@ -76,29 +72,29 @@
 
   // Scroll Animation
   $(document).ready(function(){  
-  $(window).scroll(function(){
-        var scroll = $(this).scrollTop();
-        if(scroll < 0) {
-          var scale = (scroll/120) * (-1) + 1;
-          $('.cover-slick').css('transform', 'scale(' + scale + ')');
-        } else if(scroll > 0) {
-          var scale = (scroll / 20 * (-2));
-          $('.cover-slick').css('top', scale );
-      }});
-    
     $(window).scroll(function(){
-        var scroll = $(this).scrollTop();
-        if(scroll < 0) {
-          var scale = (scroll/400) * (-1) + 1;
-          $('.performer-image').css('transform', 'scale(' + scale + ')');
-          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
-        } else if(scroll > 0) {
-          var scale = (scroll/300) * (-1) + 1;
-          var fade = 1 - (scroll/500);
-          $('.performer-image').css('transform', 'scale(' + scale + ')');
-          $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
-          $('.performer-image').css('opacity', fade);
-      }});
+          var scroll = $(this).scrollTop();
+          if(scroll < 0) {
+            var scale = (scroll/120) * (-1) + 1;
+            $('.cover-slick').css('transform', 'scale(' + scale + ')');
+          } else if(scroll > 0) {
+            var scale = (scroll / 20 * (-2));
+            $('.cover-slick').css('top', scale );
+        }});
+
+      $(window).scroll(function(){
+          var scroll = $(this).scrollTop();
+          if(scroll < 0) {
+            var scale = (scroll/400) * (-1) + 1;
+            $('.performer-image').css('transform', 'scale(' + scale + ')');
+            $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+          } else if(scroll > 0) {
+            var scale = (scroll/300) * (-1) + 1;
+            var fade = 1 - (scroll/500);
+            $('.performer-image').css('transform', 'scale(' + scale + ')');
+            $('.performer-image').css('margin-top', scroll * (-0.4) + 'px');
+            $('.performer-image').css('opacity', fade);
+        }});
   });
     //Inbound Link
     $('[data-type="inbound-link"]').on('click', function(event){

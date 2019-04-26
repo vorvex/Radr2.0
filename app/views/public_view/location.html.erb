@@ -20,13 +20,15 @@
       </g>
   </svg>
 </a>
-<div class="coverimage-container">
+<div class="coverimage-container">  
   <div class="cover-slick">
     <% @resource.images.each do |image| %>
-      <div class="blur-img-container">
-          <img src="<%= url_for(image.variant(resize: "59.5x35")) %>" alt="<%= image.filename %> Placeholder" class="small-img">
-          <img data-image="<%= url_for(image) %>" alt="<%= image.filename %>" class="big-img" onload="$(this).parent().addClass('loaded');">
-      </div>
+      <% cache image do %>
+        <div class="blur-img-container">
+            <img src="<%= url_for(image.variant(resize: "59.5x35")) %>" alt="<%= image.filename %> Placeholder" class="small-img">
+            <img data-image="<%= url_for(image) %>" alt="<%= image.filename %>" class="big-img" onload="$(this).parent().addClass('loaded');">
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
@@ -42,17 +44,19 @@
   </div>  
   <%= render "public_view/shared/opening_hours" %>
   <%= render "public_view/shared/description" %>
-  <%= render "public_view/shared/load_map_async", resource: @resource %>
-  <%= render "public_view/shared/social_links" %>
-  <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
-    <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  <% end %>
-  <% if !@soundcloud_iframe.nil? %>
-    <h2 style="margin-top: 10px !important">Get in the Mood</h2>
-    <%= @soundcloud_iframe.html_safe %>
+  <%= render "public_view/shared/load_map_async", resource: @resource, cached: true %>
+  <% cache ["socials", @resource] do %>
+    <%= render "public_view/shared/social_links" %>
+    <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
+      <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <% end %>
+    <% if !@soundcloud_iframe.nil? %>
+      <h2 style="margin-top: 10px !important">Get in the Mood</h2>
+      <%= @soundcloud_iframe.html_safe %>
+    <% end %>
   <% end %>
   <% if @resource.events.upcoming.any? %>
-    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
+    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen', cached: true %>
   <% end %>
   <%= render "public_view/shared/by_radr" %>
 </div>
