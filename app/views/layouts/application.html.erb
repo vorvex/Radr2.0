@@ -14,7 +14,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <link rel="preconnect" href="https://events.mapbox.com">
     <link rel="preconnect" href="https://www.google-analytics.com">
-    <link rel="preconnect" href="https://api.mapbox.com">
+    <link rel="preconnect" href="https://use.typekit.net">
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -225,9 +225,7 @@
   <script id="mapboxjs" src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js' async defer onload="loadMap()"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" async defer onload="loadSlick()" ></script>
   <script type="text/javascript" src="/jquery.unveil.js" async onload="loadUnveil()" ></script>
-  <% if @ua == 'desktop' %>
-  <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css" async defer onload="$('body').addClass('font-loaded');">
-  <% end %>
+
   <script>
   // PageView
     var url_string = window.location.href;
@@ -249,5 +247,15 @@
           }	
       });   
     });
+  </script>
+  <script>
+  // Fontload
+  var giftofspeed = document.createElement('link');
+  giftofspeed.rel = 'stylesheet';
+  giftofspeed.href = 'https://use.typekit.net/roz0mei.css';
+  giftofspeed.type = 'text/css';
+  giftofspeed.onload = $('body').addClass('font-loaded');
+  var godefer = document.getElementsByTagName('link')[0];
+  godefer.parentNode.insertBefore(giftofspeed, godefer);
   </script>
 </html>
