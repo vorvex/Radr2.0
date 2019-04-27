@@ -1,6 +1,6 @@
 <div style="max-height: 160px; overflow: scroll;">
 <% @organizers.each do |resource| %>
-  <a onclick="selectPerformer(<%= resource.id %>, <%= @event %>)" class="search-result">
+  <a onclick="selectOrganizer(<%= resource.id %>, <%= @event %>)" class="search-result">
     <img src="<% if resource.profile_image_thumbnail.attached? %><%= url_for(resource.profile_image_thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="search-result-img">
     <div>
       <h2><%= resource.name %></h2>

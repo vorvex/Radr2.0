@@ -208,11 +208,11 @@ class OrganizerController < ApplicationController
   
   def organizer_request
     @event = params[:event_id].to_i
-    performer = params[:organizer_id].to_i
+    organizer = params[:organizer_id].to_i
     
     @organizer = Organizer.find(organizer)
     
-    @organizer_request = OrganizerRequest.new(organizer_id: organizer, event_id: @event)
+    @organizer_request = OrganizerRequest.new(organizer_id: @organizer.id, event_id: @event)
     if @organizer_request.save
       respond_to do |format|
          format.js { render partial: 'organizer/request_success' }

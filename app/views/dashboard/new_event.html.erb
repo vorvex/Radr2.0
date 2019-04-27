@@ -67,7 +67,7 @@
               </div>
               <div class="share-container" id="shareLocation">
               <h3>Die Location wurde erfolgreich angelegt.</h3>
-              <p style="text-align: center; ">Teilen Sie bitte den Link zu dem Veranstaltungsinhaber um die Location zu verifizieren.</p>
+              <p style="text-align: center; ">Teile bitte den link mit dem Inhaber um die Location im Profil anzuzeigen!</p>
                 
               </div>
             </div>
@@ -226,8 +226,8 @@
                 <button type="submit" class="form-button" id="createPerformerButton">Erstellen</button>                
               </div>
               <div class="share-container" id="sharePerformer">
-                <h3>Die Location wurde erfolgreich angelegt.</h3>
-                <p style="text-align: center; ">Teilen Sie bitte den Link zu dem Veranstaltungsinhaber um die Location zu verifizieren.</p>                
+                <h3>Der Performer wurde erfolgreich angelegt.</h3>
+                <p style="text-align: center; ">Teilen Sie bitte den Link mit dem Performer damit dieser die Einladung annehmen kann!</p>                
               </div>
               <% if @type == "performer" %>
                 <div class="search-result" style="justify-content: space-between; margin-top: 10px;">
@@ -313,7 +313,118 @@
                         }	
                 });
               })
-            </script>        
+            </script>    
+          <div class="form-group" id="organizer-form-group">
+              <label for="organizer">Veranstalter</label>
+              <div class="search-form-container active" id="searchOrganizerContainer">
+                <input type="text" id="organizer-search" name="organizer_search" placeholder="Organizername" class="form-control">
+                <small id="organizer-search-help" class="form-text text-muted">Falls es einen Veranstalter gibt fügen Sie diesen Bitte hinzu</small>
+                <div class="search-results" id="organizer-search-preview"></div>
+              </div>
+              <div id="createOrganizer" class="create-container">
+                <div class="form-group">
+                  <input type="text" name="organizername" id="organizername" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="organizercategory" name="organizercategory" aria-describedby="categoryHelp" placeholder="Typ" >
+                    <option value="" style="color: #cccccc;">Typ</option>
+                    <% Organizer.categories.each do |category| %>
+                    <option val="<%= category %>"><%= category %></option>
+                    <% end %>
+                  </select>
+                </div>
+                <button type="submit" class="form-button" id="createOrganizerButton">Erstellen</button>                
+              </div>
+              <div class="share-container" id="shareOrganizer">
+                <h3>Der Veranstalter wurde erfolgreich angelegt. </h3>
+                <p style="text-align: center; ">Teilen Sie bitte den Link mit dem Veranstalter um diesen zu verifizieren!</p>                
+              </div>
+              <% if @type == "organizer" %>
+                <div class="search-result" style="justify-content: space-between; margin-top: 10px;">
+                  <img src="<% if @organizer.profile_image_thumbnail.attached? %><%= url_for(@organizer.profile_image_thumbnail) %><% else %>/images/blurred-image-2.jpg<% end %>" alt="" class="search-result-img">
+                  <div style="flex-grow: 10;">
+                    <h2><%= @organizer.name %></h2>
+                    <span class="subheader"><%= @organizer.category %></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+            <script>        
+              // Organizer Search
+              $('#organizer-search').on('keyup', function(event){           
+                event.preventDefault();
+                $(this).removeClass('is-valid');
+                var input = $(this).val()
+                if(input.length > 0){
+                  
+                  $.ajax({
+                          type: 'GET',
+                          url: '/o/search_from_event',
+                          data: $(this).serialize() + '&event=' + event_id,
+                          error: function(){
+                            $('#organizer-search-preview').html('<a href="newOrganizer(' + input + ')" id="newOrganizerButton">Neu erstellen</a>');
+                          }	
+                  });
+                } else {
+                  $('#organizer-search-preview').removeClass('active');
+                }
+              });
+              
+             function deleteOrganizer(organizerRequestId){
+               $.ajax({
+                  type: 'DELETE',
+                  url: '/delete-organizer-request',
+                  data: 'organizer_request_id=' + organizerRequestId,
+                  error: function(){
+                    alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+                  },
+                 success: function(){
+                   $('#organizer_request_' + organizerRequestId).remove();
+                 }
+               });
+             }
+              
+              function newOrganizer() {
+                var searchContainer = $('#searchOrganizerContainer');
+                var createContainer = $('#createOrganizer');
+                searchContainer.toggleClass('active');
+                createContainer.toggleClass('active');
+                $('#organizername').val($('#organizer-search').val());
+              }
+              
+              function selectOrganizer(organizerId, eventId) {
+                $.ajax({
+                          type: 'POST',
+                          url: '/organizer-request',
+                          data: 'organizer_id=' + organizerId + '&event_id=' + eventId,
+                          error: function(){
+                            alert('danger', 'Es ist ein Fehler aufgetretten. Bitte versuchen Sie es später erneut.')
+                          }	
+                  });
+                $('#organizer-search-preview').html('').removeClass('active');
+              }
+              
+              function dontVerifyOrganizer() {
+                var shareContainer = $('.share-container');
+                var searchContainer = $('#searchContainer');
+                
+                searchContainer.addClass('active');
+                shareContainer.removeClass('active');
+              }
+
+              $('#createOrganizerButton').on('click', function(event){
+                event.preventDefault();
+                $.ajax({
+                        type: 'POST',
+                        url: '/o/create_from_event',
+                        data: $('#createOrganizer input, #createOrganizer select').serialize() + '&event=' + event_id,
+                        error: function(){
+                          alert('danger', 'Es ist ein Fehler aufgetretten! Bitte versuchen Sie es erneut')
+                        }	
+                });
+              })
+            </script>    
+        
           <div class="form-group">
             <label for="description">Beschreibung</label>
             <textarea class="form-control" id="description" aria-describedby="descriptionHelp" name="description" rows="3"></textarea>

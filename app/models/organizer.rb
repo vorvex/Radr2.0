@@ -5,7 +5,7 @@ class Organizer < ApplicationRecord
            :class_name => "Event", 
            :source => :event
   has_many :social_links
-  belongs_to :user
+  has_one :user
   
   has_one_attached :profile_image
   has_one_attached :profile_image_thumbnail
