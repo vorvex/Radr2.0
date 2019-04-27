@@ -8,10 +8,13 @@
     <%= render 'application/tag_manager' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" href="/main-v09.css">
+    <link rel="stylesheet" href="/main-v11.css">
     <meta name="theme-color" content="#000000" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="preconnect" href="https://events.mapbox.com">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    <link rel="preconnect" href="https://api.mapbox.com">
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -222,7 +225,9 @@
   <script id="mapboxjs" src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js' async defer onload="loadMap()"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" async defer onload="loadSlick()" ></script>
   <script type="text/javascript" src="/jquery.unveil.js" async onload="loadUnveil()" ></script>
-  <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css" onload="$('body').addClass('font-loaded');">
+  <% if @ua == 'desktop' %>
+  <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css" async defer onload="$('body').addClass('font-loaded');">
+  <% end %>
   <script>
   // PageView
     var url_string = window.location.href;

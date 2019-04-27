@@ -1,5 +1,5 @@
 class PublicViewController < ApplicationController
-  before_action :set_session
+  before_action :set_session, :user_agent
   
   
   def location     
@@ -80,13 +80,10 @@ class PublicViewController < ApplicationController
   def user_agent 
     @user_agent = request.user_agent
     
-    case 
-      when @user_agent.include?('iPhone')
-        layout 'application_mobile'
-      when @user_agent.include?('Android')
-        layout 'application_mobile'
+    if @user_agent.include?('iPhone' || 'Android')
+        @ua = 'mobile'
     else
-        layout 'application'
+        @ua = 'desktop'
     end
   end 
   

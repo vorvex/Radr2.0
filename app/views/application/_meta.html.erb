@@ -35,7 +35,7 @@
       ]
       }
   </script>
-  <% @resource.events.each do |event| %>
+  <% @resource.events.upcoming.each do |event| %>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -78,7 +78,7 @@
     </script>
   <% end %>
 <% elsif @type == 'Performer' || @type == 'Organizator' %>
-  <% @resource.events.each do |event| %>
+  <% @resource.events.upcoming.each do |event| %>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
