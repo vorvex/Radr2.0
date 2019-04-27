@@ -20,89 +20,81 @@
       </g>
   </svg>
 </a>
-<div class="coverimage-container">
-  <div class="cover-slick">
-    <div class="blur-img-container">
-          <img src="<%= url_for(image.variant(resize: "59.5x35")) %>" class="small-img">
-          <img data-image="<%= url_for(image) %>" alt="" class="big-img" onload="$(this).parent().addClass('loaded');">
-      </div>
-  </div>
-</div>
-<div class="card-body">
-  <div class="card-head">
-    <div>
-      <h1><%= @resource.name %></h1>
-      <span class="subheader"><%= @resource.category %></span>
+<% cache ['images', @resource] do %>
+  <div class="coverimage-container">
+    <div class="cover-slick">
+      <div class="blur-img-container">
+            <img src="<%= url_for(@resource.profile_image.variant(resize: "59.5x35")) unless !@resource.profile_image.attached? %>" class="small-img">
+            <img data-image="<%= url_for(@resource.profile_image) unless !@resource.profile_image.attached? %>" alt="" class="big-img" onload="$(this).parent().addClass('loaded');">
+        </div>
     </div>
-    <a onclick="shareThisPage()" class="social-button" style="box-shadow: none; flex-grow: 100; justify-content: flex-end; margin-right: 10px;" >
-      <img src="/images/share.svg" alt="Share">
-    </a>
   </div>
-  <%= render "public_view/shared/description" %>
-  <% if @resource.events.upcoming.any? %>
-    <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen' %>
-  <% end %>
-  <style>
-    /* The grid: Four equal columns that floats next to each other */
-    .image-gallery-column {
-      float: left;
-      width: 25%;
-      /* padding: 10px; */
-    }
+<% end %>
+  <div class="card-body">
+    <div class="card-head">
+      <div>
+        <h1><%= @resource.name %></h1>
+        <span class="subheader"><%= @resource.category %></span>
+      </div>
+      <a onclick="shareThisPage()" class="social-button" style="box-shadow: none; flex-grow: 100; justify-content: flex-end; margin-right: 10px;" >
+        <img src="/images/share.svg" alt="Share">
+      </a>
+    </div>
+    <%= render "public_view/shared/description" %>
+    <% if @resource.events.upcoming.any? %>
+      <%= render "public_view/shared/upcoming_events", events: @resource.events.upcoming, heading: 'Kommende Veranstaltungen', cached: true %>
+    <% end %>
+    <style>
+      /* The grid: Four equal columns that floats next to each other */
+      .image-gallery-column {
+        float: left;
+        width: 25%;
+        /* padding: 10px; */
+      }
 
-    /* Style the images inside the grid */
-    .image-gallery-column img {
-      opacity: 0.8; 
-      cursor: pointer; 
-    }
+      /* Style the images inside the grid */
+      .image-gallery-column img {
+        opacity: 0.8; 
+        cursor: pointer; 
+      }
 
-    .image-gallery-column img:hover {
-      opacity: 1;
-    }
+      .image-gallery-column img:hover {
+        opacity: 1;
+      }
 
-    /* Clear floats after the columns */
-    .image-gallery-row:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
+      /* Clear floats after the columns */
+      .image-gallery-row:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
 
-    /* The expanding image container */
-    .image-gallery-container {
-      position: relative;
-      display: none;
-    }
+      /* The expanding image container */
+      .image-gallery-container {
+        position: relative;
+        display: none;
+      }
 
-    /* Closable button inside the expanded image */
-    .closebtn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      color: white;
-      font-size: 35px;
-      cursor: pointer;
-    }
-  </style>
-  <div id="image_gallery"></div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function(event) {
-      $('#image_gallery').append("<%= j(render 'public_view/shared/image_gallery') %>");
-    });
-      
-    function maximizeImage(img) {
-      var expandImg = document.getElementById("expandedImg");
-      expandImg.src = img.dataset.src;
-      expandImg.parentElement.style.display = "block";
-    }
-
-  </script>
-  <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
-    <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  <% end %>
-  <% if !@soundcloud_iframe.nil? %>
-    <h2 style="margin-top: 10px !important">Get in the Mood</h2>
-    <%= @soundcloud_iframe.html_safe %>
-  <% end %>
-  <%= render "public_view/shared/social_links" %>
-  <%= render "public_view/shared/by_radr" %>
-</div>
+      /* Closable button inside the expanded image */
+      .closebtn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        color: white;
+        font-size: 35px;
+        cursor: pointer;
+      }
+    </style>
+    <div id="image_gallery">
+      <%= render 'public_view/shared/image_gallery', resource: @resource, cached: true %>
+    </div>
+    <% if !@resource.social_links.find_by_channel('YouTube').nil? %>
+      <iframe title="youtube" width="100%" style="min-height: 200px;" data-src="https://www.youtube.com/embed/<%= @resource.social_links.find_by_channel('YouTube').url %>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <% end %>
+    <% if !@soundcloud_iframe.nil? %>
+      <h2 style="margin-top: 10px !important">Get in the Mood</h2>
+      <%= @soundcloud_iframe.html_safe %>
+    <% end %>
+    <%= render "public_view/shared/social_links" %>
+    <%= render "public_view/shared/by_radr" %>
+  </div>

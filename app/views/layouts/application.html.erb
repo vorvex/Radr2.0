@@ -43,8 +43,7 @@
     <input type="text" name="user_agent" id="pv_user_agent">
     <input type="text" name="user_id" id="pv_user_id">
   </form>
-  <script>
- 
+  <script> 
   // Description  
   $(document).ready(function(){
     if($('#description > p').outerHeight() > 100){
@@ -157,9 +156,9 @@
      
      $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('image'));
      
-     $('.slick-arrow').on('click', function(){
-       $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('image'));
-     });
+      $('.cover-slick').on('afterChange', function(event, slick, currentSlide, nextSlide){
+        $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('image'));
+      });
     } 
       
     function loadUnveil() {
@@ -224,7 +223,6 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" async defer onload="loadSlick()" ></script>
   <script type="text/javascript" src="/jquery.unveil.js" async onload="loadUnveil()" ></script>
   <link rel="stylesheet" href="https://use.typekit.net/roz0mei.css" onload="$('body').addClass('font-loaded');">
-
   <script>
   // PageView
     var url_string = window.location.href;

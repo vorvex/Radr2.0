@@ -1,11 +1,25 @@
-<div class="image-gallery-container" style="display: block;">
-  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
-  <img src="<%= url_for(@resource.images.last) %>" id="expandedImg" alt="Expanded Gallery" style="width: 100%;">
+<div class="image-gallery-container" style="display: block; width: 100%; overflow: hidden;" id="imgGallery">
+  <span onclick="this.parentElement.style.display='none'" class="closebtn" style="z-index: 3">&times;</span>
+  <img src="<%= url_for(resource.images.last.variant(resize: "111x65")) %>" alt="Blury Load" class="small-img" id="expandedImgSmall">
+  <img data-src="<%= url_for(resource.images.last) %>" id="expandedImg" alt="Expanded Gallery" style="width: 100%;" class="big-img" onload="$(this).parent().addClass('loaded')">
 </div>
 <div class="image-gallery-row">
-  <% @resource.images.order(created_at: :desc).limit(4).each do |img| %>
+  <% resource.images.order(created_at: :desc).limit(4).each do |img| %>
     <div class="image-gallery-column">
       <%= image_tag img.variant(resize: "111x65"), data: {src: url_for(img)}, style: "width:100%", onclick: "maximizeImage(this);", alt: img.filename %> 
     </div>
  <% end %>
 </div>
+<script>  
+  var imgGallery = document.getElementById('imgGallery');
+  imgGallery.style.height = imgGallery.offsetWidth / 1.7 + 'px';
+  
+  function maximizeImage(img) {
+    var expandImg = document.getElementById("expandedImg");
+    var expandImgSmall = document.getElementById("expandedImgSmall");
+    expandImg.parentElement.style.display = "block";
+    imgGallery.classList.remove('loaded');
+    expandImgSmall.src = img.src;
+    expandImg.src = img.dataset.src;    
+  }
+</script>
