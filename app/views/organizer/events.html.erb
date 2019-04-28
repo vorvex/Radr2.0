@@ -8,7 +8,7 @@
       </div>
     <% end %>
     <% @own_events.each do |event| %>
-      <div href="<%= event.url %>" class="preview-request" id="event<%= event.id %>">
+      <div class="preview-request" id="event<%= event.id %>">
         <div class="preview-request-inner">
           <a onclick="deleteThis('event', <%= event.id %>)" class="delete-button">
             <img src="/images/requests/delete.png" alt="Löschen">
@@ -28,7 +28,7 @@
             <img src="/images/requests/edit.png" alt="Bearbeiten" height="20px">
             <span>Bearbeiten</span>
           </a>
-          <a onclick="shareThis('<%= event.name %>', '<%= event.description %>', '<%= event.url %>')">
+          <a onclick="shareThis('<%= event.name %>', '<%= event.description %>', 'https://<%= ENV['ROOT_URL'] %><%= event.url %>')">
             <img src="/images/requests/share.png" alt="Ansehen" height="19px">
             <span>Teilen</span>
           </a>

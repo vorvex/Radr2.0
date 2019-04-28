@@ -54,13 +54,7 @@
         $(this).toggleClass('open');
       });
   }});
-  
-   //Opening Hours 
-   $('#openinghours').on('click', function(){
-     $('.oh-body').slideToggle();
-     $('#openinghours > .oh-button').toggleClass('open');
-   });
-  
+
   //Events  
   $('.preview').mouseover(function(){
     if (!navigator.userAgent.includes('iPhone') || !navigator.userAgent.includes('Android')) {
@@ -79,7 +73,7 @@
             var scale = (scroll/120) * (-1) + 1;
             $('.cover-slick').css('transform', 'scale(' + scale + ')');
           } else if(scroll > 0) {
-            var scale = (scroll / 20 * (-2));
+            var scale = (scroll / 2 * (-1));
             $('.cover-slick').css('top', scale );
         }});
   });
@@ -125,14 +119,7 @@
       closeShareDefault();
     });
    
-   function loadSlick() {
-      $('.cover-slick').slick({
-        lazyLoad: 'ondemand',
-        speed: 300,
-        fade: true,
-        cssEase: 'linear'
-      });
-     
+   function loadSlick() {  
        $('.slick-carousel').slick({
         dots: false,
         infinite: false,
@@ -140,12 +127,6 @@
         slidesToShow: 1,
         variableWidth: true,
         speed: 300
-      });
-     
-     $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('image'));
-     
-      $('.cover-slick').on('afterChange', function(event, slick, currentSlide, nextSlide){
-        $('.slick-current > .big-img').attr('src', $('.slick-current > .big-img').data('image'));
       });
     } 
       
@@ -173,8 +154,7 @@
       }, 50);
     }
     
-    function closeShareDefault(){
-      
+    function closeShareDefault(){      
       $('.share-default-container').removeClass('active');
       setTimeout(function(){
         $('.share-default').removeClass('active');
@@ -207,10 +187,8 @@
       alert('In die Zwischenablage kopiert.')
     }
   </script>
-  <script id="mapboxjs" src='https://static-assets.mapbox.com/gl-pricing/dist/mapbox-gl.js' async defer onload="loadMap()"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" async defer onload="loadSlick()" ></script>
   <script type="text/javascript" src="/jquery.unveil.js" async onload="loadUnveil()" ></script>
-
   <script>
   // PageView
     var url_string = window.location.href;
@@ -234,13 +212,15 @@
     });
   </script>
   <script>
-  // Fontload
-  var giftofspeed = document.createElement('link');
-  giftofspeed.rel = 'stylesheet';
-  giftofspeed.href = 'https://use.typekit.net/roz0mei.css';
-  giftofspeed.type = 'text/css';
-  giftofspeed.onload = $('body').addClass('font-loaded');
-  var godefer = document.getElementsByTagName('link')[0];
-  godefer.parentNode.insertBefore(giftofspeed, godefer);
+    // Fontload
+    $(document).ready(function(){
+      var giftofspeed = document.createElement('link');
+      giftofspeed.rel = 'stylesheet';
+      giftofspeed.href = 'https://use.typekit.net/roz0mei.css';
+      giftofspeed.type = 'text/css';
+      giftofspeed.onload = $('body').addClass('font-loaded');
+      var godefer = document.getElementsByTagName('link')[0];
+      godefer.parentNode.insertBefore(giftofspeed, godefer);
+    });
   </script>
 </html>

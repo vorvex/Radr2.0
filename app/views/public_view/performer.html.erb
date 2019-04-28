@@ -13,9 +13,9 @@
       </defs>
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <g transform="translate(-17.000000, -18.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                  <g filter="url(#filter-1)" transform="translate(27.500000, 32.000000) scale(-1, 1) translate(-27.500000, -32.000000) translate(20.000000, 20.000000)">
-                      <polygon  points="0 1.455 1.5525 0 14.4 12 1.5525 24 0 22.5525 11.2875 12"></polygon>
-                  </g>
+              <g filter="url(#filter-1)" transform="translate(27.500000, 32.000000) scale(-1, 1) translate(-27.500000, -32.000000) translate(20.000000, 20.000000)">
+                  <polygon  points="0 1.455 1.5525 0 14.4 12 1.5525 24 0 22.5525 11.2875 12"></polygon>
+              </g>
           </g>
       </g>
   </svg>
@@ -24,7 +24,7 @@
   <div class="coverimage-container-performer">
     <div class="cover-slick">
       <div class="blur-img-container" style="height: 100vw;">
-        <img src="<%= url_for(@resource.profile_image.variant(resize: "59.5x35")) unless !@resource.profile_image.attached? %>" class="small-img">
+        <img src="<%= url_for(@resource.profile_image.variant(resize: "59.5x35")) unless !@resource.profile_image.attached? %>" class="small-img" alt="Small Image">
         <img data-src="<%= url_for(@resource.profile_image) unless !@resource.profile_image.attached? %>" alt="" class="big-img" onload="$(this).parent().addClass('loaded');">
       </div>
     </div>

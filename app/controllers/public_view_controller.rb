@@ -1,4 +1,5 @@
 class PublicViewController < ApplicationController
+  layout :resolve_layout
   before_action :set_session, :user_agent
   
   
@@ -102,6 +103,15 @@ class PublicViewController < ApplicationController
       
       # print the html for the player widget
       @soundcloud_iframe = embed_info['html']
+    end
+  end
+
+  def resolve_layout
+    case action_name
+    when "performer", "organizer"
+      "application2"
+    else
+      "application"
     end
   end
   
